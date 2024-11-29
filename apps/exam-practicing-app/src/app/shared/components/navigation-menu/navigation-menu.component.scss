@@ -1,0 +1,67 @@
+@media (min-width: 1000px) {
+    .navigation-menu {
+        width: calc(56px + 32px);
+        left: 0;
+        position: fixed !important;
+        border-right: 2px solid var($border-swan);
+        height: 100vh;
+        padding: 0 16px;
+        .app-icon {
+            height: 39px;
+            padding: 36px 0 25px 10px;
+        }
+        .app-routes {
+            width: 56px !important;
+            .app-route-icon {
+                height: 48px;
+            }
+            .app-route-name{
+                display: none;
+            }
+        }
+    }
+}
+
+@media (min-width: 1160px) {
+    .navigation-menu {
+        width: calc(224px + 32px) !important;
+        .app-icon {
+            height: 30px;
+            padding: 32px 0 30px 16px;
+        }
+        .app-routes {
+            width: auto;
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+    .navigation-menu {
+        height: 82px;
+        bottom: 0;
+        position: fixed !important;
+        gap: 12px;
+        display: flex;
+        flex-direction: space-between;
+        border-right: 2px solid var($border-swan);
+    }
+}
+
+.navigation-menu {
+    box-sizing: border-box;
+    overflow-y: auto;
+    scrollbar-width: none;
+
+    .app-icon {
+        box-sizing: content-box;
+    }
+    .app-routes {
+        box-sizing: content-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        position: relative;
+    }
+}

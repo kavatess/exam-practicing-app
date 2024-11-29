@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { APP_ROUTES } from '../../../app.routes';
 
 @Component({
   selector: 'epa-navigation-menu',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './navigation-menu.component.html',
-  styleUrl: './navigation-menu.component.scss',
+  styleUrls: ['./navigation-menu.component.scss'],
 })
-export class NavigationMenuComponent {}
+export class NavigationMenuComponent {
+  readonly AppRoutes = APP_ROUTES;
+}

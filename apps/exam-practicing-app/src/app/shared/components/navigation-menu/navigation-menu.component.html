@@ -1,1 +1,15 @@
-<p>navigation-menu works!</p>
+<div class="navigation-menu">
+    <div class="app-icon"></div>
+    <div class="app-routes">
+        <div *ngFor="let route of AppRoutes | keyvalue" class="app-route-item">
+            <a
+                [routerLink]="route.value"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+            >
+                <span class="app-route-icon"></span>
+                <span class="app-route-name">{{ route.key | titlecase }}</span>
+            </a>
+        </div>
+    </div>
+</div>
