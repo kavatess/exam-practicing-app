@@ -1,0 +1,21 @@
+@media (min-width: 900px) {
+    .container {
+        padding-left: 88px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        padding-left: 256px;
+    }
+}
+
+.container {
+    .main-container {
+        width: 100%;
+        max-width: 1056px;
+        margin: 0 auto;
+        padding-top: 24px;
+        box-sizing: inherit;
+    }
+}
