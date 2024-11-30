@@ -4,6 +4,7 @@ export enum APP_ROUTES {
     LOGIN = 'login',
     DASHBOARD = 'dashboard',
     LIBRARY = 'library',
+    COURSE = 'course',
     TEST = 'test',
     PRACTICE = 'practice',
     SHOP = 'shop',
@@ -13,47 +14,54 @@ export enum APP_ROUTES {
 export const appRoutes: Route[] = [
     {
         path: APP_ROUTES.LOGIN,
-        loadChildren: () =>
+        loadComponent: () =>
             import('./routes/login/login.component').then(
-                (m) => m.LoginComponent
+                (c) => c.LoginComponent
             ),
     },
     {
         path: APP_ROUTES.DASHBOARD,
-        loadChildren: () =>
+        loadComponent: () =>
             import('./routes/dashboard/dashboard.component').then(
-                (m) => m.DashboardComponent
+                (c) => c.DashboardComponent
             ),
     },
     {
         path: APP_ROUTES.LIBRARY,
-        loadChildren: () =>
+        loadComponent: () =>
             import('./routes/library/library.component').then(
-                (m) => m.LibraryComponent
+                (c) => c.LibraryComponent
+            ),
+    },
+    {
+        path: APP_ROUTES.COURSE,
+        loadComponent: () =>
+            import('./routes/course/course.component').then(
+                (c) => c.CourseComponent
             ),
     },
     {
         path: APP_ROUTES.TEST,
-        loadChildren: () =>
-            import('./routes/test/test.component').then((m) => m.TestComponent),
+        loadComponent: () =>
+            import('./routes/test/test.component').then((c) => c.TestComponent),
     },
     {
         path: APP_ROUTES.PRACTICE,
-        loadChildren: () =>
+        loadComponent: () =>
             import('./routes/practice/practice.component').then(
-                (m) => m.PracticeComponent
+                (c) => c.PracticeComponent
             ),
     },
     {
         path: APP_ROUTES.SHOP,
-        loadChildren: () =>
-            import('./routes/shop/shop.component').then((m) => m.ShopComponent),
+        loadComponent: () =>
+            import('./routes/shop/shop.component').then((c) => c.ShopComponent),
     },
     {
         path: APP_ROUTES.PROFILE,
-        loadChildren: () =>
+        loadComponent: () =>
             import('./routes/profile/profile.component').then(
-                (m) => m.ProfileComponent
+                (c) => c.ProfileComponent
             ),
     },
 ];

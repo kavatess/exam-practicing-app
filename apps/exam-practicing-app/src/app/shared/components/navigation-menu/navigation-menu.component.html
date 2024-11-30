@@ -1,15 +1,72 @@
 <div class="navigation-menu">
-    <div class="app-icon"></div>
+    <img class="app-icon" src="Logo.png" alt="" />
     <div class="app-routes">
-        <div *ngFor="let route of AppRoutes | keyvalue" class="app-route-item">
-            <a
-                [routerLink]="route.value"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-            >
-                <span class="app-route-icon"></span>
-                <span class="app-route-name">{{ route.key | titlecase }}</span>
-            </a>
-        </div>
+        <a
+            class="app-route-item"
+            [class.active]="currentRoute === AppRoutes.DASHBOARD"
+            [routerLink]="AppRoutes.DASHBOARD"
+        >
+            <span class="app-route-item-container">
+                <span class="app-route-icon">
+                    <img
+                        class="nav-icon"
+                        alt=""
+                        src="https://d35aaqx5ub95lt.cloudfront.net/vendor/784035717e2ff1d448c0f6cc4efc89fb.svg"
+                    />
+                </span>
+                <span class="app-route-name">Dashboard</span>
+            </span>
+        </a>
+
+        <a
+            class="app-route-item"
+            [class.active]="currentRoute === AppRoutes.LIBRARY"
+            [routerLink]="AppRoutes.LIBRARY"
+        >
+            <span class="app-route-item-container">
+                <span class="app-route-icon">
+                    <img
+                        class="nav-icon"
+                        alt=""
+                        src="https://d35aaqx5ub95lt.cloudfront.net/vendor/784035717e2ff1d448c0f6cc4efc89fb.svg"
+                    />
+                </span>
+                <span class="app-route-name">Thư viện</span>
+            </span>
+        </a>
+
+        <a
+            class="app-route-item"
+            [class.active]="currentRoute === AppRoutes.SHOP"
+            [routerLink]="AppRoutes.SHOP"
+        >
+            <span class="app-route-item-container">
+                <span class="app-route-icon">
+                    <img
+                        class="nav-icon"
+                        alt=""
+                        src="https://d35aaqx5ub95lt.cloudfront.net/vendor/0e58a94dda219766d98c7796b910beee.svg"
+                    />
+                </span>
+                <span class="app-route-name">Shop</span>
+            </span>
+        </a>
+
+        <a
+            class="app-route-item"
+            [class.active]="currentRoute === AppRoutes.PROFILE"
+            [routerLink]="AppRoutes.PROFILE"
+        >
+            <span class="app-route-item-container">
+                <span class="app-route-icon">
+                    <img
+                        class="nav-icon"
+                        alt=""
+                        src="https://d35aaqx5ub95lt.cloudfront.net/vendor/7159c0b5d4250a5aea4f396d53f17f0c.svg"
+                    />
+                </span>
+                <span class="app-route-name">Profile</span>
+            </span>
+        </a>
     </div>
 </div>
