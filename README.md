@@ -26,7 +26,7 @@ yarn run start:server:dev
 To run admin-app in development mode, use:
 
 ```sh
-yarn run serve:exam-app:dev"
+yarn run serve:exam-app:dev
 ```
 
 To run exam-practicing-app in development mode, use:
