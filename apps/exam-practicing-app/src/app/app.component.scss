@@ -1,12 +1,18 @@
 @media (min-width: 900px) {
     .container {
         padding-left: 88px;
+        .main-container {
+            padding-top: 24px;
+        }
     }
 }
 
 @media (min-width: 1200px) {
     .container {
         padding-left: 256px;
+        .main-container {
+            padding-top: 12px;
+        }
     }
 }
 
@@ -15,7 +21,6 @@
         width: 100%;
         max-width: 1056px;
         margin: 0 auto;
-        padding-top: 24px;
         box-sizing: inherit;
     }
 }

@@ -12,6 +12,10 @@ export enum APP_ROUTES {
 }
 
 export const appRoutes: Route[] = [
+    // {
+    //     path: '',
+    //     redirectTo: `/${APP_ROUTES.DASHBOARD}`,
+    // },
     {
         path: APP_ROUTES.LOGIN,
         loadComponent: () =>

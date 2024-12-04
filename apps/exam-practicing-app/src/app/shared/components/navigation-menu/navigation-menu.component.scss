@@ -144,6 +144,7 @@
                     letter-spacing: 0.8px;
                     text-transform: uppercase;
                     transition: none;
+                    color: rgb(119, 119, 119);      // Text color of the menu name
                 }
             }
         }
@@ -159,6 +160,10 @@
     background-color: rgb(221, 244, 255);
     border: 2px solid rgb(132, 216, 255) !important;
     border-radius: 12px;
+}
+
+.active .app-route-name {
+    color: rgb(28, 176, 246) !important;
 }
 
 .nav-icon {
