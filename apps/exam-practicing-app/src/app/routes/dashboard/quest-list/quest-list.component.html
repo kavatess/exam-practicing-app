@@ -1,0 +1,31 @@
+<div class="epa-quest-list">
+    <h2 class="epa-quest-list-header">Tasks</h2>
+
+    <ng-container *ngFor="let quest of quests$ | async">
+        <div class="epa-quest-item">
+            <img class="epa-quest-icon" [src]="quest.iconUrl" alt="" />
+
+            <div class="epa-quest-description">
+                <div class="epa-quest-name">{{ quest.name }}</div>
+
+                <div class="epa-quest-progress">
+                    <div
+                        class="progress"
+                        role="progressbar"
+                        aria-label="epa-quest-progress"
+                        aria-valuenow="25"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                    >
+                        <div
+                            class="progress-bar bg-success"
+                            [style.width.%]="getQuestPercentage(quest)"
+                        >
+                            {{ quest.progress }} / {{ quest.totalProgress }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

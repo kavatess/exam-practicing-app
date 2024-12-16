@@ -1,11 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
+import { Quest } from '@libs/models';
 import {
     EnergyActions,
     GemActions,
+    QuestActions,
     StreakActions,
-} from './dropdown-item.actions';
+} from './dashboard.actions';
 
-export interface DropdownItemStoreState {
+export interface DashboardStoreState {
     streak: {
         streakDays: number;
     };
@@ -15,9 +17,13 @@ export interface DropdownItemStoreState {
     gems: {
         value: number;
     };
+    quests: {
+        list: Quest[];
+        length: number;
+    };
 }
 
-export const initialState: DropdownItemStoreState = {
+export const initialState: DashboardStoreState = {
     streak: {
         streakDays: 0,
     },
@@ -27,10 +33,15 @@ export const initialState: DropdownItemStoreState = {
     gems: {
         value: 0,
     },
+    quests: {
+        list: [],
+        length: 0,
+    },
 };
 
-export const dropdownItemReducer = createReducer(
+export const dashboardReducer = createReducer(
     initialState,
+    // Dropdown Events
     on(StreakActions.getStreakDaysSuccess, (state, { streakDays }) => ({
         ...state,
         streak: {
@@ -50,6 +61,16 @@ export const dropdownItemReducer = createReducer(
         gems: {
             ...state.streak,
             value,
+        },
+    })),
+
+    // Quest Events
+    on(QuestActions.getQuestsSuccess, (state, { list }) => ({
+        ...state,
+        quests: {
+            ...state.quests,
+            list,
+            length: list.length,
         },
     }))
 );

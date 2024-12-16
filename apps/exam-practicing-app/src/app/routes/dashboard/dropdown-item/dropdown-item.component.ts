@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { DropdownItemDirective } from './dropdown-item.directive';
-import { DropdownItemStoreState } from './store/dropdown-item.reducer';
+import { DashboardStoreState } from '../store/dashboard.reducer';
 import { Store } from '@ngrx/store';
 import {
     EnergyActions,
     GemActions,
     StreakActions,
-} from './store/dropdown-item.actions';
+} from '../store/dashboard.actions';
 import {
     EnergiesSelectors,
     GemsSelectors,
     StreakSelectors,
-} from './store/dropdown-item.selectors';
+} from '../store/dashboard.selectors';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
 import { APP_ROUTES } from '../../../app.routes';
@@ -35,7 +35,7 @@ export class DropdownItemComponent implements OnInit {
     readonly daysOfWeek = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
 
     constructor(
-        private readonly store: Store<DropdownItemStoreState>,
+        private readonly store: Store<DashboardStoreState>,
         private readonly router: Router
     ) {}
 

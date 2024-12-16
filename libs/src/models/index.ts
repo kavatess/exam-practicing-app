@@ -3,6 +3,7 @@ export * from './base';
 export * from './currency';
 export * from './media';
 export * from './product';
+export * from './quest';
 export * from './question';
 export * from './subject';
 export * from './test';

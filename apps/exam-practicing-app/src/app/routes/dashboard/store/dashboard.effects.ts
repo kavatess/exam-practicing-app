@@ -2,15 +2,16 @@ import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, exhaustMap, catchError } from 'rxjs/operators';
-import { DropdownItemService } from './dropdown-item.service';
+import { DashboardService } from './dashboard.service';
 import {
     EnergyActions,
     GemActions,
+    QuestActions,
     StreakActions,
-} from './dropdown-item.actions';
+} from './dashboard.actions';
 
 @Injectable()
-export class DropdownItemEffects {
+export class DashboardEffects {
     private readonly actions$: Actions = inject(Actions);
 
     readonly getUserStreakDays$ = createEffect(() =>
@@ -50,7 +51,9 @@ export class DropdownItemEffects {
             ofType(GemActions.getGemAmount),
             exhaustMap(() =>
                 this.service.getUserGemAmount().pipe(
-                    map((gem) => GemActions.getGemAmountSuccess({ value: gem })),
+                    map((gem) =>
+                        GemActions.getGemAmountSuccess({ value: gem })
+                    ),
                     catchError((error) =>
                         of(GemActions.getGemAmountFailure({ error }))
                     )
@@ -59,5 +62,19 @@ export class DropdownItemEffects {
         )
     );
 
-    constructor(private readonly service: DropdownItemService) {}
+    readonly getQuests$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(QuestActions.getQuests),
+            exhaustMap(() =>
+                this.service.getUserQuests().pipe(
+                    map((list) => QuestActions.getQuestsSuccess({ list })),
+                    catchError((error) =>
+                        of(QuestActions.getQuestsFailure({ error }))
+                    )
+                )
+            )
+        )
+    );
+
+    constructor(private readonly service: DashboardService) {}
 }

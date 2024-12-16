@@ -79,8 +79,11 @@
 
     .epa-energies-menu-container {
         min-width: 300px;
+        padding: 20px 20px 20px 12px;
+
         .epa-energy-icon {
-            height: 100%;
+            height: 80px;
+            margin-right: 0.5rem;
         }
 
         .epa-text {
@@ -90,8 +93,10 @@
 
     .epa-gems-menu-container {
         min-width: 240px;
+
         .epa-gems-icon {
-            height: 100%;
+            height: 60px;
+            margin-right: 1rem;
         }
 
         .epa-text {

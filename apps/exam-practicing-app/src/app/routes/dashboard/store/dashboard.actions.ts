@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Quest } from '@libs/models';
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
+// Dropdown Item Actions
 export const StreakActions = createActionGroup({
     source: 'Streak',
     events: {
@@ -25,5 +27,15 @@ export const GemActions = createActionGroup({
         GetGemAmount: emptyProps(),
         GetGemAmountSuccess: props<{ value: number }>(),
         GetGemAmountFailure: props<{ error: any }>(),
+    },
+});
+
+// Quest Actions
+export const QuestActions = createActionGroup({
+    source: 'Quest',
+    events: {
+        GetQuests: emptyProps(),
+        GetQuestsSuccess: props<{ list: Quest[] }>(),
+        GetQuestsFailure: props<{ error: any }>(),
     },
 });
