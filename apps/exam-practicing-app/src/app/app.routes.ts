@@ -1,4 +1,9 @@
 import { Route } from '@angular/router';
+import { provideState } from '@ngrx/store';
+import { dropdownItemStoreKey } from './routes/dashboard/dropdown-item/store/dropdown-item.selectors';
+import { dropdownItemReducer } from './routes/dashboard/dropdown-item/store/dropdown-item.reducer';
+import { provideEffects } from '@ngrx/effects';
+import { DropdownItemEffects } from './routes/dashboard/dropdown-item/store/dropdown-item.effects';
 
 export enum APP_ROUTES {
     LOGIN = 'login',
@@ -29,6 +34,13 @@ export const appRoutes: Route[] = [
             import('./routes/dashboard/dashboard.component').then(
                 (c) => c.DashboardComponent
             ),
+        providers: [
+            provideState({
+                name: dropdownItemStoreKey,
+                reducer: dropdownItemReducer,
+            }),
+            provideEffects(DropdownItemEffects),
+        ],
     },
     {
         path: APP_ROUTES.LIBRARY,

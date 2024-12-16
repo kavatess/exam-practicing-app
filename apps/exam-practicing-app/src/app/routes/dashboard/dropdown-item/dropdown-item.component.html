@@ -1,0 +1,149 @@
+<div #container class="epa-streak-energy-gem-container">
+    <span epaDropdownItem>
+        <span
+            class="epa-dropdown-item"
+            [ngClass]="{
+                'epa-streak-fire-color': (streakDays$ | async) != 0,
+            }"
+        >
+            <img
+                class="epa-dropdown-icon"
+                src="https://d35aaqx5ub95lt.cloudfront.net/images/icons/ba95e6081679d9d7e8c132da5cfce1ec.svg"
+                alt=""
+            />
+            <div class="epa-dropdown-value">{{ streakDays$ | async }}</div>
+
+            <div
+                ngbDropdownMenu
+                class="epa-dropdown-menu epa-streak-menu-container"
+                [ngClass]="{
+                    'epa-streak-fire-background-color': (streakDays$ | async) != 0,
+                }"
+            >
+                <h3
+                    class="epa-streak-header epa-text-header"
+                    [ngClass]="{
+                        'epa-streak-fire-text-color': (streakDays$ | async) != 0,
+                    }"
+                >
+                    {{ streakDays$ | async }} day streak
+                </h3>
+
+                <p
+                    class="epa-streak-description epa-text"
+                    [ngClass]="{
+                        'epa-streak-fire-text-color': (streakDays$ | async) != 0,
+                    }"
+                >
+                    Hãy làm test để gia tăng chuỗi ngày cũng như nhận nhiều phần
+                    thưởng hấp dẫn
+                </p>
+
+                <div class="epa-streak-calendar">
+                    <ng-container *ngFor="let day of daysOfWeek">
+                        <div class="epa-streak-day">
+                            <div class="epa-streak-day-header">
+                                {{ day }}
+                            </div>
+                            <div class="epa-streak-day-status"></div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </span>
+    </span>
+
+    <span epaDropdownItem [placement]="['bottom-end']">
+        <span class="epa-dropdown-item">
+            <img
+                class="epa-dropdown-icon"
+                src="https://d35aaqx5ub95lt.cloudfront.net/images/goals/2b5a211d830a24fab92e291d50f65d1d.svg"
+                alt=""
+            />
+            <div class="epa-dropdown-value" style="color: #ffd900">
+                {{ energies$ | async }}
+            </div>
+
+            <div
+                ngbDropdownMenu
+                class="epa-dropdown-menu epa-energies-menu-container"
+            >
+                <div class="w-100 d-flex flex-row align-items-center">
+                    <div class="h-100 mr-3">
+                        <img
+                            class="epa-energy-icon"
+                            src="https://d35aaqx5ub95lt.cloudfront.net/images/goals/2b5a211d830a24fab92e291d50f65d1d.svg"
+                            alt=""
+                        />
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        <h3 class="epa-text-header">Energies</h3>
+
+                        <p class="epa-energies-description epa-text">
+                            Bạn đang có {{ energies$ | async }} energies
+                        </p>
+
+                        <div class="w-100">
+                            <button
+                                class="btn btn-warning"
+                                (click)="
+                                    navigateToShop(); $event.preventDefault()
+                                "
+                            >
+                                GO TO SHOP
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </span>
+    </span>
+
+    <span epaDropdownItem [placement]="['bottom-end']">
+        <span class="epa-dropdown-item">
+            <img
+                class="epa-dropdown-icon"
+                src="https://d35aaqx5ub95lt.cloudfront.net/images/gems/45c14e05be9c1af1d7d0b54c6eed7eee.svg"
+                alt=""
+            />
+            <div class="epa-dropdown-value" style="color: #1cb0f6">
+                {{ gems$ | async }}
+            </div>
+
+            <div
+                ngbDropdownMenu
+                class="epa-dropdown-menu epa-gems-menu-container"
+            >
+                <div class="w-100 d-flex flex-row align-items-center">
+                    <div class="h-100 mr-3">
+                        <img
+                            class="epa-gems-icon"
+                            src="https://d35aaqx5ub95lt.cloudfront.net/images/gems/45c14e05be9c1af1d7d0b54c6eed7eee.svg"
+                            alt=""
+                        />
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        <h3 class="epa-text-header">Gems</h3>
+
+                        <p class="epa-gems-description epa-text">
+                            Bạn đang có {{ gems$ | async }} gems
+                        </p>
+
+                        <div class="w-100">
+                            <button
+                                class="btn btn-primary"
+                                (click)="
+                                    navigateToShop(); $event.preventDefault()
+                                "
+                            >
+                                GO TO SHOP
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </span>
+    </span>
+</div>

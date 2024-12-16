@@ -1,0 +1,114 @@
+.epa-streak-energy-gem-container {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+
+    .epa-dropdown-item {
+        height: 44px;
+        border-radius: 12px;
+        padding: 0 16px 0 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        color: rgb(229, 229, 229); // Streak icon color when streak = 0
+
+        .epa-dropdown-icon {
+            height: 28px;
+            margin-right: 11px;
+        }
+        .epa-dropdown-value {
+            font-size: 17px;
+            font-weight: 700;
+        }
+    }
+
+    .epa-dropdown-item:hover {
+        background-color: #f7f7f7; // Icon color when hovered
+    }
+
+    .epa-dropdown-menu {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .epa-streak-menu-container {
+        min-width: 360px;
+        background-color: #fff5d3; // Streak Menu background color when streak = 0
+
+        .epa-streak-header {
+            color: #ebc37f; // Streak header color when streak = 0
+        }
+
+        .epa-streak-description {
+            margin-bottom: 24px;
+        }
+
+        .epa-streak-calendar {
+            padding: 12px 20px;
+            border-radius: 12px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .epa-streak-day {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .epa-streak-day-header {
+                    font-weight: 700;
+                    color: #afafaf;
+                    margin-bottom: 6px;
+                }
+
+                .epa-streak-day-status {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    background-color: #e5e5e5;
+                }
+            }
+        }
+    }
+
+    .epa-energies-menu-container {
+        min-width: 300px;
+        .epa-energy-icon {
+            height: 100%;
+        }
+
+        .epa-text {
+            color: #878787;
+        }
+    }
+
+    .epa-gems-menu-container {
+        min-width: 240px;
+        .epa-gems-icon {
+            height: 100%;
+        }
+
+        .epa-text {
+            color: #878787;
+        }
+    }
+}
+
+.epa-streak-fire-color {
+    color: rgb(255, 150, 0) !important;
+}
+
+.epa-streak-fire-text-color {
+    color: #ffffff !important;
+}
+
+.epa-streak-fire-background-color {
+    background-color: rgb(255, 150, 0) !important;
+    color: #ffffff !important;
+}
