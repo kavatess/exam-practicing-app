@@ -1,0 +1,18 @@
+@media (min-width: 900px) {
+    .epa-dashboard {
+        flex-direction: row-reverse;
+        padding: 0 24px 24px;
+    }
+}
+
+.epa-dashboard {
+    display: flex;
+
+    .epa-dashboard-right-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 368px;
+        position: sticky;
+    }
+}

@@ -1,4 +1,9 @@
 import { Route } from '@angular/router';
+import { provideState } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+import { dashboardStoreKey } from './routes/dashboard/store/dashboard.selectors';
+import { dashboardReducer } from './routes/dashboard/store/dashboard.reducer';
+import { DashboardEffects } from './routes/dashboard/store/dashboard.effects';
 
 export enum APP_ROUTES {
     LOGIN = 'login',
@@ -29,6 +34,13 @@ export const appRoutes: Route[] = [
             import('./routes/dashboard/dashboard.component').then(
                 (c) => c.DashboardComponent
             ),
+        providers: [
+            provideState({
+                name: dashboardStoreKey,
+                reducer: dashboardReducer,
+            }),
+            provideEffects(DashboardEffects),
+        ],
     },
     {
         path: APP_ROUTES.LIBRARY,
