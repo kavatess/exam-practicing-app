@@ -1,7 +1,7 @@
 @media (min-width: 900px) {
     .epa-container {
         padding-left: 88px;
-        .main-container {
+        .epa-main-container {
             padding-top: 24px;
         }
     }
@@ -10,7 +10,7 @@
 @media (min-width: 1200px) {
     .epa-container {
         padding-left: 256px;
-        .main-container {
+        .epa-main-container {
             padding-top: 12px;
             margin: 0 auto;
         }
@@ -18,7 +18,7 @@
 }
 
 .epa-container {
-    .main-container {
+    .epa-main-container {
         width: 100%;
         max-width: 1056px;
     }

@@ -14,6 +14,7 @@ export enum TestProperties {
     subject = 'subject',
     courseId = 'courseId',
     course = 'course',
+    numOfQuestions = 'numOfQuestions',
     duration = 'duration',
     startTime = 'startTime',
     endTime = 'endTime',
@@ -41,7 +42,8 @@ export interface Test extends BaseModel {
     [TestProperties.userId]: string;
     [TestProperties.user]?: User;
     [TestProperties.name]: string;
-    [TestProperties.type]: string;
+    [TestProperties.type]: TestTypes;
+    [TestProperties.numOfQuestions]: number;
     [TestProperties.subjectId]: string;
     [TestProperties.subject]?: Subject;
     [TestProperties.courseId]: string;
@@ -85,6 +87,12 @@ export enum TestStructureProperties {
     questionTypes = 'questionTypes',
 }
 
+export enum TestDifficulties {
+    Easy = 'Easy',
+    Normal = 'Normal',
+    Advanced = 'Advanced',
+}
+
 export enum TestStructureTypes {
     Molding = 'Molding',
     Customizing = 'Customizing',
@@ -95,8 +103,8 @@ export interface TestStructure extends BaseModel {
     [TestStructureProperties.subject]?: Subject;
     [TestStructureProperties.courseId]: string;
     [TestStructureProperties.course]?: Course;
-    [TestStructureProperties.type]: string;
-    [TestStructureProperties.difficulty]?: QuestionDifficulties;
+    [TestStructureProperties.type]: TestStructureTypes;
+    [TestStructureProperties.difficulty]?: TestDifficulties;
     [TestStructureProperties.unitIds]?: string[];
     [TestStructureProperties.units]?: SubjectUnit[];
     [TestStructureProperties.subUnitIds]?: string[];

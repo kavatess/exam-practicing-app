@@ -12,12 +12,16 @@ export interface Subject extends BaseModel {
 
 export enum SubjectUnitProperties {
     subjectId = 'subjectId',
+    subject = 'subject',
+    subUnits = 'subUnits',
     title = 'title',
     description = 'description',
 }
 
 export interface SubjectUnit extends BaseModel {
     [SubjectUnitProperties.subjectId]: string;
+    [SubjectUnitProperties.subject]?: Subject;
+    [SubjectUnitProperties.subUnits]?: SubUnit[];
     [SubjectUnitProperties.title]: string;
     [SubjectUnitProperties.description]: string;
 }
@@ -36,14 +40,20 @@ export interface SubUnit extends BaseModel {
 
 export enum CourseProperties {
     subjectId = 'subjectId',
+    subject = 'subject',
     name = 'name',
     unitIds = 'unitIds',
+    units = 'units',
     description = 'description',
+    iconUrl = 'iconUrl',
 }
 
 export interface Course extends BaseModel {
     [CourseProperties.subjectId]: string;
+    [CourseProperties.subject]?: Subject;
     [CourseProperties.name]: string;
     [CourseProperties.unitIds]: string[];
+    [CourseProperties.units]?: SubjectUnit[];
     [CourseProperties.description]: string;
+    [CourseProperties.iconUrl]: string;
 }

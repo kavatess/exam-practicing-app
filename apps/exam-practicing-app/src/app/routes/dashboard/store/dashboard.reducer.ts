@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
-import { Quest } from '@libs/models';
+import { Course, Quest } from '@libs/models';
 import {
+    CourseActions,
     EnergyActions,
     GemActions,
     QuestActions,
@@ -21,6 +22,10 @@ export interface DashboardStoreState {
         list: Quest[];
         length: number;
     };
+    course: {
+        selectedCourseId: string;
+        data: Course;
+    };
 }
 
 export const initialState: DashboardStoreState = {
@@ -36,6 +41,10 @@ export const initialState: DashboardStoreState = {
     quests: {
         list: [],
         length: 0,
+    },
+    course: {
+        selectedCourseId: 'abc',
+        data: null,
     },
 };
 
@@ -71,6 +80,15 @@ export const dashboardReducer = createReducer(
             ...state.quests,
             list,
             length: list.length,
+        },
+    })),
+
+    // Course Events
+    on(CourseActions.getCourseSuccess, (state, { data }) => ({
+        ...state,
+        course: {
+            ...state.course,
+            data,
         },
     }))
 );

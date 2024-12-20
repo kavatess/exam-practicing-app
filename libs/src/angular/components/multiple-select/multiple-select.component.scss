@@ -1,0 +1,14 @@
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.form-select {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    .display-text {
+        width: calc(100% - 36px);
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+}

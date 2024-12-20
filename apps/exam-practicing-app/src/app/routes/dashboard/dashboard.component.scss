@@ -1,7 +1,21 @@
+@media (max-width: 900px) {
+    .epa-dashboard {
+        .epa-dashboard-right-container {
+            display: none !important;
+        }
+    }
+}
+
 @media (min-width: 900px) {
     .epa-dashboard {
         flex-direction: row-reverse;
         padding: 0 24px 24px;
+
+        .epa-dashboard-left-container {
+            .epa-course-header {
+                margin-top: 24px;
+            }
+        }
     }
 }
 
@@ -13,6 +27,51 @@
         flex-direction: column;
         gap: 16px;
         width: 368px;
-        position: sticky;
+    }
+
+    .epa-dashboard-left-container {
+        min-width: 360px;
+        max-width: 590px;
+        box-sizing: border-box;
+
+        .epa-course-header {
+            background-color: rgb(255, 150, 0);
+            padding: 16px;
+            color: #ffffff;
+            min-height: 82px;
+            z-index: 210;
+            row-gap: 6px;
+            border-radius: 13px;
+
+            .epa-course-title {
+                font-size: 24px;
+                font-weight: 700;
+                line-height: 28px;
+            }
+
+            .epa-course-description {
+                font-size: 16px;
+                font-weight: 700;
+                line-height: 24px;
+                opacity: 0.7;
+            }
+        }
+
+        .epa-course-test-btn {
+            display: flex;
+            flex-direction: row;
+            justify-content: end;
+            align-items: center;
+        }
     }
 }
+
+// :host {
+//     ::ng-deep {
+//         .mdc-button__label {
+//             font: 700 12.5px 'Dosis', sans-serif;
+//             letter-spacing: 0.8px;
+//             text-transform: uppercase;
+//         }
+//     }
+// }

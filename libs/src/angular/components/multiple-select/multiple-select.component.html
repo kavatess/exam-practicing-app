@@ -1,0 +1,25 @@
+<div ngbDropdown class="input-group">
+    <div
+        ngbDropdownToggle
+        class="form-select"
+        style="min-height: 37.8px"
+        [attr.disabled]="disabled"
+    >
+        <div class="display-text">
+            {{ displayText }}
+        </div>
+    </div>
+
+    <ng-container *ngIf="!disabled">
+        <div class="w-100" ngbDropdownMenu>
+            <div class="d-flex flex-column">
+                <mat-checkbox
+                    *ngFor="let opt of options; let i = index"
+                    [formControl]="multiSelect.at(i)"
+                >
+                    {{ opt.title }}
+                </mat-checkbox>
+            </div>
+        </div>
+    </ng-container>
+</div>

@@ -8,6 +8,7 @@ export const dashboardStoreKey = 'dropdown-item';
 export const dashboardFeatureSelector =
     createFeatureSelector<DashboardStoreState>(dashboardStoreKey);
 
+// Dropdown Item Selectors
 export const StreakSelectors = {
     StreakDays: createSelector(
         dashboardFeatureSelector,
@@ -29,6 +30,7 @@ export const GemsSelectors = {
     ),
 };
 
+// Quest Selectors
 export const QuestsSelectors = {
     QuestList: createSelector(
         dashboardFeatureSelector,
@@ -37,5 +39,21 @@ export const QuestsSelectors = {
     QuestLength: createSelector(
         dashboardFeatureSelector,
         (state: DashboardStoreState) => state.quests.length || 0
+    ),
+};
+
+// Course Selectors
+export const CourseSelectors = {
+    SelectedCourseId: createSelector(
+        dashboardFeatureSelector,
+        (state: DashboardStoreState) => state.course.selectedCourseId || ''
+    ),
+    CourseData: createSelector(
+        dashboardFeatureSelector,
+        (state: DashboardStoreState) => state.course.data || null
+    ),
+    CourseUnits: createSelector(
+        dashboardFeatureSelector,
+        (state: DashboardStoreState) => state.course.data?.units || []
     ),
 };

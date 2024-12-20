@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@angular/core';
-import { Quest } from '@libs/models';
+import { Course, Quest, SubjectUnit } from '@libs/models';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -43,7 +44,59 @@ export class DashboardService {
                 progress: 40,
                 iconUrl:
                     'https://d35aaqx5ub95lt.cloudfront.net/images/goals/39f13d2de304cad2ac2f88b31a7e2ff4.svg',
-            } as Quest
+            } as Quest,
         ]);
+    }
+
+    getCourseById(courseId: string): Observable<Course> {
+        return of({
+            name: 'Đề THPTQG Môn Toán',
+            subject: {
+                name: 'Toán',
+                description: 'Chương trình của bộ giáo dục',
+            },
+            units: [
+                {
+                    id: 213,
+                    title: 'Đạo hàm',
+                    subUnits: [
+                        {
+                            title: 'Khái niệm',
+                            description: 'Khái niệm',
+                        },
+                        {
+                            title: 'Vi phân',
+                            description: 'Vi phân',
+                        },
+                        {
+                            title: 'Ứng dụng của đạo hàm',
+                            description: 'Ứng dụng của đạo hàm',
+                        },
+                    ],
+                } as SubjectUnit,
+                {
+                    id: 234,
+                    title: 'Hàm số',
+                    subUnits: [
+                        {
+                            title: 'Giới thiệu về hàm số',
+                            description: 'Giới thiệu về hàm số',
+                        },
+                        {
+                            title: 'Hàm bậc 1',
+                            description: 'Hàm bậc 1',
+                        },
+                        {
+                            title: 'Hàm bậc 2',
+                            description: 'Hàm bậc 2',
+                        },
+                        {
+                            title: 'Hàm bậc 3',
+                            description: 'Hàm bậc 3',
+                        },
+                    ],
+                } as SubjectUnit,
+            ],
+        } as Course);
     }
 }

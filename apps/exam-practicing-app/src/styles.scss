@@ -1,11 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
 $border-swan: rgb(229, 229, 229);
 
+@use '@angular/material' as mat;
+
+$main-theme: mat.define-theme(
+    (
+        color: (
+            theme-type: light,
+            primary: mat.$orange-palette,
+            // tertiary: mat.$violet-palette,
+        ),
+        typography: (
+            plain-family: 'Dosis',
+            brand-family: 'Dosis',
+            bold-weight: 700,
+            medium-weight: 500,
+            regular-weight: 300,
+        ),
+        density: (
+            scale: -1,
+        ),
+    )
+);
+
+.mdc-button__label {
+    font-family: 'Dosis', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
 body {
     font-family: 'Dosis', sans-serif;
 
     button {
+        font: 700 12.5px 'Dosis', sans-serif;
         font-family: 'Dosis', sans-serif;
+        letter-spacing: 0.8px;
     }
 
     .epa-text {
@@ -23,4 +55,17 @@ body {
         color: rgb(229, 229, 229);
     }
 
+    .cdk-overlay-pane {
+        z-index: 9999 !important;
+    }
+
+    @include mat.all-component-themes($main-theme);
+}
+
+@include mat.core();
+
+@media (max-width: 500px) {
+    button mat-icon {
+        display: none !important;
+    }
 }

@@ -1,6 +1,37 @@
 <div class="epa-dashboard">
-    <div class="epa-dashboard-right-container">
+    <div class="epa-dashboard-right-container container-fluid">
         <epa-dropdown-item></epa-dropdown-item>
         <epa-quest-list></epa-quest-list>
+    </div>
+
+    <div class="epa-dashboard-left-container container-fluid">
+        <ng-container *ngIf="course$ | async as course">
+            <div class="epa-course-header row">
+                <div class="col-8">
+                    <h1 class="epa-course-title">
+                        {{ course.name }}
+                    </h1>
+
+                    <div class="epa-course-description">
+                        {{ course.subject.description }}
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="epa-course-test-btn">
+                        <button
+                            mat-fab
+                            extended
+                            (click)="openTestConfigModal(course)"
+                        >
+                            <mat-icon fontIcon="favorite"></mat-icon>
+                            PRACTICE
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="epa-dashboard-course-journey"></div>
+        </ng-container>
     </div>
 </div>
