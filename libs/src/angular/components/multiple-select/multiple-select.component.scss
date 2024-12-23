@@ -3,12 +3,18 @@
 }
 
 .form-select {
-    overflow: hidden;
-    text-overflow: ellipsis;
+    box-sizing: border-box;
+
     .display-text {
-        width: calc(100% - 36px);
-        height: 100%;
         display: flex;
         align-items: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis "...";
     }
+}
+
+.checkbox-text {
+    font-size: 14px;
+    font-weight: 500;
 }

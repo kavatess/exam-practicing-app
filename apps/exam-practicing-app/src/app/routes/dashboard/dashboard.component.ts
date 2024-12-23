@@ -8,13 +8,10 @@ import { DashboardStoreState } from './store/dashboard.reducer';
 import { Store } from '@ngrx/store';
 import { CourseSelectors } from './store/dashboard.selectors';
 import { CourseActions } from './store/dashboard.actions';
-import {
-    NgbModal,
-    NgbModalConfig,
-    NgbModalModule,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbModal, NgbModalConfig, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TestConfigPopupComponent } from './test-config-popup/test-config-popup.component';
 import { Course } from '@libs/models';
+import { DropdownItemDirective } from './dropdown-item/dropdown-item.directive';
 
 @Component({
     selector: 'epa-dashboard',
@@ -26,6 +23,8 @@ import { Course } from '@libs/models';
         MatButtonModule,
         MatIconModule,
         NgbModalModule,
+        NgbDropdownModule,
+        DropdownItemDirective,
     ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss',
@@ -41,6 +40,10 @@ export class DashboardComponent implements OnInit {
 
     get course$() {
         return this.store.select(CourseSelectors.CourseData);
+    }
+
+    get units$() {
+        return this.store.select(CourseSelectors.CourseUnits);
     }
 
     ngOnInit(): void {

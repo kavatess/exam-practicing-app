@@ -1,3 +1,11 @@
+:host {
+    ::ng-deep {
+        .dropdown-toggle::after {
+            display: none !important;
+        }
+    }
+}
+
 .epa-streak-energy-gem-container {
     box-sizing: border-box;
     display: flex;
@@ -32,7 +40,7 @@
 
     .epa-dropdown-menu {
         padding: 20px;
-        border-radius: 12px;
+        border-radius: 15px;
     }
 
     .epa-streak-menu-container {

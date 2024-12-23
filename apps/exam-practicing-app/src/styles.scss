@@ -64,8 +64,8 @@ body {
 
 @include mat.core();
 
-@media (max-width: 500px) {
-    button mat-icon {
-        display: none !important;
-    }
-}
+// @media (max-width: 500px) {
+//     button mat-icon {
+//         display: none !important;
+//     }
+// }

@@ -1,37 +1,93 @@
 <div class="epa-dashboard">
     <div class="epa-dashboard-right-container container-fluid">
-        <epa-dropdown-item></epa-dropdown-item>
-        <epa-quest-list></epa-quest-list>
+        <div class="epa-container">
+            <epa-dropdown-item></epa-dropdown-item>
+            <epa-quest-list></epa-quest-list>
+        </div>
+       
     </div>
 
     <div class="epa-dashboard-left-container container-fluid">
         <ng-container *ngIf="course$ | async as course">
-            <div class="epa-course-header row">
-                <div class="col-8">
-                    <h1 class="epa-course-title">
-                        {{ course.name }}
-                    </h1>
+            <div class="epa-course-header">
+                <div class="epa-blank-space"></div>
+                <div class="epa-header">
+                    <div class="col-8">
+                        <h1 class="epa-course-title">
+                            {{ course.name }}
+                        </h1>
 
-                    <div class="epa-course-description">
-                        {{ course.subject.description }}
+                        <div class="epa-course-description">
+                            {{ course.subject.description }}
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-4">
-                    <div class="epa-course-test-btn">
-                        <button
-                            mat-fab
-                            extended
-                            (click)="openTestConfigModal(course)"
-                        >
-                            <mat-icon fontIcon="favorite"></mat-icon>
-                            PRACTICE
-                        </button>
+                    <div class="col-4">
+                        <div class="epa-course-test-btn">
+                            <button mat-fab extended (click)="openTestConfigModal(course)">
+                                <mat-icon>assignment</mat-icon>
+                                DO TEST
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="epa-dashboard-course-journey"></div>
+            <div class="epa-course-journey mt-2">
+                @for(unit of (units$ | async); track unit) {
+                <div class="epa-course-unit">
+                    <button
+                        class="btn btn-light"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#collapse-' + unit.id"
+                        aria-expanded="false"
+                        [attr.aria-controls]="'collapse-' + unit.id"
+                    >
+                        <img class="epa-unit-icon" [src]="unit.iconUrl" alt="" />
+                        <div class="epa-text">
+                            {{ unit.title }}
+                        </div>
+                    </button>
+
+                    <div class="w-100 collapse mt-1" [id]="'collapse-' + unit.id">
+                        <div class="epa-unit-details">
+                            <div class="row">
+                                @for(subUnit of unit.subUnits; track subUnit; let i = $index; let isLast = $last) {
+                                @if(isLast && unit.subUnits.length % 3 == 1) {
+                                <div class="col-4"></div>
+                                }
+                                <div ngbDropdown class="col-4">
+                                    <div ngbDropdownToggle class="epa-sub-unit">
+                                        <img class="epa-sub-unit-icon" [src]="subUnit.iconUrl" alt="" />
+                                        <div class="epa-text">
+                                            {{ subUnit.title }}
+                                        </div>
+                                    </div>
+
+                                    <div ngbDropdownMenu class="epa-sub-unit-menu">
+                                        <h1 class="epa-menu-title">{{ subUnit.title }}</h1>
+
+                                        <p class="epa-menu-description">Đã hoàn thành 50 (44/50)</p>
+
+                                        <!-- <div class="epa-menu-description">Đã hoàn thành: 50 (44/50)</div>
+                                        <p class="epa-menu-description">Điểm năng lực: 550 (Tốt)</p> -->
+
+                                        <button mat-fab extended>
+                                            <mat-icon>edit</mat-icon>
+                                            PRACTICE
+                                        </button>
+                                    </div>
+                                </div>
+                                @if(isLast && unit.subUnits.length % 3 == 1) {
+                                <div class="col-4"></div>
+                                } }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
         </ng-container>
     </div>
 </div>

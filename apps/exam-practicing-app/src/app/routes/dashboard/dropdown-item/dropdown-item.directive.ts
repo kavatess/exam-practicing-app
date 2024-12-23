@@ -7,7 +7,7 @@ import { NgbDropdown, NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
     hostDirectives: [
         {
             directive: NgbDropdown,
-            inputs: ['placement', 'container'],
+            inputs: ['placement', 'container', 'display'],
         },
     ],
 })

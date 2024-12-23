@@ -68,10 +68,7 @@
         width: 100%;
         bottom: 0;
         position: fixed !important;
-        gap: 12px;
-        display: flex;
-        flex-direction: space-between;
-        border-right: 2px solid rgb(229, 229, 229);
+        display: inline-flex;
 
         .app-icon {
             display: none;
@@ -105,9 +102,7 @@
 }
 
 .navigation-menu {
-    box-sizing: border-box;
-    overflow-y: auto;
-    scrollbar-width: none;
+    background-color: #ffffff;
 
     .app-icon {
         height: 60px;
@@ -144,7 +139,7 @@
                     letter-spacing: 0.8px;
                     text-transform: uppercase;
                     transition: none;
-                    color: rgb(119, 119, 119);      // Text color of the menu name
+                    color: rgb(119, 119, 119); // Text color of the menu name
                 }
             }
         }

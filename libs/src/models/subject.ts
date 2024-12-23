@@ -16,6 +16,8 @@ export enum SubjectUnitProperties {
     subUnits = 'subUnits',
     title = 'title',
     description = 'description',
+    iconUrl = 'iconUrl',
+    userStats = 'userStats',
 }
 
 export interface SubjectUnit extends BaseModel {
@@ -24,18 +26,25 @@ export interface SubjectUnit extends BaseModel {
     [SubjectUnitProperties.subUnits]?: SubUnit[];
     [SubjectUnitProperties.title]: string;
     [SubjectUnitProperties.description]: string;
+    [SubjectUnitProperties.iconUrl]: string;
+    [SubjectUnitProperties.userStats]?: {
+        completedQuestions: number;
+        totalQuestions: number;
+    };
 }
 
 export enum SubUnitProperties {
     unitId = 'unitId',
     title = 'title',
     description = 'description',
+    iconUrl = 'iconUrl',
 }
 
 export interface SubUnit extends BaseModel {
     [SubUnitProperties.unitId]: string;
     [SubUnitProperties.title]: string;
     [SubUnitProperties.description]: string;
+    [SubUnitProperties.iconUrl]: string;
 }
 
 export enum CourseProperties {

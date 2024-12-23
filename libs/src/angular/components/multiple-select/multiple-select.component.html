@@ -17,7 +17,7 @@
                     *ngFor="let opt of options; let i = index"
                     [formControl]="multiSelect.at(i)"
                 >
-                    {{ opt.title }}
+                    <div class="checkbox-text">{{ opt.title }}</div>
                 </mat-checkbox>
             </div>
         </div>
