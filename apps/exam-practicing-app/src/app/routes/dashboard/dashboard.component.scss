@@ -11,6 +11,12 @@
         .epa-dashboard-right-container {
             display: none !important;
         }
+
+        .epa-dashboard-left-container {
+            .epa-course-journey {
+                height: calc(100% + 90px);
+            }
+        }
     }
 }
 
@@ -20,9 +26,11 @@
         padding: 0 24px 24px;
 
         .epa-dashboard-left-container {
-            .epa-blank-space {
-                background-color: #ffffff;
-                height: 24px;
+            .epa-course-header {
+                .epa-blank-space {
+                    background-color: #ffffff;
+                    height: 24px;
+                }
             }
         }
     }
@@ -97,9 +105,6 @@
         }
 
         .epa-course-journey {
-            height: calc(100% + 90px);
-            display: flex;
-            flex-wrap: wrap;
 
             .epa-course-unit {
                 width: 100%;
@@ -133,7 +138,11 @@
                         }
 
                         .epa-text {
+                            width: 100%;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                             text-align: center;
+                            font-weight: 600;
                         }
                     }
 
