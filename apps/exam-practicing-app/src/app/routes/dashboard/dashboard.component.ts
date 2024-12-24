@@ -7,11 +7,21 @@ import { MatIconModule } from '@angular/material/icon';
 import { DashboardStoreState } from './store/dashboard.reducer';
 import { Store } from '@ngrx/store';
 import { CourseSelectors } from './store/dashboard.selectors';
-import { CourseActions } from './store/dashboard.actions';
-import { NgbDropdownModule, NgbModal, NgbModalConfig, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+    NgbDropdownModule,
+    NgbModal,
+    NgbModalConfig,
+    NgbModalModule,
+} from '@ng-bootstrap/ng-bootstrap';
 import { TestConfigPopupComponent } from './test-config-popup/test-config-popup.component';
 import { Course } from '@libs/models';
 import { DropdownItemDirective } from './dropdown-item/dropdown-item.directive';
+import {
+    CourseActions,
+    EnergyActions,
+    GemActions,
+    StreakActions,
+} from './store/dashboard.actions';
 
 @Component({
     selector: 'epa-dashboard',
@@ -47,7 +57,11 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.store.dispatch(CourseActions.getCourse());
+        this.store.dispatch(CourseActions.getCourses());
+        // this.store.dispatch(CourseActions.selectCourse());
+        this.store.dispatch(StreakActions.getStreakDays());
+        this.store.dispatch(EnergyActions.getEnergyAmount());
+        this.store.dispatch(GemActions.getGemAmount());
     }
 
     openTestConfigModal(courseData: Course): void {

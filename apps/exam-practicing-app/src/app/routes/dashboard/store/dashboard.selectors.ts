@@ -44,6 +44,10 @@ export const QuestsSelectors = {
 
 // Course Selectors
 export const CourseSelectors = {
+    CourseList: createSelector(
+        dashboardFeatureSelector,
+        (state: DashboardStoreState) => state.course.list || []
+    ),
     SelectedCourseId: createSelector(
         dashboardFeatureSelector,
         (state: DashboardStoreState) => state.course.selectedCourseId || ''

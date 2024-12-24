@@ -1,5 +1,33 @@
 <div #container class="epa-streak-energy-gem-container">
     <span epaDropdownItem>
+        <span ngbDropdownAnchor class="epa-dropdown-item" style="padding: 16px">
+            <img
+                class="epa-dropdown-icon"
+                [src]="(selectedCourse$ | async).iconUrl"
+                alt=""
+            />
+        </span>
+
+        <div ngbDropdownMenu class="epa-dropdown-menu epa-test-select-menu" >
+            <h3 class="epa-test-select-header epa-text-header">Tests</h3>
+
+            @for(course of (courses$ | async); track course) {
+            <div
+                class="epa-test-select-item"
+                [ngClass]="{
+                    active: course.id == (selectedCourse$ | async).id
+                }"
+            >
+                <img class="epa-test-icon me-3" [src]="course.iconUrl" alt="" />
+                <div class="epa-test-title epa-text">
+                    {{ course.name }}
+                </div>
+            </div>
+            }
+        </div>
+    </span>
+
+    <span epaDropdownItem>
         <span
             ngbDropdownAnchor
             class="epa-dropdown-item"
@@ -8,7 +36,7 @@
             }"
         >
             <img
-                class="epa-dropdown-icon"
+                class="epa-dropdown-icon me-2"
                 src="https://d35aaqx5ub95lt.cloudfront.net/images/icons/ba95e6081679d9d7e8c132da5cfce1ec.svg"
                 alt=""
             />
@@ -57,7 +85,7 @@
     <span epaDropdownItem>
         <span ngbDropdownAnchor class="epa-dropdown-item">
             <img
-                class="epa-dropdown-icon"
+                class="epa-dropdown-icon me-2"
                 src="https://d35aaqx5ub95lt.cloudfront.net/images/goals/2b5a211d830a24fab92e291d50f65d1d.svg"
                 alt=""
             />
@@ -100,7 +128,7 @@
     <span epaDropdownItem display="dynamic" placement="bottom-end">
         <span ngbDropdownAnchor class="epa-dropdown-item">
             <img
-                class="epa-dropdown-icon"
+                class="epa-dropdown-icon me-2"
                 src="https://d35aaqx5ub95lt.cloudfront.net/images/gems/45c14e05be9c1af1d7d0b54c6eed7eee.svg"
                 alt=""
             />

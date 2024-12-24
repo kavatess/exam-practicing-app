@@ -9,6 +9,11 @@ import {
 } from './dashboard.actions';
 
 export interface DashboardStoreState {
+    course: {
+        list: Course[];
+        selectedCourseId: string;
+        data: Course;
+    };
     streak: {
         streakDays: number;
     };
@@ -22,13 +27,14 @@ export interface DashboardStoreState {
         list: Quest[];
         length: number;
     };
-    course: {
-        selectedCourseId: string;
-        data: Course;
-    };
 }
 
 export const initialState: DashboardStoreState = {
+    course: {
+        list: [],
+        selectedCourseId: 'abc',
+        data: null,
+    },
     streak: {
         streakDays: 0,
     },
@@ -41,10 +47,6 @@ export const initialState: DashboardStoreState = {
     quests: {
         list: [],
         length: 0,
-    },
-    course: {
-        selectedCourseId: 'abc',
-        data: null,
     },
 };
 
@@ -84,7 +86,17 @@ export const dashboardReducer = createReducer(
     })),
 
     // Course Events
-    on(CourseActions.getCourseSuccess, (state, { data }) => ({
+    on(CourseActions.getCoursesSuccess, (state, { list }) => ({
+        ...state,
+        course: {
+            ...state.course,
+            list,
+            data: list.find(
+                (item) => item.id === state.course.selectedCourseId
+            ),
+        },
+    })),
+    on(CourseActions.selectCourseSuccess, (state, { data }) => ({
         ...state,
         course: {
             ...state.course,
