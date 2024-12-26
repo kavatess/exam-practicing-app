@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropdownItemComponent } from './dropdown-item/dropdown-item.component';
 import { QuestListComponent } from './quest-list/quest-list.component';
@@ -15,13 +15,12 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { TestConfigPopupComponent } from './test-config-popup/test-config-popup.component';
 import { Course } from '@libs/models';
-import { DropdownItemDirective } from './dropdown-item/dropdown-item.directive';
-import {
-    CourseActions,
-    EnergyActions,
-    GemActions,
-    StreakActions,
-} from './store/dashboard.actions';
+// import {
+//     CourseActions,
+//     EnergyActions,
+//     GemActions,
+//     StreakActions,
+// } from './store/dashboard.actions';
 
 @Component({
     selector: 'epa-dashboard',
@@ -34,12 +33,11 @@ import {
         MatIconModule,
         NgbModalModule,
         NgbDropdownModule,
-        DropdownItemDirective,
     ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
     constructor(
         private readonly store: Store<DashboardStoreState>,
         private readonly modalService: NgbModal,
@@ -56,13 +54,12 @@ export class DashboardComponent implements OnInit {
         return this.store.select(CourseSelectors.CourseUnits);
     }
 
-    ngOnInit(): void {
-        this.store.dispatch(CourseActions.getCourses());
-        // this.store.dispatch(CourseActions.selectCourse());
-        this.store.dispatch(StreakActions.getStreakDays());
-        this.store.dispatch(EnergyActions.getEnergyAmount());
-        this.store.dispatch(GemActions.getGemAmount());
-    }
+    // ngOnInit(): void {
+    //     // this.store.dispatch(CourseActions.getCourses());
+    //     // this.store.dispatch(StreakActions.getStreakDays());
+    //     // this.store.dispatch(EnergyActions.getEnergyAmount());
+    //     // this.store.dispatch(GemActions.getGemAmount());
+    // }
 
     openTestConfigModal(courseData: Course): void {
         const modalRef = this.modalService.open(TestConfigPopupComponent);

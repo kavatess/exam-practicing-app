@@ -21,7 +21,6 @@ export class DropdownItemDirective {
     }
 
     @HostListener('mouseover') onMouseOver() {
-        console.log(this.el.nativeElement);
         this.dropdown.open();
     }
 

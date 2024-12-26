@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { DropdownItemDirective } from './dropdown-item.directive';
@@ -14,6 +14,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
 import { APP_ROUTES } from '../../../app.routes';
 import $ from 'jquery';
+import {
+    CourseActions,
+    EnergyActions,
+    GemActions,
+    StreakActions,
+} from '../store/dashboard.actions';
 
 @Component({
     selector: 'epa-dropdown-item',
@@ -29,6 +35,9 @@ import $ from 'jquery';
     styleUrl: './dropdown-item.component.scss',
 })
 export class DropdownItemComponent implements OnInit {
+    @Input()
+    showCourseSelect = false;
+
     readonly daysOfWeek = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
 
     constructor(
@@ -57,6 +66,13 @@ export class DropdownItemComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (this.showCourseSelect) {
+            this.store.dispatch(CourseActions.getCourses());
+        }
+        this.store.dispatch(StreakActions.getStreakDays());
+        this.store.dispatch(EnergyActions.getEnergyAmount());
+        this.store.dispatch(GemActions.getGemAmount());
+
         $(document).ready(function () {
             $('.dropdown').hover(
                 function () {

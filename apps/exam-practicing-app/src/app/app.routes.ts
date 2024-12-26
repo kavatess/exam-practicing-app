@@ -4,6 +4,9 @@ import { provideEffects } from '@ngrx/effects';
 import { dashboardStoreKey } from './routes/dashboard/store/dashboard.selectors';
 import { dashboardReducer } from './routes/dashboard/store/dashboard.reducer';
 import { DashboardEffects } from './routes/dashboard/store/dashboard.effects';
+import { libraryStoreKey } from './routes/library/store/library.selectors';
+import { libraryReducer } from './routes/library/store/library.reducer';
+import { LibraryEffects } from './routes/library/store/library.effects';
 
 export enum APP_ROUTES {
     LOGIN = 'login',
@@ -44,10 +47,34 @@ export const appRoutes: Route[] = [
     },
     {
         path: APP_ROUTES.LIBRARY,
-        loadComponent: () =>
-            import('./routes/library/library.component').then(
-                (c) => c.LibraryComponent
-            ),
+        children: [
+            {
+                path: '',
+                loadComponent: () =>
+                    import('./routes/library/library.component').then(
+                        (c) => c.LibraryComponent
+                    ),
+            },
+            {
+                path: ':courseId',
+                loadComponent: () =>
+                    import(
+                        './routes/library/course-details/course-details.component'
+                    ).then((c) => c.CourseDetailsComponent),
+            },
+        ],
+        providers: [
+            provideState({
+                name: dashboardStoreKey,
+                reducer: dashboardReducer,
+            }),
+            provideState({
+                name: libraryStoreKey,
+                reducer: libraryReducer,
+            }),
+            provideEffects(DashboardEffects),
+            provideEffects(LibraryEffects),
+        ],
     },
     {
         path: APP_ROUTES.COURSE,

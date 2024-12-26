@@ -1,31 +1,41 @@
 <div #container class="epa-streak-energy-gem-container">
-    <span epaDropdownItem>
-        <span ngbDropdownAnchor class="epa-dropdown-item" style="padding: 16px">
-            <img
-                class="epa-dropdown-icon"
-                [src]="(selectedCourse$ | async).iconUrl"
-                alt=""
-            />
-        </span>
-
-        <div ngbDropdownMenu class="epa-dropdown-menu epa-test-select-menu" >
-            <h3 class="epa-test-select-header epa-text-header">Tests</h3>
-
-            @for(course of (courses$ | async); track course) {
-            <div
-                class="epa-test-select-item"
-                [ngClass]="{
-                    active: course.id == (selectedCourse$ | async).id
-                }"
+    <ng-container *ngIf="showCourseSelect">
+        <span epaDropdownItem>
+            <span
+                ngbDropdownAnchor
+                class="epa-dropdown-item"
+                style="padding: 16px"
             >
-                <img class="epa-test-icon me-3" [src]="course.iconUrl" alt="" />
-                <div class="epa-test-title epa-text">
-                    {{ course.name }}
+                <img
+                    class="epa-dropdown-icon"
+                    [src]="(selectedCourse$ | async).iconUrl"
+                    alt=""
+                />
+            </span>
+
+            <div ngbDropdownMenu class="epa-dropdown-menu epa-test-select-menu">
+                <h3 class="epa-test-select-header epa-text-header">Tests</h3>
+
+                @for(course of (courses$ | async); track course) {
+                <div
+                    class="epa-test-select-item"
+                    [ngClass]="{
+                        active: course.id == (selectedCourse$ | async).id
+                    }"
+                >
+                    <img
+                        class="epa-test-icon me-3"
+                        [src]="course.iconUrl"
+                        alt=""
+                    />
+                    <div class="epa-test-title epa-text">
+                        {{ course.name }}
+                    </div>
                 </div>
+                }
             </div>
-            }
-        </div>
-    </span>
+        </span>
+    </ng-container>
 
     <span epaDropdownItem>
         <span

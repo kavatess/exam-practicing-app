@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { DashboardStoreState } from './dashboard.reducer';
 
 // Feature Key
-export const dashboardStoreKey = 'dropdown-item';
+export const dashboardStoreKey = 'dashboard';
 
 // Selectors
 export const dashboardFeatureSelector =
