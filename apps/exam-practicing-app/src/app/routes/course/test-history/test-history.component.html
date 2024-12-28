@@ -1,7 +1,7 @@
 <div class="epa-test-history">
     <h2 class="epa-test-history-header mb-3">Test history</h2>
 
-    <div class="epa-test-history-list-header row mb-1">
+    <div class="epa-test-history-list-header row mb-1 px-2">
         <div class="col-4">
             <div class="epa-test-history-item-header">Ngày</div>
         </div>
@@ -21,7 +21,7 @@
 
     <div class="epa-test-history-list">
         <ng-container *ngFor="let test of testList$ | async">
-            <div class="row epa-test-history-item mb-1">
+            <div class="row epa-test-history-item mb-1 px-2 py-2">
                 <div class="col-4">
                     <div class="epa-item-field">
                         {{ test.createdAt | date : 'dd-MM-yyyy' }}

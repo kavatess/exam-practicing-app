@@ -21,10 +21,10 @@ export enum QuestionProperties {
 }
 
 export enum QuestionDifficulties {
-    Easy = 'Easy',
-    Medium = 'Medium',
-    Hard = 'Hard',
-    Advanced = 'Advanced',
+    Easy,
+    Medium,
+    Hard,
+    Advanced,
 }
 
 export enum QuestionTypes {

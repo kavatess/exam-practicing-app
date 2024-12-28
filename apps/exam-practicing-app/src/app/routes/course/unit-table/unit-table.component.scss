@@ -16,16 +16,14 @@
 
     .epa-unit-table-list {
         box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
 
         .epa-unit-table-item {
+            // padding: 20px 16px;
             width: 100%;
             box-sizing: border-box;
             border: 2px solid rgb(229, 229, 229);
             border-radius: 12px;
-            min-height: 60px;
+            min-height: 80px;
             box-shadow: 0 0.125rem 0.25rem 0 #282e3e1a;
 
             .epa-item-field {
@@ -34,19 +32,25 @@
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                font-size: 17px;
-                line-height: 25px;
+                font-size: 16px;
+                line-height: 24px;
+
+                .epa-progress-bar-bg-green {
+                    background-color: #479f76;
+                }
+
+                .epa-progress-bar-bg-yellow {
+                    background-color: #ffcd39;
+                }
+
+                .epa-progress-bar-bg-orange {
+                    background-color: #fd9843;
+                }
+
+                .epa-progress-bar-bg-red {
+                    background-color: #e35d6a;
+                }
             }
         }
-
-        .epa-unit-table-success {
-            background-color: var(--bs-success-bg-subtle);
-        }
-
-        .epa-unit-table-danger {
-            background-color: var(--bs-danger-bg-subtle);
-        }
     }
-
-    
 }

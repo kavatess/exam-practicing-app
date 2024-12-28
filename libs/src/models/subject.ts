@@ -31,6 +31,17 @@ export enum StatProperties {
     avgScore = 'avgScore',
 }
 
+export interface Statistics {
+    [StatProperties.todayTestsCompleted]?: number;
+    [StatProperties.currStudierCount]?: number;
+    [StatProperties.completedQuestions]?: number;
+    [StatProperties.totalQuestions]?: number;
+    [StatProperties.correctAnswers]?: number;
+    [StatProperties.incorrectAnswers]?: number;
+    [StatProperties.diffStats]?: DifficultStats[];
+    [StatProperties.avgScore]?: number;
+}
+
 export interface SubjectUnit extends BaseModel {
     [SubjectUnitProperties.subjectId]: string;
     [SubjectUnitProperties.subject]?: Subject;
@@ -38,9 +49,7 @@ export interface SubjectUnit extends BaseModel {
     [SubjectUnitProperties.title]: string;
     [SubjectUnitProperties.description]: string;
     [SubjectUnitProperties.iconUrl]: string;
-    [SubjectUnitProperties.stats]?: {
-        [StatProperties.avgScore]: number;
-    };
+    [SubjectUnitProperties.stats]?: Statistics;
 }
 
 export enum SubUnitProperties {
@@ -51,19 +60,18 @@ export enum SubUnitProperties {
     stats = 'stats',
 }
 
+export interface DifficultStats {
+    total?: number;
+    correct?: number;
+    incorrect?: number;
+}
+
 export interface SubUnit extends BaseModel {
     [SubUnitProperties.unitId]: string;
     [SubUnitProperties.title]: string;
     [SubUnitProperties.description]: string;
     [SubUnitProperties.iconUrl]: string;
-    [SubUnitProperties.stats]?: {
-        [StatProperties.completedQuestions]: number;
-        [StatProperties.totalQuestions]: number;
-        [StatProperties.correctAnswers]: number;
-        [StatProperties.incorrectAnswers]: number;
-        [StatProperties.diffStats]: number;
-        [StatProperties.avgScore]: number;
-    };
+    [SubUnitProperties.stats]?: Statistics;
 }
 
 export enum CourseProperties {
@@ -85,11 +93,5 @@ export interface Course extends BaseModel {
     [CourseProperties.units]?: SubjectUnit[];
     [CourseProperties.description]: string;
     [CourseProperties.iconUrl]: string;
-    [CourseProperties.stats]?: {
-        [StatProperties.todayTestsCompleted]: number;
-        [StatProperties.currStudierCount]: number;
-        [StatProperties.totalQuestions]: number;
-        [StatProperties.completedQuestions]: number;
-        [StatProperties.avgScore]: number;
-    };
+    [CourseProperties.stats]?: Statistics;
 }
