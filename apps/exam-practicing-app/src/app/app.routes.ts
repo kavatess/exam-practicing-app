@@ -7,6 +7,9 @@ import { DashboardEffects } from './routes/dashboard/store/dashboard.effects';
 import { libraryStoreKey } from './routes/library/store/library.selectors';
 import { libraryReducer } from './routes/library/store/library.reducer';
 import { LibraryEffects } from './routes/library/store/library.effects';
+import { courseStoreKey } from './routes/course/store/course.selectors';
+import { courseReducer } from './routes/course/store/course.reducer';
+import { CourseEffects } from './routes/course/store/course.effects';
 
 export enum APP_ROUTES {
     LOGIN = 'login',
@@ -54,26 +57,33 @@ export const appRoutes: Route[] = [
                     import('./routes/library/library.component').then(
                         (c) => c.LibraryComponent
                     ),
+                providers: [
+                    provideState({
+                        name: libraryStoreKey,
+                        reducer: libraryReducer,
+                    }),
+                    provideEffects(LibraryEffects),
+                ],
             },
             {
                 path: ':courseId',
                 loadComponent: () =>
-                    import(
-                        './routes/library/course-details/course-details.component'
-                    ).then((c) => c.CourseDetailsComponent),
+                    import('./routes/course/course.component').then(
+                        (c) => c.CourseComponent
+                    ),
+                providers: [
+                    provideState({
+                        name: dashboardStoreKey,
+                        reducer: dashboardReducer,
+                    }),
+                    provideEffects(DashboardEffects),
+                    provideState({
+                        name: courseStoreKey,
+                        reducer: courseReducer,
+                    }),
+                    provideEffects(CourseEffects),
+                ],
             },
-        ],
-        providers: [
-            provideState({
-                name: dashboardStoreKey,
-                reducer: dashboardReducer,
-            }),
-            provideState({
-                name: libraryStoreKey,
-                reducer: libraryReducer,
-            }),
-            provideEffects(DashboardEffects),
-            provideEffects(LibraryEffects),
         ],
     },
     {

@@ -28,18 +28,4 @@ export class LibraryEffects {
             )
         )
     );
-
-    readonly selectCourse$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(LibraryActions.selectCourse),
-            exhaustMap((action) =>
-                this.service.getCourseById(action.courseId).pipe(
-                    map((data) => LibraryActions.selectCourseSuccess({ data })),
-                    catchError((error) =>
-                        of(LibraryActions.selectCourseFailure({ error }))
-                    )
-                )
-            )
-        )
-    );
 }

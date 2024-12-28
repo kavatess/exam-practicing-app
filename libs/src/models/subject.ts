@@ -25,6 +25,9 @@ export enum StatProperties {
     currStudierCount = 'currStudierCount',
     completedQuestions = 'completedQuestions',
     totalQuestions = 'totalQuestions',
+    correctAnswers = 'correctAnswers',
+    incorrectAnswers = 'incorrectAnswers',
+    diffStats = 'diffStats',
     avgScore = 'avgScore',
 }
 
@@ -36,8 +39,7 @@ export interface SubjectUnit extends BaseModel {
     [SubjectUnitProperties.description]: string;
     [SubjectUnitProperties.iconUrl]: string;
     [SubjectUnitProperties.stats]?: {
-        [StatProperties.completedQuestions]: number;
-        [StatProperties.totalQuestions]: number;
+        [StatProperties.avgScore]: number;
     };
 }
 
@@ -46,6 +48,7 @@ export enum SubUnitProperties {
     title = 'title',
     description = 'description',
     iconUrl = 'iconUrl',
+    stats = 'stats',
 }
 
 export interface SubUnit extends BaseModel {
@@ -53,6 +56,14 @@ export interface SubUnit extends BaseModel {
     [SubUnitProperties.title]: string;
     [SubUnitProperties.description]: string;
     [SubUnitProperties.iconUrl]: string;
+    [SubUnitProperties.stats]?: {
+        [StatProperties.completedQuestions]: number;
+        [StatProperties.totalQuestions]: number;
+        [StatProperties.correctAnswers]: number;
+        [StatProperties.incorrectAnswers]: number;
+        [StatProperties.diffStats]: number;
+        [StatProperties.avgScore]: number;
+    };
 }
 
 export enum CourseProperties {

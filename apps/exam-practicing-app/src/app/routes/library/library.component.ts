@@ -5,18 +5,12 @@ import { LibraryStoreState } from './store/library.reducer';
 import { LibraryActions } from './store/library.actions';
 import { LibrarySelectors } from './store/library.selectors';
 import { CourseCardComponent } from './course-card/course-card.component';
-import { CourseDetailsComponent } from './course-details/course-details.component';
 import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'epa-library',
     standalone: true,
-    imports: [
-        CommonModule,
-        CourseCardComponent,
-        CourseDetailsComponent,
-        RouterModule,
-    ],
+    imports: [CommonModule, CourseCardComponent, RouterModule],
     templateUrl: './library.component.html',
     styleUrl: './library.component.scss',
 })

@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbActiveModal, NgbTimeAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {
+    Course,
     TestDifficulties,
     TestProperties,
     TestStructureProperties,
@@ -10,17 +11,13 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MultipleSelectComponent, NgbTimepickerAdapter } from '@libs/angular';
+import { MultipleSelectComponent } from '@libs/angular';
 import {
     FormBuilder,
     FormsModule,
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { DashboardStoreState } from '../store/dashboard.reducer';
-import { CourseSelectors } from '../store/dashboard.selectors';
-import { map } from 'rxjs';
 
 @Component({
     selector: 'epa-test-config-popup',
@@ -36,23 +33,16 @@ import { map } from 'rxjs';
     ],
     templateUrl: './test-config-popup.component.html',
     styleUrl: './test-config-popup.component.scss',
-    providers: [{ provide: NgbTimeAdapter, useClass: NgbTimepickerAdapter }],
 })
 export class TestConfigPopupComponent {
-    private readonly store = inject(Store<DashboardStoreState>);
     private readonly fb = inject(FormBuilder);
     public readonly activeModal = inject(NgbActiveModal);
 
     readonly TestTypes = TestTypes;
     readonly TestDifficulties = TestDifficulties;
-    readonly course$ = this.store.select(CourseSelectors.CourseData);
-    readonly unitOptions$ = this.store
-        .select(CourseSelectors.CourseUnits)
-        .pipe(
-            map((units) =>
-                units.map((unit) => ({ value: unit.id, title: unit.title }))
-            )
-        );
+
+    @Input()
+    course: Course = null;
 
     readonly form = this.fb.group({
         [TestProperties.duration]: [
@@ -79,4 +69,13 @@ export class TestConfigPopupComponent {
             this.fb.control(false),
         ]),
     });
+
+    get unitOptions() {
+        return (
+            this.course?.units.map((unit) => ({
+                value: unit.id,
+                title: unit.title,
+            })) || []
+        );
+    }
 }

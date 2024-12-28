@@ -11,6 +11,7 @@ export enum QuestionProperties {
     units = 'units',
     difficulty = 'difficulty',
     type = 'type',
+    level = 'level',
     choices = 'choices',
     content = 'content',
     answer = 'answer',
@@ -33,6 +34,14 @@ export enum QuestionTypes {
     EssayAnswer = 'EssayAnswer',
 }
 
+export enum QuestionLevels {
+    Theoretical = 'Theoretical',
+    Interpretation = 'Interpretation',
+    CombinedAnalysis = 'CombinedAnalysis',
+    CriticalEvaluation = 'CriticalEvaluation',
+    PracticalApplication = 'PracticalApplication',
+}
+
 export enum QuestionChoiceProperties {
     content = 'content',
     mediaId = 'mediaId',
@@ -51,6 +60,7 @@ export interface Question extends BaseModel {
     [QuestionProperties.unitIds]: string[];
     [QuestionProperties.difficulty]: string;
     [QuestionProperties.type]: QuestionTypes;
+    [QuestionProperties.level]: QuestionLevels;
     [QuestionProperties.content]: string;
     [QuestionProperties.choices]?: QuestionChoice[];
     [QuestionProperties.answer]: any;

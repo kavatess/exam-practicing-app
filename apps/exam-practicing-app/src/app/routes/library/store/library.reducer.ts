@@ -7,23 +7,12 @@ export interface LibraryStoreState {
         loading: boolean;
         list: Course[];
     };
-
-    courseDetails: {
-        loading: boolean;
-        // courseId: string;
-        data: Course;
-    };
 }
 
 export const initialState: LibraryStoreState = {
     courses: {
         loading: false,
         list: [],
-    },
-    courseDetails: {
-        loading: false,
-        // courseId: '',
-        data: null,
     },
 };
 
@@ -34,13 +23,6 @@ export const libraryReducer = createReducer(
         courses: {
             ...state.courses,
             list,
-        },
-    })),
-    on(LibraryActions.selectCourseSuccess, (state, { data }) => ({
-        ...state,
-        courseDetails: {
-            ...state.courseDetails,
-            data,
         },
     }))
 );

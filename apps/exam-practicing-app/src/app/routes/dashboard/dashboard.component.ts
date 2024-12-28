@@ -15,12 +15,6 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { TestConfigPopupComponent } from './test-config-popup/test-config-popup.component';
 import { Course } from '@libs/models';
-// import {
-//     CourseActions,
-//     EnergyActions,
-//     GemActions,
-//     StreakActions,
-// } from './store/dashboard.actions';
 
 @Component({
     selector: 'epa-dashboard',
@@ -53,13 +47,6 @@ export class DashboardComponent {
     get units$() {
         return this.store.select(CourseSelectors.CourseUnits);
     }
-
-    // ngOnInit(): void {
-    //     // this.store.dispatch(CourseActions.getCourses());
-    //     // this.store.dispatch(StreakActions.getStreakDays());
-    //     // this.store.dispatch(EnergyActions.getEnergyAmount());
-    //     // this.store.dispatch(GemActions.getGemAmount());
-    // }
 
     openTestConfigModal(courseData: Course): void {
         const modalRef = this.modalService.open(TestConfigPopupComponent);

@@ -10,6 +10,7 @@ export enum TestProperties {
     user = 'user',
     name = 'name',
     type = 'type',
+    difficulty = 'difficulty',
     subjectId = 'subjectId',
     subject = 'subject',
     courseId = 'courseId',
@@ -44,6 +45,7 @@ export interface Test extends BaseModel {
     [TestProperties.name]: string;
     [TestProperties.type]: TestTypes;
     [TestProperties.numOfQuestions]: number;
+    [TestProperties.difficulty]: TestDifficulties;
     [TestProperties.subjectId]: string;
     [TestProperties.subject]?: Subject;
     [TestProperties.courseId]: string;

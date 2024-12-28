@@ -1,4 +1,4 @@
-<ng-container *ngIf="course$ | async as course">
+<ng-container *ngIf="course">
     <div class="modal-header">
         <div class="epa-config-header-container">
             <div class="epa-config-header-title">
@@ -77,7 +77,7 @@
                 <label class="epa-config-item-title"> Chủ đề: </label>
 
                 <app-multiple-select
-                    [options]="unitOptions$ | async"
+                    [options]="unitOptions"
                     formControlName="unitIds"
                 ></app-multiple-select>
             </div>
