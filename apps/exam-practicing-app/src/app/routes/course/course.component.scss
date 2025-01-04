@@ -13,8 +13,20 @@
         }
 
         .epa-course-details-left-container {
+            .epa-course-header {
+                .epa-blank-space {
+                    height: 8px;
+                }
+                .epa-header {
+                    .epa-course-title {
+                        font-size: 22px !important;
+                        line-height: 1.2 !important;
+                    }
+                }
+            }
+
             .epa-course-content {
-                height: calc(100% + 90px);
+                height: calc(100% + 40px);
             }
         }
     }
@@ -28,8 +40,7 @@
         .epa-course-details-left-container {
             .epa-course-header {
                 .epa-blank-space {
-                    background-color: #ffffff;
-                    height: 24px;
+                    height: 16px;
                 }
             }
         }
@@ -38,6 +49,7 @@
 
 .epa-course-details {
     display: flex;
+    grid-gap: 20px;
 
     .epa-course-details-right-container {
         display: flex;
@@ -45,7 +57,7 @@
         position: sticky;
         z-index: 1;
         top: 24px;
-        width: 340px;
+        width: 336px;
 
         .epa-container {
             display: flex;
@@ -72,11 +84,12 @@
             z-index: 210;
             width: 100%;
             min-height: 82px;
+            background: #ffffff;
 
             .epa-header {
                 display: flex;
                 justify-content: space-between;
-                background-color: #EBEBEB;
+                background-color: #ebebeb;
                 padding: 16px;
                 color: #ffffff;
                 row-gap: 6px;
@@ -105,12 +118,10 @@
         }
 
         // .epa-course-content{
-            
+        //     width: calc();
         // }
     }
 }
-
-
 
 // .badge {
 //     .bi {

@@ -23,8 +23,8 @@ export enum QuestionProperties {
 export enum QuestionDifficulties {
     Easy,
     Medium,
-    Hard,
     Advanced,
+    Hard,
 }
 
 export enum QuestionTypes {

@@ -37,7 +37,11 @@
                             <button
                                 mat-fab
                                 extended
-                                (click)="openTestConfigModal(course)"
+                                (click)="
+                                    openTestConfigModal(course);
+                                    $event.stopPropagation();
+                                    $event.preventDefault()
+                                "
                             >
                                 <mat-icon>assignment</mat-icon>
                                 DO TEST
@@ -47,9 +51,9 @@
                 </div>
             </div>
 
-            <hr />
-
             <div class="epa-course-content">
+                <epa-statistics></epa-statistics>
+
                 <epa-test-history></epa-test-history>
                 <epa-unit-table></epa-unit-table>
             </div>

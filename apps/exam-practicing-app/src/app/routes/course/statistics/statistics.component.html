@@ -1,1 +1,157 @@
-<p>statistics works!</p>
+<div class="epa-academic-stats py-3 mt-3 mb-5">
+    <div class="epa-academic-stats-nav">
+        <ul ngbNav #statNav="ngbNav" class="nav-tabs" [destroyOnHide]="false">
+            <li [ngbNavItem]="1">
+                <button ngbNavLink>
+                    <div class="epa-academic-stats-nav-title">Tổng quan</div>
+                </button>
+                <ng-template ngbNavContent>
+                    <div
+                        *ngIf="evals$ | async as evals"
+                        class="epa-overall-stats"
+                    >
+                        <div class="epa-overall-evaluation">
+                            <div class="accordion" id="evalAccor">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button
+                                            class="accordion-button alert alert-success mb-0"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#strengthCollapse"
+                                            aria-expanded="true"
+                                            aria-controls="strengthCollapse"
+                                        >
+                                            Điểm mạnh
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="strengthCollapse"
+                                        class="accordion-collapse collapse show"
+                                    >
+                                        <div
+                                            class="accordion-body"
+                                            [innerHTML]="evals.strengths"
+                                        ></div>
+                                    </div>
+
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button
+                                                class="accordion-button alert alert-danger mb-0 collapsed"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#weaknessCollapse"
+                                                aria-expanded="false"
+                                                aria-controls="weaknessCollapse"
+                                            >
+                                                Điểm yếu
+                                            </button>
+                                        </h2>
+                                        <div
+                                            id="weaknessCollapse"
+                                            class="accordion-collapse collapse"
+                                        >
+                                            <div
+                                                class="accordion-body"
+                                                [innerHTML]="evals.weaknesses"
+                                            ></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button
+                                                class="accordion-button alert alert-warning mb-0 collapsed"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#threatsCollapse"
+                                                aria-expanded="false"
+                                                aria-controls="threatsCollapse"
+                                            >
+                                                Rủi ro
+                                            </button>
+                                        </h2>
+                                        <div
+                                            id="threatsCollapse"
+                                            class="accordion-collapse collapse"
+                                        >
+                                            <div
+                                                class="accordion-body"
+                                                [innerHTML]="evals.threats"
+                                            ></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button
+                                                class="accordion-button alert alert-info mb-0 collapsed"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#opportunityCollapse"
+                                                aria-expanded="false"
+                                                aria-controls="opportunityCollapse"
+                                            >
+                                                Cơ hội
+                                            </button>
+                                        </h2>
+                                        <div
+                                            id="opportunityCollapse"
+                                            class="accordion-collapse collapse"
+                                        >
+                                            <div
+                                                class="accordion-body"
+                                                [innerHTML]="
+                                                    evals.opportunities
+                                                "
+                                            ></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="epa-overall-stats-radar-chart mt-3">
+                            <div class="epa-overall-chart-container">
+                                <canvas id="RadarChart">
+                                    {{ radarChart }}
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+                <button ngbNavLink>
+                    <div class="epa-academic-stats-nav-title">Thống kê</div>
+                </button>
+                <ng-template ngbNavContent>
+                    <div class="epa-other-evals mt-3">
+                        <h3 class="epa-chart-title">
+                            Biểu đồ thống kê độ chính xác theo Độ khó và Loại
+                            câu hỏi
+                        </h3>
+
+                        <div class="epa-other-evals-chart-container">
+                            <canvas id="BarChart">
+                                {{ barChart }}
+                            </canvas>
+                        </div>
+                    </div>
+                </ng-template>
+            </li>
+            <!-- <li [ngbNavItem]="3">
+                <button ngbNavLink>
+                    <div class="epa-academic-stats-nav-title">Three</div>
+                </button>
+                <ng-template ngbNavContent> </ng-template>
+            </li> -->
+        </ul>
+
+        <div
+            [ngbNavOutlet]="statNav"
+            class="epa-academic-stats-content mt-2"
+        ></div>
+    </div>
+</div>

@@ -1,13 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@angular/core';
-import {
-    Course,
-    Pagination,
-    Quest,
-    QuestionDifficulties,
-    SubjectUnit,
-    Test,
-} from '@libs/models';
+import { Course, Pagination, SubjectUnit, Test } from '@libs/models';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -35,7 +28,7 @@ export class LibraryService {
                                 completedQuestions: 100,
                                 correctAnswers: 75,
                                 incorrectAnswers: 25,
-                                diffStats: [
+                                difficulties: [
                                     {
                                         correct: 30,
                                     },
@@ -61,7 +54,7 @@ export class LibraryService {
                                 completedQuestions: 100,
                                 correctAnswers: 65,
                                 incorrectAnswers: 35,
-                                diffStats: [
+                                difficulties: [
                                     {
                                         correct: 30,
                                     },
@@ -87,7 +80,7 @@ export class LibraryService {
                                 completedQuestions: 100,
                                 correctAnswers: 85,
                                 incorrectAnswers: 15,
-                                diffStats: [
+                                difficulties: [
                                     {
                                         correct: 30,
                                     },
@@ -110,7 +103,7 @@ export class LibraryService {
                         completedQuestions: 300,
                         correctAnswers: 225,
                         incorrectAnswers: 75,
-                        diffStats: [
+                        difficulties: [
                             {
                                 correct: 90,
                             },
@@ -140,7 +133,7 @@ export class LibraryService {
                                 completedQuestions: 100,
                                 correctAnswers: 75,
                                 incorrectAnswers: 25,
-                                diffStats: [
+                                difficulties: [
                                     {
                                         correct: 30,
                                     },
@@ -166,7 +159,7 @@ export class LibraryService {
                                 completedQuestions: 50,
                                 correctAnswers: 25,
                                 incorrectAnswers: 25,
-                                diffStats: [
+                                difficulties: [
                                     {
                                         correct: 30,
                                     },
@@ -192,7 +185,7 @@ export class LibraryService {
                                 completedQuestions: 100,
                                 correctAnswers: 75,
                                 incorrectAnswers: 25,
-                                diffStats: [
+                                difficulties: [
                                     {
                                         correct: 30,
                                     },
@@ -218,7 +211,7 @@ export class LibraryService {
                                 completedQuestions: 75,
                                 correctAnswers: 75,
                                 incorrectAnswers: 0,
-                                diffStats: [
+                                difficulties: [
                                     {
                                         correct: 30,
                                     },
@@ -241,7 +234,7 @@ export class LibraryService {
                         completedQuestions: 300,
                         correctAnswers: 75,
                         incorrectAnswers: 225,
-                        diffStats: [
+                        difficulties: [
                             {
                                 correct: 30,
                             },
@@ -271,7 +264,7 @@ export class LibraryService {
                                 completedQuestions: 45,
                                 correctAnswers: 20,
                                 incorrectAnswers: 25,
-                                diffStats: [
+                                difficulties: [
                                     {
                                         correct: 30,
                                     },
@@ -294,7 +287,7 @@ export class LibraryService {
                         completedQuestions: 45,
                         correctAnswers: 20,
                         incorrectAnswers: 25,
-                        diffStats: [
+                        difficulties: [
                             {
                                 correct: 30,
                             },
@@ -313,11 +306,138 @@ export class LibraryService {
                 } as SubjectUnit,
             ],
             stats: {
+                difficulties: [
+                    {
+                        questionTypes: {
+                            MultipleChoice: {
+                                correct: 50,
+                            },
+                            Matching: {
+                                correct: 30,
+                            },
+                            TrueFalse: {
+                                correct: 20,
+                            },
+                        },
+                    },
+                    {
+                        questionTypes: {
+                            MultipleChoice: {
+                                correct: 40,
+                            },
+                            Matching: {
+                                correct: 20,
+                            },
+                            TrueFalse: {
+                                correct: 21,
+                            },
+                        },
+                    },
+                    {
+                        questionTypes: {
+                            MultipleChoice: {
+                                correct: 20,
+                            },
+                            Matching: {
+                                correct: 25,
+                            },
+                            TrueFalse: {
+                                correct: 5,
+                            },
+                        },
+                    },
+                    {
+                        questionTypes: {
+                            MultipleChoice: {
+                                correct: 2,
+                            },
+                            Matching: {
+                                correct: 2,
+                            },
+                            TrueFalse: {
+                                correct: 1,
+                            },
+                        },
+                    },
+                ],
                 todayTestsCompleted: 66,
                 currStudierCount: 12,
                 completedQuestions: 50,
                 totalQuestions: 5000,
                 avgScore: 450,
+                evaluations: {
+                    strengths: `
+                    <ul>
+                        <li class="epa-stats-text">
+                            Bạn đã hoàn thành khá tốt
+                            các bài toán của chương Đạo
+                            hàm từ cơ bản đến nâng cao.
+                        </li>
+
+                        <li class="epa-stats-text">
+                            Bên cạnh đó, tỷ lệ trả lời
+                            chính xác các câu hỏi
+                            multiple choice của bạn khá
+                            cao, đặc biệt ở chương Tích
+                            phân.
+                        </li>
+                    </ul>`,
+                    weaknesses: `
+                    <ul>
+                        <li class="epa-stats-text">
+                            Bạn hiện tại chưa thể
+                            hiện tốt ở các bài toán
+                            của chương Tích phân và
+                            Hàm số, đặc biệt là
+                            chương Hàm số.
+                        </li>
+
+                        <li class="epa-stats-text">
+                            Bạn vẫn còn làm sai
+                            những câu hỏi lý thuyết,
+                            áp dụng cơ bản ở tất cả
+                            các chương, đặc biệt là
+                            dạng câu hỏi True/False.
+                        </li>
+                    </ul>`,
+                    threats: `
+                    <ul>
+                        <li class="epa-stats-text">
+                            Thống kê cho thấy hơn
+                            80% học sinh thể hiện
+                            không tốt ở chương Hàm
+                            số, cũng thể hiện không
+                            tốt ở chương Tích phân.
+                        </li>
+
+                        <li class="epa-stats-text">
+                            Bạn vẫn còn làm sai
+                            những câu hỏi lý thuyết,
+                            áp dụng cơ bản ở tất cả
+                            các chương.
+                        </li>
+                    </ul>`,
+                    opportunities: `
+                    <ul>
+                        <li class="epa-stats-text">
+                            Bạn khá vững lý thuyết
+                            và giải tốt các bài toán
+                            cơ bản ở chương Hàm số,
+                            do đó bạn có thể nhanh
+                            chóng cải thiện chương
+                            này nếu luyện tập bền
+                            bỉ.
+                        </li>
+
+                        <li class="epa-stats-text">
+                            Bạn thể hiện rất tốt ở
+                            chương Đạo hàm, đây là
+                            nền tảng vững chắc giúp
+                            bạn làm tốt chương Tích
+                            phân.
+                        </li>
+                    </ul>`,
+                },
             },
         } as Course);
     }

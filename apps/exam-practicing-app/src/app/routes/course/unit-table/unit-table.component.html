@@ -41,10 +41,13 @@
 </div>
 
 <ng-template #tableColumn let-unit="unit" let-isSubUnit="isSubUnit">
-    @let stats=unit.stats; @let diffStats = stats.diffStats;
+    @let stats=unit.stats; @let diffStats = stats.difficulties;
 
     <div class="col-3">
-        <div class="epa-item-field">
+        <div
+            class="epa-item-field"
+            [ngStyle]="{ 'font-weight': isSubUnit ? 400 : 600 }"
+        >
             {{ unit.title }}
         </div>
     </div>
@@ -84,6 +87,7 @@
         <div class="epa-item-field">
             <div class="progress-stacked w-100">
                 @for(diff of diffStats; track diff; let i = $index) {
+                <ng-template #tooltip></ng-template>
                 <div
                     class="progress"
                     role="progressbar"
@@ -91,6 +95,7 @@
                     aria-valuemin="0"
                     aria-valuemax="100"
                     [style.width.%]="getDifficultyPercentage(stats, diff)"
+                    [ngbTooltip]="i | questionDiff"
                 >
                     <div
                         class="progress-bar"

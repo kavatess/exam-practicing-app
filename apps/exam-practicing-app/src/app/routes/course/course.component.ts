@@ -18,6 +18,7 @@ import { Course } from '@libs/models';
 import { TestConfigPopupComponent } from '../dashboard/test-config-popup/test-config-popup.component';
 import { TestHistoryComponent } from './test-history/test-history.component';
 import { UnitTableComponent } from './unit-table/unit-table.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 @Component({
     selector: 'epa-course',
@@ -30,6 +31,7 @@ import { UnitTableComponent } from './unit-table/unit-table.component';
         MatButtonModule,
         MatIconModule,
         NgbModalModule,
+        StatisticsComponent,
         TestHistoryComponent,
         UnitTableComponent,
     ],

@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { CourseSelectors } from '../store/course.selectors';
-import { DifficultStats, QuestionDifficulties, Statistics } from '@libs/models';
+import { AttributeStats, QuestionDifficulties, Statistics } from '@libs/models';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { QuestionDiffPipe } from '@libs/angular';
 
 @Component({
     selector: 'epa-unit-table',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, NgbTooltipModule, QuestionDiffPipe],
     templateUrl: './unit-table.component.html',
     styleUrl: './unit-table.component.scss',
 })
@@ -32,7 +34,7 @@ export class UnitTableComponent {
         );
     }
 
-    getDifficultyPercentage(stats: Statistics, diffStats: DifficultStats) {
+    getDifficultyPercentage(stats: Statistics, diffStats: AttributeStats) {
         return Math.round((diffStats?.correct / stats.correctAnswers) * 100);
     }
 }

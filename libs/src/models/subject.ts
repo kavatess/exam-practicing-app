@@ -1,4 +1,5 @@
 import { BaseModel } from './base';
+import { QuestionTypes } from './question';
 
 export enum SubjectProperties {
     name = 'name',
@@ -27,7 +28,9 @@ export enum StatProperties {
     totalQuestions = 'totalQuestions',
     correctAnswers = 'correctAnswers',
     incorrectAnswers = 'incorrectAnswers',
-    diffStats = 'diffStats',
+    difficulties = 'difficulties',
+    questionTypes = 'questionTypes',
+    evaluations = 'evaluations',
     avgScore = 'avgScore',
 }
 
@@ -38,8 +41,17 @@ export interface Statistics {
     [StatProperties.totalQuestions]?: number;
     [StatProperties.correctAnswers]?: number;
     [StatProperties.incorrectAnswers]?: number;
-    [StatProperties.diffStats]?: DifficultStats[];
+    [StatProperties.difficulties]?: AttributeStats[];
+    [StatProperties.questionTypes]?: {
+        [key in QuestionTypes]: AttributeStats;
+    };
     [StatProperties.avgScore]?: number;
+    [StatProperties.evaluations]?: {
+        strengths: string;
+        weaknesses: string;
+        threats: string;
+        opportunities: string;
+    };
 }
 
 export interface SubjectUnit extends BaseModel {
@@ -60,10 +72,14 @@ export enum SubUnitProperties {
     stats = 'stats',
 }
 
-export interface DifficultStats {
+export interface AttributeStats {
     total?: number;
     correct?: number;
     incorrect?: number;
+    difficulties?: AttributeStats[];
+    questionTypes?: {
+        [key in QuestionTypes]: AttributeStats;
+    };
 }
 
 export interface SubUnit extends BaseModel {
