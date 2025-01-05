@@ -78,6 +78,7 @@ export class MultipleSelectComponent
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['options']) {
+            console.log(this.options)
             this.multiSelect.clear({
                 emitEvent: false,
             });

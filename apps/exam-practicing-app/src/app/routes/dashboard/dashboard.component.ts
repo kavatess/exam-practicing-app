@@ -50,14 +50,21 @@ export class DashboardComponent {
 
     openTestConfigModal(courseData: Course): void {
         const modalRef = this.modalService.open(TestConfigPopupComponent);
-        modalRef.componentInstance.course = courseData;
-        modalRef.result.then(
-            (result) => {
-                console.log(`Closed with: ${result}`);
-            },
-            (reason) => {
-                console.log(`Dismissed ${reason}`);
-            }
+        modalRef.componentInstance.courseName = courseData.name;
+        modalRef.componentInstance.courseId = courseData.id;
+        modalRef.componentInstance.unitOptions = courseData.units.map(
+            (unit) => ({
+                title: unit.title,
+                value: unit.id,
+            })
         );
+        // modalRef.result.then(
+        //     (result) => {
+        //         console.log(`Closed with: ${result}`);
+        //     },
+        //     (reason) => {
+        //         console.log(`Dismissed ${reason}`);
+        //     }
+        // );
     }
 }

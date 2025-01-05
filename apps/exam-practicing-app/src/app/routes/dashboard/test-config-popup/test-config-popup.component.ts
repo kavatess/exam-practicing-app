@@ -2,7 +2,6 @@ import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {
-    Course,
     TestDifficulties,
     TestProperties,
     TestStructureProperties,
@@ -11,7 +10,7 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MultipleSelectComponent } from '@libs/angular';
+import { MultipleSelectComponent, Option } from '@libs/angular';
 import {
     FormBuilder,
     FormsModule,
@@ -42,7 +41,13 @@ export class TestConfigPopupComponent {
     readonly TestDifficulties = TestDifficulties;
 
     @Input()
-    course: Course = null;
+    courseName = '';
+
+    @Input()
+    courseId = '';
+
+    @Input()
+    unitOptions: Option[] = [];
 
     readonly form = this.fb.group({
         [TestProperties.duration]: [
@@ -69,13 +74,4 @@ export class TestConfigPopupComponent {
             this.fb.control(false),
         ]),
     });
-
-    get unitOptions() {
-        return (
-            this.course?.units.map((unit) => ({
-                value: unit.id,
-                title: unit.title,
-            })) || []
-        );
-    }
 }
