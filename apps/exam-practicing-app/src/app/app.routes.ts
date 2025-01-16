@@ -95,8 +95,15 @@ export const appRoutes: Route[] = [
     },
     {
         path: APP_ROUTES.TEST,
-        loadComponent: () =>
-            import('./routes/test/test.component').then((c) => c.TestComponent),
+        children: [
+            {
+                path: ':testId',
+                loadComponent: () =>
+                    import('./routes/test/test.component').then(
+                        (c) => c.TestComponent
+                    ),
+            },
+        ],
     },
     {
         path: APP_ROUTES.PRACTICE,

@@ -58,7 +58,7 @@ export interface Question extends BaseModel {
     [QuestionProperties.subjectId]: string;
     [QuestionProperties.courseId]: string;
     [QuestionProperties.unitIds]: string[];
-    [QuestionProperties.difficulty]: string;
+    [QuestionProperties.difficulty]: QuestionDifficulties;
     [QuestionProperties.type]: QuestionTypes;
     [QuestionProperties.level]: QuestionLevels;
     [QuestionProperties.content]: string;

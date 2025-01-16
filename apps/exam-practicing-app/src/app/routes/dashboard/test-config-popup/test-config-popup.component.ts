@@ -1,12 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-    TestDifficulties,
-    TestProperties,
-    TestStructureProperties,
-    TestTypes,
-} from '@libs/models';
+import { TestDifficulties, TestProperties, TestTypes } from '@libs/models';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -17,6 +13,9 @@ import {
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { APP_ROUTES } from '../../../app.routes';
+import { TestConfigService } from './test-config.service';
 
 @Component({
     selector: 'epa-test-config-popup',
@@ -29,13 +28,14 @@ import {
         MatIconModule,
         MatSlideToggleModule,
         MultipleSelectComponent,
+        RouterModule,
     ],
     templateUrl: './test-config-popup.component.html',
     styleUrl: './test-config-popup.component.scss',
 })
 export class TestConfigPopupComponent {
-    private readonly fb = inject(FormBuilder);
     public readonly activeModal = inject(NgbActiveModal);
+    private readonly fb = inject(FormBuilder);
 
     readonly TestTypes = TestTypes;
     readonly TestDifficulties = TestDifficulties;
@@ -58,20 +58,29 @@ export class TestConfigPopupComponent {
                 Validators.max(10800000),
             ],
         ],
-        [TestStructureProperties.difficulty]: [
+        [TestProperties.difficulty]: [
             TestDifficulties.Normal,
             [Validators.required],
         ],
-        [TestStructureProperties.type]: [
-            TestTypes.Standard,
-            [Validators.required],
-        ],
+        [TestProperties.type]: [TestTypes.Standard, [Validators.required]],
         [TestProperties.numOfQuestions]: [20, [Validators.required]],
-        [TestStructureProperties.unitIds]: [[], [Validators.minLength(1)]],
-        [TestStructureProperties.questionTypes]: this.fb.array([
+        [TestProperties.unitIds]: [[], [Validators.minLength(1)]],
+        [TestProperties.questionTypes]: this.fb.array([
             this.fb.control(false),
             this.fb.control(false),
             this.fb.control(false),
         ]),
     });
+
+    constructor(
+        private readonly service: TestConfigService,
+        private readonly router: Router
+    ) {}
+
+    createTest() {
+        this.service.createTest(this.form.value as any).subscribe((test) => {
+            this.router.navigate([APP_ROUTES.TEST, test.id]);
+        });
+        this.activeModal.close();
+    }
 }
