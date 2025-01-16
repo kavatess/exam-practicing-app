@@ -1,0 +1,25 @@
+@media (min-width: 900px) {
+    .epa-container {
+        padding-left: 88px;
+        .epa-main-container {
+            padding-top: 24px;
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+    .epa-container {
+        padding-left: 256px;
+        .epa-main-container {
+            padding-top: 12px;
+            margin: 0 auto;
+        }
+    }
+}
+
+.epa-container {
+    .epa-main-container {
+        width: 100%;
+        max-width: 1056px;
+    }
+}

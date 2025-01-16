@@ -1,0 +1,56 @@
+.epa-unit-table {
+    .epa-unit-table-title {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 4px;
+        color: rgb(100, 100, 100);
+        margin: 24px 0 12px 0;
+    }
+
+    .epa-unit-table-header {
+        font-size: 17px;
+        font-weight: 500;
+        color: rgb(100, 100, 100);
+        margin: 12px 0 12px 0;
+    }
+
+    .epa-unit-table-list {
+        box-sizing: border-box;
+
+        .epa-unit-table-item {
+            // padding: 20px 16px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 2px solid rgb(229, 229, 229);
+            border-radius: 12px;
+            min-height: 80px;
+            box-shadow: 0 0.125rem 0.25rem 0 #282e3e1a;
+
+            .epa-item-field {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                font-size: 16px;
+                line-height: 24px;
+
+                .epa-progress-bar-bg-green {
+                    background-color: #479f76;
+                }
+
+                .epa-progress-bar-bg-yellow {
+                    background-color: #ffcd39;
+                }
+
+                .epa-progress-bar-bg-orange {
+                    background-color: #fd9843;
+                }
+
+                .epa-progress-bar-bg-red {
+                    background-color: #e35d6a;
+                }
+            }
+        }
+    }
+}

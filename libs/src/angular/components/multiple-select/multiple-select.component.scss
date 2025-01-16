@@ -1,0 +1,20 @@
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.form-select {
+    box-sizing: border-box;
+
+    .display-text {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis "...";
+    }
+}
+
+.checkbox-text {
+    font-size: 14px;
+    font-weight: 500;
+}

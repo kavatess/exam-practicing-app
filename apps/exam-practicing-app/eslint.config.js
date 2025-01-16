@@ -4,7 +4,7 @@ const baseConfig = require('../../eslint.config.js');
 module.exports = [
   ...baseConfig,
   ...nx.configs['flat/angular'],
-  ...nx.configs['flat/angular-template'],
+  // ...nx.configs['flat/angular-template'],
   {
     files: ['**/*.ts'],
     rules: {
@@ -12,7 +12,7 @@ module.exports = [
         'error',
         {
           type: 'attribute',
-          prefix: 'app',
+          prefix: 'epa',
           style: 'camelCase',
         },
       ],
@@ -20,15 +20,15 @@ module.exports = [
         'error',
         {
           type: 'element',
-          prefix: 'app',
+          prefix: 'epa',
           style: 'kebab-case',
         },
       ],
     },
   },
-  {
-    files: ['**/*.html'],
-    // Override or add rules here
-    rules: {},
-  },
+  // {
+  //   files: ['**/*.html'],
+  //   // Override or add rules here
+  //   rules: {},
+  // },
 ];

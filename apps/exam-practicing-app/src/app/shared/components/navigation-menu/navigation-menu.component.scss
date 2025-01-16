@@ -1,0 +1,169 @@
+@media (min-width: 900px) {
+    .navigation-menu {
+        width: calc(56px + 32px);
+        left: 0;
+        position: fixed !important;
+        border-right: 2px solid rgb(229, 229, 229);
+        height: 100vh;
+        padding: 0 16px;
+        .app-icon {
+            height: 39px !important;
+            padding: 36px 0 25px 10px;
+        }
+        .app-routes {
+            .app-route-item {
+                .app-route-item-container {
+                    width: 56px;
+                    height: 48px;
+                    justify-content: center;
+
+                    .app-route-icon {
+                        height: 48px;
+                    }
+                    .app-route-name {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+    .navigation-menu {
+        width: calc(224px + 32px) !important;
+        .app-icon {
+            padding: 32px 0 30px 16px;
+        }
+        .app-routes {
+            width: auto !important;
+            .app-route-item {
+                min-width: 202px;
+                .app-route-item-container {
+                    width: auto;
+                    height: 40px;
+                    padding: 4px 8px;
+                    justify-content: flex-start !important;
+
+                    .app-route-icon {
+                        margin-right: 20px;
+                    }
+
+                    .app-route-name {
+                        display: initial !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .nav-icon {
+        margin-left: 6px;
+    }
+}
+
+@media (max-width: 900px) {
+    .navigation-menu {
+        z-index: 210;
+        width: 100%;
+        bottom: 0;
+        position: fixed !important;
+        display: inline-flex;
+
+        .app-icon {
+            display: none;
+        }
+        .app-routes {
+            box-sizing: border-box;
+            width: 100%;
+            border-top: 2px solid rgb(229, 229, 229);
+            display: flex;
+            flex-direction: row !important;
+            align-items: center;
+            justify-content: space-between !important;
+            gap: 12px;
+            padding: 16px;
+
+            .app-route-item {
+                width: 48px;
+                height: 48px;
+
+                .app-route-item-container {
+                    height: 100%;
+                    justify-content: center;
+
+                    .app-route-name {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.navigation-menu {
+    background-color: #ffffff;
+
+    .app-icon {
+        height: 60px;
+        padding: 32px 0 30px 16px;
+        box-sizing: content-box;
+    }
+    .app-routes {
+        box-sizing: content-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        .app-route-item {
+            border: 2px solid transparent;
+            text-decoration: none !important;
+            color: initial !important;
+            box-sizing: inherit;
+            .app-route-item-container {
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+
+                .app-route-icon {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .app-route-name {
+                    width: 100%;
+                    font-size: 15px;
+                    font-weight: 700;
+                    letter-spacing: 0.8px;
+                    text-transform: uppercase;
+                    transition: none;
+                    color: rgb(119, 119, 119); // Text color of the menu name
+                }
+            }
+        }
+    }
+}
+
+.app-route-item:hover {
+    background-color: rgb(247, 247, 247);
+    border-radius: 12px;
+}
+
+.app-routes .active {
+    background-color: rgb(221, 244, 255);
+    border: 2px solid rgb(132, 216, 255) !important;
+    border-radius: 12px;
+}
+
+.active .app-route-name {
+    color: rgb(28, 176, 246) !important;
+}
+
+.nav-icon {
+    height: 32px;
+    width: 32px;
+    padding-right: 0;
+    transition: filter 0.2s;
+}

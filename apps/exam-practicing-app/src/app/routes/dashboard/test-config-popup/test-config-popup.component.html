@@ -1,0 +1,117 @@
+<div class="modal-header">
+    <div class="epa-config-header-container">
+        <div class="epa-config-header-title">
+            <h3 class="epa-config-small-title">
+                {{ courseName }}
+            </h3>
+            <h1 class="epa-config-big-title">Cài đặt bài test</h1>
+        </div>
+
+        <button
+            type="button"
+            class="btn-close"
+            (click)="activeModal.dismiss('Cross click')"
+        ></button>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div class="epa-config-body" [formGroup]="form">
+        <div class="epa-config-item">
+            <label class="epa-config-item-title" for="durationSelect">
+                Thời gian:
+            </label>
+
+            <select
+                id="durationSelect"
+                class="form-select"
+                formControlName="duration"
+            >
+                <option [value]="1800000">30 phút</option>
+                <option [value]="3600000">60 phút</option>
+                <option [value]="5400000">90 phút</option>
+                <option [value]="7200000">120 phút</option>
+                <option [value]="10800000">180 phút</option>
+            </select>
+        </div>
+
+        <div class="epa-config-item">
+            <label class="epa-config-item-title" for="difficultySelect">
+                Độ khó:
+            </label>
+
+            <select
+                id="difficultySelect"
+                class="form-select"
+                formControlName="difficulty"
+            >
+                <option [value]="TestDifficulties.Easy">Dễ</option>
+                <option [value]="TestDifficulties.Normal">Tiêu chuẩn</option>
+                <option [value]="TestDifficulties.Advanced">Nâng cao</option>
+            </select>
+        </div>
+
+        <div class="epa-config-item">
+            <label class="epa-config-item-title" for="typeSelect">
+                Chế độ:
+            </label>
+
+            <select id="typeSelect" class="form-select" formControlName="type">
+                <option [value]="TestTypes.Standard">Standard</option>
+                <option [value]="TestTypes.Practice">Luyện tập</option>
+            </select>
+        </div>
+
+        <hr />
+
+        <div class="epa-config-item">
+            <label class="epa-config-item-title"> Chủ đề: </label>
+
+            <app-multiple-select
+                [options]="unitOptions"
+                formControlName="unitIds"
+            ></app-multiple-select>
+        </div>
+
+        <div class="epa-config-item">
+            <label class="epa-config-item-title" for="numberOfQuestion">
+                Số câu hỏi (min 20):
+            </label>
+
+            <input
+                id="numberOfQuestion"
+                type="number"
+                class="form-control"
+                maxlength="4"
+                formControlName="numOfQuestions"
+            />
+        </div>
+
+        <div class="w-100" formArrayName="questionTypes">
+            <div class="epa-config-item">
+                <label class="epa-config-item-title"> Đúng/Sai </label>
+
+                <mat-slide-toggle [formControlName]="0"> </mat-slide-toggle>
+            </div>
+
+            <div class="epa-config-item">
+                <label class="epa-config-item-title"> Chọn đáp án đúng </label>
+
+                <mat-slide-toggle [formControlName]="1"> </mat-slide-toggle>
+            </div>
+
+            <div class="epa-config-item">
+                <label class="epa-config-item-title"> Điền đáp số </label>
+
+                <mat-slide-toggle [formControlName]="2"> </mat-slide-toggle>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button mat-fab extended>
+        <mat-icon fontIcon="build"></mat-icon>
+        Let's go
+    </button>
+</div>

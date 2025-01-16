@@ -1,0 +1,161 @@
+:host {
+    ::ng-deep {
+        .dropdown-toggle::after {
+            display: none !important;
+        }
+    }
+}
+
+.epa-streak-energy-gem-container {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .epa-dropdown-item {
+        width: 100%;
+        height: 44px;
+        border-radius: 12px;
+        padding: 0 16px 0 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        color: rgb(229, 229, 229); // Streak icon color when streak = 0
+
+        .epa-dropdown-icon {
+            height: 28px;
+        }
+        .epa-dropdown-value {
+            font-size: 17px;
+            font-weight: 700;
+        }
+    }
+
+    .epa-dropdown-item:hover {
+        background-color: #f7f7f7; // Icon color when hovered
+    }
+
+    .epa-dropdown-menu {
+        padding: 20px;
+        border-radius: 15px;
+        margin-top: 0 !important;
+    }
+
+    .epa-test-select-menu {
+        padding: 0px !important;
+        padding-bottom: 12px !important;
+        min-width: 240px;
+
+        .epa-test-select-header {
+            padding: 12px 20px;
+            color: #afafaf;
+            margin-bottom: 0;
+            font-size: 22px;
+            line-height: 28px;
+        }
+
+        .epa-test-select-item {
+            cursor: pointer;
+            padding: 12px 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .epa-test-icon {
+                height: 28px;
+            }
+        }
+
+        .epa-test-select-item.active {
+            background-color: #ddf4ff;
+            color: #1899d6;
+        }
+
+        .epa-test-select-item:not(.active):hover {
+            background-color: #f7f7f7; // Icon color when hovered
+        }
+    }
+
+    .epa-streak-menu-container {
+        min-width: 360px;
+        background-color: #fff5d3; // Streak Menu background color when streak = 0
+
+        .epa-streak-header {
+            color: #ebc37f; // Streak header color when streak = 0
+        }
+
+        .epa-streak-description {
+            margin-bottom: 24px;
+        }
+
+        .epa-streak-calendar {
+            padding: 12px 20px;
+            border-radius: 12px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .epa-streak-day {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .epa-streak-day-header {
+                    color: #afafaf;
+                    margin-bottom: 6px;
+                }
+
+                .epa-streak-day-status {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    background-color: #e5e5e5;
+                }
+            }
+        }
+    }
+
+    .epa-energies-menu-container {
+        min-width: 300px;
+        padding: 20px 20px 20px 12px;
+
+        .epa-energy-icon {
+            height: 90px;
+            margin-right: 0.5rem;
+        }
+
+        .epa-text {
+            color: #878787;
+        }
+    }
+
+    .epa-gems-menu-container {
+        min-width: 240px;
+
+        .epa-gems-icon {
+            height: 60px;
+            margin-right: 1rem;
+        }
+
+        .epa-text {
+            color: #878787;
+        }
+    }
+}
+
+.epa-streak-fire-color {
+    color: rgb(255, 150, 0) !important;
+}
+
+.epa-streak-fire-text-color {
+    color: #ffffff !important;
+}
+
+.epa-streak-fire-background-color {
+    background-color: rgb(255, 150, 0) !important;
+    color: #ffffff !important;
+}

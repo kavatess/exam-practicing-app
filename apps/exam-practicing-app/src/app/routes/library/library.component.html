@@ -1,0 +1,12 @@
+<div class="epa-library-container container-fluid">
+    <div class="epa-library-header mb-4">
+        <h1 class="epa-library-title epa-text-header">Library</h1>
+    </div>
+
+
+    <div class="epa-library-content row">
+        <div class="col-12 col-lg-4" *ngFor="let course of courses$ | async">
+            <epa-course-card [data]="course"></epa-course-card>
+        </div>
+    </div>
+</div>

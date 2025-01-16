@@ -1,0 +1,130 @@
+:host {
+    ::ng-deep {
+        .dropdown-toggle::after {
+            display: none !important;
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .epa-course-details {
+        .epa-course-details-right-container {
+            display: none !important;
+        }
+
+        .epa-course-details-left-container {
+            .epa-course-header {
+                .epa-blank-space {
+                    height: 8px;
+                }
+                .epa-header {
+                    .epa-course-title {
+                        font-size: 22px !important;
+                        line-height: 1.2 !important;
+                    }
+                }
+            }
+
+            .epa-course-content {
+                height: calc(100% + 40px);
+            }
+        }
+    }
+}
+
+@media (min-width: 900px) {
+    .epa-course-details {
+        flex-direction: row-reverse;
+        padding: 0 24px 24px;
+
+        .epa-course-details-left-container {
+            .epa-course-header {
+                .epa-blank-space {
+                    height: 16px;
+                }
+            }
+        }
+    }
+}
+
+.epa-course-details {
+    display: flex;
+    grid-gap: 20px;
+
+    .epa-course-details-right-container {
+        display: flex;
+        flex-direction: column;
+        position: sticky;
+        z-index: 1;
+        top: 24px;
+        width: 336px;
+
+        .epa-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: sticky;
+            top: 24px;
+        }
+    }
+
+    .epa-course-details-left-container {
+        min-width: 360px;
+        max-width: 800px;
+        flex: 1;
+        position: sticky;
+        z-index: 0;
+        box-sizing: border-box;
+
+        .epa-course-header {
+            padding-left: 0;
+            padding-right: 0;
+            top: 0;
+            position: sticky;
+            z-index: 210;
+            width: 100%;
+            min-height: 82px;
+            background: #ffffff;
+
+            .epa-header {
+                display: flex;
+                justify-content: space-between;
+                background-color: #ebebeb;
+                padding: 16px;
+                color: #ffffff;
+                row-gap: 6px;
+                border-radius: 13px;
+
+                .epa-course-title {
+                    font-size: 27px;
+                    line-height: 1.6;
+                }
+
+                .epa-course-description {
+                    font-size: 16px;
+                    font-weight: 700;
+                    line-height: 24px;
+                    opacity: 0.7;
+                }
+
+                .epa-course-test-btn {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: end;
+                    align-items: center;
+                }
+            }
+        }
+
+        // .epa-course-content{
+        //     width: calc();
+        // }
+    }
+}
+
+// .badge {
+//     .bi {
+//         font-size: 14px;
+//     }
+// }
