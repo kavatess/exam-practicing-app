@@ -10,6 +10,9 @@ import { LibraryEffects } from './routes/library/store/library.effects';
 import { courseStoreKey } from './routes/course/store/course.selectors';
 import { courseReducer } from './routes/course/store/course.reducer';
 import { CourseEffects } from './routes/course/store/course.effects';
+import { practiceStoreKey } from './routes/practice/store/practice.selectors';
+import { practiceReducer } from './routes/practice/store/practice.reducer';
+import { PracticeEffects } from './routes/practice/store/practice.effects';
 
 export enum APP_ROUTES {
     LOGIN = 'login',
@@ -107,10 +110,34 @@ export const appRoutes: Route[] = [
     },
     {
         path: APP_ROUTES.PRACTICE,
-        loadComponent: () =>
-            import('./routes/practice/practice.component').then(
-                (c) => c.PracticeComponent
-            ),
+        children: [
+            {
+                path: ':practiceId',
+                children: [
+                    {
+                        path: '',
+                        loadComponent: () =>
+                            import('./routes/practice/practice.component').then(
+                                (c) => c.PracticeComponent
+                            ),
+                    },
+                    {
+                        path: 'result',
+                        loadComponent: () =>
+                            import(
+                                './routes/practice/result/result.component'
+                            ).then((c) => c.ResultComponent),
+                    },
+                ],
+                providers: [
+                    provideState({
+                        name: practiceStoreKey,
+                        reducer: practiceReducer,
+                    }),
+                    provideEffects(PracticeEffects),
+                ],
+            },
+        ],
     },
     {
         path: APP_ROUTES.SHOP,

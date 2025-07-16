@@ -2,6 +2,7 @@ export * from './achievement';
 export * from './base';
 export * from './currency';
 export * from './media';
+export * from './practice';
 export * from './product';
 export * from './query';
 export * from './quest';

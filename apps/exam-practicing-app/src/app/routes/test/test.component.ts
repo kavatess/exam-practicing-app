@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { TestStoreState } from './store/test.reducer';
 import { TestActions } from './store/test.actions';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { TestSelectors } from './store/test.selectors';
 
 @Component({
     selector: 'epa-test',
@@ -20,6 +21,10 @@ export class TestComponent implements OnInit {
 
     get testId() {
         return this.router.snapshot.paramMap.get('testId') as string;
+    }
+
+    get test$() {
+        return this.store.select(TestSelectors.TestData);
     }
 
     ngOnInit(): void {

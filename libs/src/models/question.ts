@@ -17,6 +17,7 @@ export enum QuestionProperties {
     answer = 'answer',
     solution = 'solution',
     mediaIds = 'mediaIds',
+    media = 'media',
     description = 'description',
 }
 
@@ -36,9 +37,10 @@ export enum QuestionTypes {
 
 export enum QuestionLevels {
     Theoretical = 'Theoretical',
+    BasicApplication = 'BasicApplication',
     Interpretation = 'Interpretation',
-    CombinedAnalysis = 'CombinedAnalysis',
-    CriticalEvaluation = 'CriticalEvaluation',
+    Analysis = 'Analysis',
+    AdvancedSynthesis = 'AdvancedSynthesis',
     PracticalApplication = 'PracticalApplication',
 }
 
@@ -48,9 +50,9 @@ export enum QuestionChoiceProperties {
     media = 'media',
 }
 
-export interface QuestionChoice {
+export interface QuestionChoice extends BaseModel {
     [QuestionChoiceProperties.content]: string;
-    [QuestionChoiceProperties.mediaId]: string;
+    [QuestionChoiceProperties.mediaId]?: string;
     [QuestionChoiceProperties.media]?: Media;
 }
 
@@ -66,5 +68,13 @@ export interface Question extends BaseModel {
     [QuestionProperties.answer]: any;
     [QuestionProperties.solution]: string;
     [QuestionProperties.mediaIds]: string[];
+    [QuestionProperties.media]?: Media[];
     [QuestionProperties.description]: string;
+}
+
+export enum QuestionStates {
+    Correct = 'Correct',
+    Incorrect = 'Incorrect',
+    NotAnswered = 'NotAnswered',
+    GradeAwating = 'GradeAwating',
 }

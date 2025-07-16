@@ -19,7 +19,7 @@ export const StreakSelectors = {
 export const EnergiesSelectors = {
     EnergyAmount: createSelector(
         dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.energies.value || 0
+        (state: DashboardStoreState) => state?.energies.value || 0
     ),
 };
 

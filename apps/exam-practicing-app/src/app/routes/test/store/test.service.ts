@@ -10,23 +10,32 @@ export class TestService {
     getTestById(testId: string): Observable<Test> {
         return of({
             id: '0x89ef',
+            course: {
+                id: 'abc',
+                code: 'MATH-THPTQG-2025',
+                name: 'Đề THPTQG Môn Toán',
+                description: 'Chương trình của bộ giáo dục',
+                iconUrl: 'https://i.ibb.co/HFDbM1v/math-test-icon.png',
+            },
             status: 'InProgress',
-            testQuestions: [
+            questions: [
                 {
                     questionId: 1,
                     question: {
                         difficulty: 0,
                         type: 'MultipleChoice',
                         level: 'Theoretical',
-                        content: 'Nguyên hàm của hàm số (f(x)=e^{x}) là:',
+                        content:
+                            'Nguyên hàm của hàm số <i>f(x)=e<sup>x</sup></i> là:',
                         choices: [
-                            '(\\frac{e^{z+1}}{x+1}+C.\\)',
-                            '(e^{x}+C.\\)',
-                            '(\\frac{e^{x}}{x}+C.\\)',
-                            '(xe^{x-1}+C.\\)',
+                            '<math><mfrac><msup><mi>e</mi><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow></msup><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mo>+</mo><mi>C</mi></math>',
+                            '<math><msup><mi>e</mi><mi>x</mi></msup><mo>+</mo><mi>C</mi></math>',
+                            '<math><mfrac><msup><mi>e</mi><mi>x</mi></msup><mi>x</mi></mfrac><mo>+</mo><mi>C</mi></math>',
+                            '<math><mi>x</mi><msup><mi>e</mi><mrow><mi>x</mi><mo>-</mo><mn>1</mn></mrow></msup><mo>+</mo><mi>C</mi></math>',
                         ],
                         answer: 'B',
-                        solution: 'Nguyên hàm của e^x là e^x + C.',
+                        solution:
+                            'Nguyên hàm của e<sup>x</sup> là e<sup>x</sup> + C.',
                     },
                     isCorrect: false,
                 },
@@ -37,16 +46,16 @@ export class TestService {
                         type: 'MultipleChoice',
                         level: 'Theoretical',
                         content:
-                            'Cho hàm số (y=f(x)) liên tục, nhận giá trị dương trên đoạn [a,b]. Xét hình phẳng (H) giới hạn bởi đồ thị hàm số (y=f(x),) trục hoành và hai đường thẳng (x=a_{s} x=b,) Khối tròn xoay được tạo thành khi quay hình phẳng (H) quanh trục Ox có thể tích là:',
+                            'Cho hàm số <i>y=f(x)</i> liên tục, nhận giá trị dương trên đoạn [a,b]. Xét hình phẳng (H) giới hạn bởi đồ thị hàm số <i>y=f(x)</i>, trục hoành và hai đường thẳng <i>x=a</i>, <i>x=b</i>, Khối tròn xoay được tạo thành khi quay hình phẳng (H) quanh trục Ox có thể tích là:',
                         choices: [
-                            '(V=\\pi\\int_{a}^{b}|f(x)|dx.\\)',
-                            '(V=\\pi^{2}\\int_{a}^{b}f(x)dx.\\)',
-                            '(V=\\pi^{2}\\int_{a}^{b}[f(z)]^{2}dx.\\)',
-                            '(V=\\pi\\int_{a}^{b}[f(x)]^{2}dx.\\)',
+                            '<math><mi>V</mi><mo>=</mo><mi>π</mi><msubsup><mo>∫</mo><mi>a</mi><mi>b</mi></msubsup><mo>|</mo><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>|</mo><mi>d</mi><mi>x</mi></math>',
+                            '<math><mi>V</mi><mo>=</mo><msup><mi>π</mi><mn>2</mn></msup><msubsup><mo>∫</mo><mi>a</mi><mi>b</mi></msubsup><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mi>d</mi><mi>x</mi></math>',
+                            '<math><mi>V</mi><mo>=</mo><msup><mi>π</mi><mn>2</mn></msup><msubsup><mo>∫</mo><mi>a</mi><mi>b</mi></msubsup><mo>[</mo><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><msup><mo>]</mo><mn>2</mn></msup><mi>d</mi><mi>x</mi></math>',
+                            '<math><mi>V</mi><mo>=</mo><mi>π</mi><msubsup><mo>∫</mo><mi>a</mi><mi>b</mi></msubsup><mo>[</mo><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><msup><mo>]</mo><mn>2</mn></msup><mi>d</mi><mi>x</mi></math>',
                         ],
                         answer: 'D',
                         solution:
-                            'Công thức tính thể tích vật thể tròn xoay khi quay quanh Ox là V = π∫[a,b] f(x)^2 dx.',
+                            'Công thức tính thể tích khối tròn xoay khi quay hình phẳng quanh trục Ox là V = π∫<sub>a</sub><sup>b</sup>[f(x)]<sup>2</sup>dx.',
                     },
                 },
                 {
@@ -56,16 +65,16 @@ export class TestService {
                         type: 'MultipleChoice',
                         level: 'CombinedAnalysis',
                         content:
-                            'Hai mẫu số liệu ghép nhóm (M_{1}, M_{2}) có bảng tần số ghép nhóm như sau:\n\nNhóm\n[8:10)\n[10:12)\n[12:14)\n[14:16)\n[16:18)\nM1\nTần số\n3\n4\n8\n6\n4\nNhóm\n[8:10)\n[10:12)\n[12:14)\n[14:16)\n[16:18)\nM1\nTần số\n6\n8\n16\n12\n8\nGọi (s_{1}) lần lượt là độ lệch chuẩn của mẫu số liệu ghép nhóm (M_{v} M_{2}.) Phát biểu nào sau đây là đúng?',
+                            'Hai mẫu số liệu ghép nhóm <i>M<sub>1</sub>, M<sub>2</sub></i> có bảng tần số ghép nhóm như sau:<br/>[Table data as in the image]',
                         choices: [
-                            '(s_{1}=s_{2}.\\)',
-                            '(s_{1}=2s_{2}.\\)',
-                            '(2s_{1}=s_{2}\\)',
-                            '(4x_{1}=x_{2}\\)',
+                            '<math><msub><mi>s</mi><mn>1</mn></msub><mo>=</mo><msub><mi>s</mi><mn>2</mn></msub></math>',
+                            '<math><msub><mi>s</mi><mn>1</mn></msub><mo>=</mo><mn>2</mn><msub><mi>s</mi><mn>2</mn></msub></math>',
+                            '<math><mn>2</mn><msub><mi>s</mi><mn>1</mn></msub><mo>=</mo><msub><mi>s</mi><mn>2</mn></msub></math>',
+                            '<math><mn>4</mn><msub><mi>s</mi><mn>1</mn></msub><mo>=</mo><msub><mi>s</mi><mn>2</mn></msub></math>',
                         ],
                         answer: 'C',
                         solution:
-                            'Mẫu số liệu M2 có tần số gấp đôi M1 ở mỗi nhóm, do đó độ lệch chuẩn của M2 gấp đôi M1.',
+                            'Dựa vào bảng tần số, ta thấy tần số của M<sub>2</sub> gấp đôi tần số của M<sub>1</sub> ở mỗi nhóm. Do đó, độ lệch chuẩn của M<sub>2</sub> gấp đôi độ lệch chuẩn của M<sub>1</sub>.',
                     },
                 },
                 {
@@ -75,35 +84,16 @@ export class TestService {
                         type: 'MultipleChoice',
                         level: 'Theoretical',
                         content:
-                            'Trong không gian với hệ trục tọa độ Oxyz, phương trình của đường thẳng đi qua điểm (M(1;-3;5)) và có một vectơ chỉ phương (\\vec{u}(2;-1;1)) là:',
+                            'Trong không gian với hệ trục tọa độ Oxyz, phương trình của đường thẳng đi qua điểm <i>M(1;-3;5)</i> và có một vectơ chỉ phương <math><mover><mi>u</mi><mo>→</mo></mover><mo>(</mo><mn>2</mn><mo>;</mo><mo>-</mo><mn>1</mn><mo>;</mo><mn>1</mn><mo>)</mo></math> là:',
                         choices: [
-                            '(\\frac{x-1}{2}=\\frac{y-3}{-1}=\\frac{z-5}{1}.\\)',
-                            '(\\frac{x-1}{2}=\\frac{y-3}{-1}=\\frac{z+5}{1}.\\)',
-                            '(\\frac{x+1}{2}=\\frac{y+3}{-1}=\\frac{z-5}{1}.\\)',
-                            '(\\frac{x-1}{2}=\\frac{y+3}{-1}=\\frac{z-5}{1}.\\)',
+                            '<math><mfrac><mrow><mi>x</mi><mo>-</mo><mn>1</mn></mrow><mn>2</mn></mfrac><mo>=</mo><mfrac><mrow><mi>y</mi><mo>-</mo><mn>3</mn></mrow><mrow><mo>-</mo><mn>1</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>z</mi><mo>-</mo><mn>5</mn></mrow><mn>1</mn></mfrac></math>',
+                            '<math><mfrac><mrow><mi>x</mi><mo>-</mo><mn>1</mn></mrow><mn>2</mn></mfrac><mo>=</mo><mfrac><mrow><mi>y</mi><mo>-</mo><mn>3</mn></mrow><mrow><mo>-</mo><mn>1</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>z</mi><mo>+</mo><mn>5</mn></mrow><mn>1</mn></mfrac></math>',
+                            '<math><mfrac><mrow><mi>x</mi><mo>-</mo><mn>1</mn></mrow><mn>2</mn></mfrac><mo>=</mo><mfrac><mrow><mi>y</mi><mo>+</mo><mn>3</mn></mrow><mrow><mo>-</mo><mn>1</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>z</mi><mo>-</mo><mn>5</mn></mrow><mn>1</mn></mfrac></math>',
+                            '<math><mfrac><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mn>2</mn></mfrac><mo>=</mo><mfrac><mrow><mi>y</mi><mo>+</mo><mn>3</mn></mrow><mrow><mo>-</mo><mn>1</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>z</mi><mo>-</mo><mn>5</mn></mrow><mn>1</mn></mfrac></math>',
                         ],
-                        answer: 'D',
+                        answer: 'C',
                         solution:
-                            'Phương trình đường thẳng đi qua M(x0, y0, z0) và có VTCP u(a, b, c) là (x-x0)/a = (y-y0)/b = (z-z0)/c.',
-                    },
-                },
-                {
-                    questionId: 5,
-                    question: {
-                        difficulty: 1,
-                        type: 'MultipleChoice',
-                        level: 'Interpretation',
-                        content:
-                            'Cho hàm số (y=\\frac{ax+b}{cx+d}(c\\ne0,ad-bc\\ne0)) có đồ thị như hình vẽ bên. Tiệm cận ngang của đồ thị hàm số là:',
-                        choices: [
-                            '(x=-1.\\)',
-                            '(y=\\frac{1}{2}\\)',
-                            '(y=-1.\\)',
-                            '(x=\\frac{1}{2}\\)',
-                        ],
-                        answer: 'B',
-                        solution:
-                            'Tiệm cận ngang là đường thẳng y = a/c. Từ đồ thị thấy y tiến đến 1/2 khi x tiến đến vô cùng.',
+                            'Phương trình đường thẳng đi qua M(x<sub>0</sub>, y<sub>0</sub>, z<sub>0</sub>) và có vectơ chỉ phương u(a, b, c) là (x-x<sub>0</sub>)/a = (y-y<sub>0</sub>)/b = (z-z<sub>0</sub>)/c.',
                     },
                 },
             ],

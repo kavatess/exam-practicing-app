@@ -93,6 +93,7 @@ export interface SubUnit extends BaseModel {
 export enum CourseProperties {
     subjectId = 'subjectId',
     subject = 'subject',
+    code = 'code',
     name = 'name',
     unitIds = 'unitIds',
     units = 'units',
@@ -104,6 +105,7 @@ export enum CourseProperties {
 export interface Course extends BaseModel {
     [CourseProperties.subjectId]: string;
     [CourseProperties.subject]?: Subject;
+    [CourseProperties.code]: string;
     [CourseProperties.name]: string;
     [CourseProperties.unitIds]: string[];
     [CourseProperties.units]?: SubjectUnit[];

@@ -1,5 +1,12 @@
-<div class="epa-container">
+<div
+    class="epa-container"
+    [class.epa-practice-container]="
+        (currRoute$ | async) === APP_ROUTES.PRACTICE
+    "
+>
+    @if ((currRoute$ | async) !== APP_ROUTES.PRACTICE) {
     <epa-navigation-menu></epa-navigation-menu>
+    }
     <div class="epa-main-container">
         <router-outlet></router-outlet>
     </div>

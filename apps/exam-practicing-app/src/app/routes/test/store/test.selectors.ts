@@ -1,17 +1,22 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { LibraryStoreState } from './test.reducer';
+import { TestStoreState } from './test.reducer';
 
 // Feature Key
-export const libraryStoreKey = 'library';
+export const testStoreKey = 'Test';
 
 // Selectors
-export const libraryFeatureSelector =
-    createFeatureSelector<LibraryStoreState>(libraryStoreKey);
+export const testFeatureSelector =
+    createFeatureSelector<TestStoreState>(testStoreKey);
 
 // Selectors
-export const LibrarySelectors = {
-    CourseList: createSelector(
-        libraryFeatureSelector,
-        (state: LibraryStoreState) => state.courses.list || []
+export const TestSelectors = {
+    TestData: createSelector(
+        testFeatureSelector,
+        (state: TestStoreState) => state.data
+    ),
+    QuestionList: createSelector(
+        testFeatureSelector,
+        (state: TestStoreState) =>
+            state.data?.questions.map((q) => q.question) || []
     ),
 };

@@ -25,7 +25,6 @@ export enum TestProperties {
     totalScore = 'totalScore',
     score = 'score',
     status = 'status',
-    testQuestionIds = 'testQuestionIds',
     questions = 'questions',
     // description = 'description',
 }
@@ -64,7 +63,6 @@ export interface Test extends BaseModel {
     [TestProperties.totalScore]: number;
     [TestProperties.score]: number;
     [TestProperties.status]: string;
-    [TestProperties.testQuestionIds]: string[];
     [TestProperties.questions]?: TestQuestion[];
     // [TestProperties.description]: string;
 }
@@ -75,7 +73,7 @@ export enum TestQuestionProperties {
     questionId = 'questionId',
     question = 'question',
     isCorrect = 'isCorrect',
-    point = 'point',
+    points = 'points',
 }
 
 export interface TestQuestion extends BaseModel {
@@ -84,7 +82,7 @@ export interface TestQuestion extends BaseModel {
     [TestQuestionProperties.questionId]: string;
     [TestQuestionProperties.question]?: Question;
     [TestQuestionProperties.isCorrect]: boolean;
-    [TestQuestionProperties.point]: number;
+    [TestQuestionProperties.points]: number;
 }
 
 // export enum TestStructureProperties {

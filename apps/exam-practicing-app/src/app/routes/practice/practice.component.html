@@ -1,1 +1,169 @@
-<p>practice works!</p>
+<div class="epa-practice-exam">
+    <div class="epa-practice-header">
+        <button
+            type="button"
+            class="epa-close-btn btn-close"
+            (click)="closePracticeTest()"
+            aria-label="Close"
+        ></button>
+
+        <div class="progress-container">
+            <div class="progress">
+                <div
+                    class="progress-bar bg-success"
+                    role="progressbar"
+                    [style.width.%]="progress$ | async"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                ></div>
+            </div>
+        </div>
+
+        <div class="epa-hearts-container">
+            <img
+                class="epa-hearts-icon me-2"
+                src="https://d35aaqx5ub95lt.cloudfront.net/images/hearts/7631e3ee734dd4fe7792626b59457fa4.svg"
+                alt=""
+            />
+            <span class="epa-hearts-value">{{ energies$ | async }}</span>
+        </div>
+    </div>
+
+    <div class="epa-practice-body">
+        <div class="epa-practice-question-first-container">
+            <div class="epa-practice-question-second-container">
+                <h1 class="epa-question-title">
+                    Câu {{ (currIndex$ | async) + 1 }} -
+                    {{ (practiceTest$ | async)?.subUnit?.title }}
+                </h1>
+
+                <div class="epa-question-content">
+                    <div
+                        class="epa-question-txt"
+                        [innerHTML]="(currQuestion$ | async)?.question?.content"
+                    ></div>
+
+                    @if((currQuestion$ | async)?.question?.media?.length > 0) {
+                    <div class="epa-question-medias">
+                        @for(media of (currQuestion$ | async)?.question?.media;
+                        track media.url) {
+                        <div class="epa-question-media-item">
+                            <img [src]="media.url" alt="" />
+                        </div>
+                        }
+                    </div>
+                    }
+                </div>
+
+                <b class="epa-question-instruction">
+                    Chọn/Điền câu trả lời đúng
+                </b>
+
+                <div class="epa-question-solution">
+                    @switch ((currQuestion$ | async)?.question?.type) { @case
+                    (QuestionTypes.MultipleChoice) {
+                    <div class="epa-question-choices">
+                        <mat-radio-group [formControl]="answer">
+                            <div class="row">
+                                @for(choice of (currQuestion$ |
+                                async)?.question?.choices; track choice.content)
+                                {
+                                <div class="col-12 col-md-6">
+                                    <mat-radio-button [value]="$index">
+                                        <div
+                                            style="font-size: 19px"
+                                            [innerHTML]="choice.content"
+                                        ></div>
+                                    </mat-radio-button>
+                                </div>
+                                }
+                            </div>
+                        </mat-radio-group>
+                    </div>
+                    } @case (QuestionTypes.TrueFalse) {
+                    <div class="epa-question-choices">
+                        <label id="example-radio-group-label"> Đáp án: </label>
+                        <mat-radio-group [(ngModel)]="answer">
+                            <mat-radio-button value="True">
+                                Đúng
+                            </mat-radio-button>
+                            <mat-radio-button value="False">
+                                Sai
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    } }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="epa-practice-footer"
+        [ngClass]="{
+            'correct-answer': (isCorrect$ | async) === true,
+            'incorrect-answer': (isCorrect$ | async) === false
+        }"
+    >
+        @if((isCorrect$ | async) === null) {
+        <div class="epa-footer-btn-group">
+            <button
+                mat-fab
+                extended
+                (click)="skipQuestion()"
+                [disabled]="isLastQuestion$ | async"
+            >
+                <mat-icon>skip_next</mat-icon>
+                SKIP
+            </button>
+            <button
+                mat-fab
+                extended
+                (click)="checkAnswer()"
+                [disabled]="answer.invalid"
+            >
+                <mat-icon>edit</mat-icon>
+                KIỂM TRA
+            </button>
+        </div>
+        } @else {
+        <div class="epa-footer-result">
+            <div class="epa-result-box">
+                <div class="epa-result-icon pe-3">
+                    @if((isCorrect$ | async) === true) {
+                    <mat-icon class="correct-icon">check_circle</mat-icon>
+                    } @else {
+                    <mat-icon class="incorrect-icon">cancel</mat-icon>
+                    }
+                </div>
+
+                <div
+                    class="epa-result-text"
+                    [ngClass]="{
+                        'correct-text': (isCorrect$ | async) === true,
+                        'incorrect-text': (isCorrect$ | async) === false
+                    }"
+                >
+                    @if((isCorrect$ | async) === true) {
+                    <span>Correct</span>
+                    } @else {
+                    <span>Incorrect</span>
+                    }
+                </div>
+            </div>
+
+            <button
+                mat-fab
+                extended
+                (click)="continue()"
+                [ngClass]="{
+                    'correct-button': (isCorrect$ | async) === true,
+                    'incorrect-button': (isCorrect$ | async) === false
+                }"
+            >
+                CONTINUE
+            </button>
+        </div>
+        }
+    </div>
+</div>
