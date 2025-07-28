@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { PracticeStoreState } from '../store/practice.reducer';
 import { APP_ROUTES } from '../../../app.routes';
 import { MatIconModule } from '@angular/material/icon';
 import { PracticeSelectors } from '../store/practice.selectors';
 import { MatButtonModule } from '@angular/material/button';
+import { PracticeActions } from '../store/practice.actions';
 
 @Component({
     selector: 'epa-result',
@@ -15,11 +16,16 @@ import { MatButtonModule } from '@angular/material/button';
     templateUrl: './result.component.html',
     styleUrl: './result.component.scss',
 })
-export class ResultComponent {
+export class ResultComponent implements OnInit {
     constructor(
         private readonly store: Store<PracticeStoreState>,
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly route: ActivatedRoute
     ) {}
+
+    get practiceId() {
+        return this.route.snapshot.paramMap.get('practiceId') || '';
+    }
 
     get evalTxt$() {
         return this.store.select(PracticeSelectors.EvaluationTxt);
@@ -29,11 +35,15 @@ export class ResultComponent {
         return this.store.select(PracticeSelectors.Rewards);
     }
 
+    ngOnInit(): void {
+        this.store.dispatch(PracticeActions.complete());
+    }
+
     backToDashboard() {
         this.router.navigate([APP_ROUTES.DASHBOARD]);
     }
 
     reviewPractice() {
-        // TODO: Implement review practice
+        this.router.navigate([APP_ROUTES.HISTORY, this.practiceId]);
     }
 }

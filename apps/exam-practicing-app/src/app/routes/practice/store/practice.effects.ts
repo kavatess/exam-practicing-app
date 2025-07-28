@@ -51,9 +51,8 @@ export class PracticeEffects {
                 this.store.select(PracticeSelectors.CurrQuestion),
                 this.store.select(PracticeSelectors.UserAnswer)
             ),
-            exhaustMap(([, { question }, answer]) => {
-                const isCorrect = question.answer === answer;
-                console.log(question.answer, answer);
+            exhaustMap(([, question, answer]) => {
+                const isCorrect = question.data.answer === answer;
                 return of(PracticeActions.checkAnswerSuccess({ isCorrect }));
             })
         )
@@ -74,7 +73,7 @@ export class PracticeEffects {
                         practiceId,
                         'result',
                     ]);
-                    return of(PracticeActions.complete());
+                    return of(null);
                 } else {
                     return of(PracticeActions.nextQuestion());
                 }

@@ -1,5 +1,5 @@
 import { BaseModel } from './base';
-import { Question } from './question';
+import { QuestionData } from './question';
 import { Course, SubjectUnit, SubUnit } from './subject';
 
 export enum PracticeQuestionProperties {
@@ -14,16 +14,8 @@ export enum PracticeQuestionProperties {
     points = 'points',
 }
 
-export interface PracticeQuestion extends BaseModel {
-    [PracticeQuestionProperties.userId]: string;
+export interface PracticeQuestion extends QuestionData {
     [PracticeQuestionProperties.practiceId]: string;
-    [PracticeQuestionProperties.courseId]: string;
-    [PracticeQuestionProperties.unitId]: string;
-    [PracticeQuestionProperties.questionId]: string;
-    [PracticeQuestionProperties.question]?: Partial<Question>;
-    [PracticeQuestionProperties.userAnswer]: string;
-    [PracticeQuestionProperties.state]: string;
-    [PracticeQuestionProperties.points]: number;
 }
 
 export enum PracticeExamProperties {
@@ -40,6 +32,8 @@ export enum PracticeExamProperties {
     // questionIds = 'questionIds',
     questions = 'questions',
     status = 'status',
+    maxPoints = 'maxPoints',
+    score = 'score',
 }
 
 export interface PracticeExam extends BaseModel {
@@ -50,7 +44,6 @@ export interface PracticeExam extends BaseModel {
     [PracticeExamProperties.subUnitId]: string;
     [PracticeExamProperties.subUnit]?: SubUnit;
     [PracticeExamProperties.userId]: string;
-    // [PracticeExamProperties.user]?: string;
     [PracticeExamProperties.title]: string;
     // [PracticeExamProperties.description]: string;
     // [PracticeExamProperties.questionIds]: string[];

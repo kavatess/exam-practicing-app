@@ -17,6 +17,6 @@ export const TestSelectors = {
     QuestionList: createSelector(
         testFeatureSelector,
         (state: TestStoreState) =>
-            state.data?.questions.map((q) => q.question) || []
+            state.data?.questions.map((q) => q.data) || []
     ),
 };

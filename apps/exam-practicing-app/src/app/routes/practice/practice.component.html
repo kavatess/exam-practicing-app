@@ -40,12 +40,12 @@
                 <div class="epa-question-content">
                     <div
                         class="epa-question-txt"
-                        [innerHTML]="(currQuestion$ | async)?.question?.content"
+                        [innerHTML]="(currQuestion$ | async)?.data?.content"
                     ></div>
 
-                    @if((currQuestion$ | async)?.question?.media?.length > 0) {
+                    @if((currQuestion$ | async)?.data?.media?.length > 0) {
                     <div class="epa-question-medias">
-                        @for(media of (currQuestion$ | async)?.question?.media;
+                        @for(media of (currQuestion$ | async)?.data?.media;
                         track media.url) {
                         <div class="epa-question-media-item">
                             <img [src]="media.url" alt="" />
@@ -60,13 +60,13 @@
                 </b>
 
                 <div class="epa-question-solution">
-                    @switch ((currQuestion$ | async)?.question?.type) { @case
+                    @switch ((currQuestion$ | async)?.data?.type) { @case
                     (QuestionTypes.MultipleChoice) {
                     <div class="epa-question-choices">
                         <mat-radio-group [formControl]="answer">
                             <div class="row">
                                 @for(choice of (currQuestion$ |
-                                async)?.question?.choices; track choice.content)
+                                async)?.data?.choices; track choice.content)
                                 {
                                 <div class="col-12 col-md-6">
                                     <mat-radio-button [value]="$index">

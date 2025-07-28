@@ -1,4 +1,9 @@
-import { PracticeExam, PracticeQuestion, QuestionStates } from '@libs/models';
+import {
+    PracticeExam,
+    PracticeQuestion,
+    PracticeResult,
+    QuestionStates,
+} from '@libs/models';
 import { createReducer, on } from '@ngrx/store';
 import { PracticeActions } from './practice.actions';
 
@@ -17,13 +22,7 @@ export interface PracticeStoreState {
         userAnswer: string;
         isCorrect: boolean | null;
     };
-    result: {
-        evalTxt: string;
-        rewards: {
-            gems: number;
-            energies: number;
-        };
-    };
+    result: PracticeResult;
 }
 
 export const initialState: PracticeStoreState = {
@@ -132,5 +131,9 @@ export const practiceReducer = createReducer(
             ...state.practiceExam,
             state: PracticeStates.Completed,
         },
+    })),
+    on(PracticeActions.completeSuccess, (state, { result }) => ({
+        ...state,
+        result,
     }))
 );

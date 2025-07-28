@@ -49,7 +49,7 @@ export class PracticeService {
                     userId: 'jkl',
                     unitId: 'def',
                     questionId: 'zxc',
-                    question: {
+                    data: {
                         difficulty: 0,
                         type: 'MultipleChoice',
                         level: 'Theoretical',
@@ -88,7 +88,7 @@ export class PracticeService {
                     userId: 'jkl',
                     unitId: 'def',
                     questionId: 'zxc',
-                    question: {
+                    data: {
                         difficulty: 1,
                         type: 'MultipleChoice',
                         level: 'Theoretical',
@@ -127,7 +127,7 @@ export class PracticeService {
                     userId: 'jkl',
                     unitId: 'def',
                     questionId: 'zxc',
-                    question: {
+                    data: {
                         difficulty: 2,
                         type: 'MultipleChoice',
                         level: 'CombinedAnalysis',
@@ -172,7 +172,7 @@ export class PracticeService {
                     userId: 'jkl',
                     unitId: 'def',
                     questionId: 'zxc',
-                    question: {
+                    data: {
                         difficulty: 1,
                         type: 'MultipleChoice',
                         level: 'Theoretical',

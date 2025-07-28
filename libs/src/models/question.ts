@@ -48,12 +48,14 @@ export enum QuestionChoiceProperties {
     content = 'content',
     mediaId = 'mediaId',
     media = 'media',
+    isCorrect = 'isCorrect',
 }
 
 export interface QuestionChoice extends BaseModel {
     [QuestionChoiceProperties.content]: string;
     [QuestionChoiceProperties.mediaId]?: string;
     [QuestionChoiceProperties.media]?: Media;
+    [QuestionChoiceProperties.isCorrect]?: boolean;
 }
 
 export interface Question extends BaseModel {
@@ -70,6 +72,28 @@ export interface Question extends BaseModel {
     [QuestionProperties.mediaIds]: string[];
     [QuestionProperties.media]?: Media[];
     [QuestionProperties.description]: string;
+}
+
+export enum QuestionDataProperties {
+    courseId = 'courseId',
+    userId = 'userId',
+    unitId = 'unitId',
+    questionId = 'questionId',
+    data = 'data',
+    state = 'state',
+    userAnswer = 'userAnswer',
+    points = 'points',
+}
+
+export interface QuestionData extends BaseModel {
+    [QuestionDataProperties.courseId]?: string;
+    [QuestionDataProperties.userId]?: string;
+    [QuestionDataProperties.unitId]?: string;
+    [QuestionDataProperties.questionId]: string;
+    [QuestionDataProperties.data]?: Partial<Question>;
+    [QuestionDataProperties.state]: QuestionStates;
+    [QuestionDataProperties.userAnswer]?: any;
+    [QuestionDataProperties.points]?: number;
 }
 
 export enum QuestionStates {

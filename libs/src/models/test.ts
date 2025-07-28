@@ -1,5 +1,5 @@
 import { BaseModel } from './base';
-import { Question, QuestionTypes } from './question';
+import { QuestionData, QuestionTypes } from './question';
 import { Course, Subject, SubjectUnit } from './subject';
 import { User } from './user';
 
@@ -63,7 +63,7 @@ export interface Test extends BaseModel {
     [TestProperties.totalScore]: number;
     [TestProperties.score]: number;
     [TestProperties.status]: string;
-    [TestProperties.questions]?: TestQuestion[];
+    [TestProperties.questions]: TestQuestion[];
     // [TestProperties.description]: string;
 }
 
@@ -76,13 +76,8 @@ export enum TestQuestionProperties {
     points = 'points',
 }
 
-export interface TestQuestion extends BaseModel {
-    [TestQuestionProperties.userId]: string;
+export interface TestQuestion extends QuestionData {
     [TestQuestionProperties.testId]: string;
-    [TestQuestionProperties.questionId]: string;
-    [TestQuestionProperties.question]?: Question;
-    [TestQuestionProperties.isCorrect]: boolean;
-    [TestQuestionProperties.points]: number;
 }
 
 // export enum TestStructureProperties {

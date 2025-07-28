@@ -10,3 +10,4 @@ export * from './question';
 export * from './subject';
 export * from './test';
 export * from './user';
+export * from './result';
