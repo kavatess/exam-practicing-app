@@ -63,13 +63,13 @@ export class TestConfigPopupComponent {
             [Validators.required],
         ],
         [TestProperties.type]: [TestTypes.Standard, [Validators.required]],
-        [TestProperties.numOfQuestions]: [20, [Validators.required]],
         [TestProperties.unitIds]: [[], [Validators.minLength(1)]],
-        [TestProperties.questionTypes]: this.fb.array([
-            this.fb.control(false),
-            this.fb.control(false),
-            this.fb.control(false),
-        ]),
+        // [TestProperties.numOfQuestions]: [20, [Validators.required]],
+        // [TestProperties.questionTypes]: this.fb.array([
+        //     this.fb.control(false),
+        //     this.fb.control(false),
+        //     this.fb.control(false),
+        // ]),
     });
 
     constructor(

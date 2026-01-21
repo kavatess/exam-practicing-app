@@ -48,7 +48,7 @@ export interface Test extends BaseModel {
     [TestProperties.courseId]: string;
     [TestProperties.course]?: Course;
     // [TestProperties.structure]?: TestStructure;
-    [TestProperties.userId]: string;
+    [TestProperties.userId]?: string;
     [TestProperties.user]?: User;
     [TestProperties.name]: string;
     [TestProperties.type]: TestTypes;
