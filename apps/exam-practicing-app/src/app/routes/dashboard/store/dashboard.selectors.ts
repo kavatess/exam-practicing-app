@@ -2,12 +2,13 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { DashboardStoreState } from './dashboard.reducer';
 
 // Feature Key
-export const dashboardStoreKey = 'dropdown-item';
+export const dashboardStoreKey = 'dashboard';
 
 // Selectors
 export const dashboardFeatureSelector =
     createFeatureSelector<DashboardStoreState>(dashboardStoreKey);
 
+// Dropdown Item Selectors
 export const StreakSelectors = {
     StreakDays: createSelector(
         dashboardFeatureSelector,
@@ -18,7 +19,7 @@ export const StreakSelectors = {
 export const EnergiesSelectors = {
     EnergyAmount: createSelector(
         dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.energies.value || 0
+        (state: DashboardStoreState) => state?.energies.value || 0
     ),
 };
 
@@ -29,6 +30,7 @@ export const GemsSelectors = {
     ),
 };
 
+// Quest Selectors
 export const QuestsSelectors = {
     QuestList: createSelector(
         dashboardFeatureSelector,
@@ -37,5 +39,25 @@ export const QuestsSelectors = {
     QuestLength: createSelector(
         dashboardFeatureSelector,
         (state: DashboardStoreState) => state.quests.length || 0
+    ),
+};
+
+// Course Selectors
+export const CourseSelectors = {
+    CourseList: createSelector(
+        dashboardFeatureSelector,
+        (state: DashboardStoreState) => state.course.list || []
+    ),
+    SelectedCourseId: createSelector(
+        dashboardFeatureSelector,
+        (state: DashboardStoreState) => state.course.selectedCourseId || ''
+    ),
+    CourseData: createSelector(
+        dashboardFeatureSelector,
+        (state: DashboardStoreState) => state.course.data || null
+    ),
+    CourseUnits: createSelector(
+        dashboardFeatureSelector,
+        (state: DashboardStoreState) => state.course.data?.units || []
     ),
 };

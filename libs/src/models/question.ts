@@ -11,19 +11,21 @@ export enum QuestionProperties {
     units = 'units',
     difficulty = 'difficulty',
     type = 'type',
+    level = 'level',
     choices = 'choices',
     content = 'content',
     answer = 'answer',
     solution = 'solution',
     mediaIds = 'mediaIds',
+    media = 'media',
     description = 'description',
 }
 
 export enum QuestionDifficulties {
-    Easy = 'Easy',
-    Medium = 'Medium',
-    Hard = 'Hard',
-    Advanced = 'Advanced',
+    Easy,
+    Medium,
+    Advanced,
+    Hard,
 }
 
 export enum QuestionTypes {
@@ -33,28 +35,70 @@ export enum QuestionTypes {
     EssayAnswer = 'EssayAnswer',
 }
 
+export enum QuestionLevels {
+    Theoretical = 'Theoretical',
+    BasicApplication = 'BasicApplication',
+    Interpretation = 'Interpretation',
+    Analysis = 'Analysis',
+    AdvancedSynthesis = 'AdvancedSynthesis',
+    PracticalApplication = 'PracticalApplication',
+}
+
 export enum QuestionChoiceProperties {
     content = 'content',
     mediaId = 'mediaId',
     media = 'media',
+    isCorrect = 'isCorrect',
 }
 
-export interface QuestionChoice {
+export interface QuestionChoice extends BaseModel {
     [QuestionChoiceProperties.content]: string;
-    [QuestionChoiceProperties.mediaId]: string;
+    [QuestionChoiceProperties.mediaId]?: string;
     [QuestionChoiceProperties.media]?: Media;
+    [QuestionChoiceProperties.isCorrect]?: boolean;
 }
 
 export interface Question extends BaseModel {
     [QuestionProperties.subjectId]: string;
     [QuestionProperties.courseId]: string;
     [QuestionProperties.unitIds]: string[];
-    [QuestionProperties.difficulty]: string;
+    [QuestionProperties.difficulty]: QuestionDifficulties;
     [QuestionProperties.type]: QuestionTypes;
+    [QuestionProperties.level]: QuestionLevels;
     [QuestionProperties.content]: string;
     [QuestionProperties.choices]?: QuestionChoice[];
     [QuestionProperties.answer]: any;
     [QuestionProperties.solution]: string;
     [QuestionProperties.mediaIds]: string[];
+    [QuestionProperties.media]?: Media[];
     [QuestionProperties.description]: string;
+}
+
+export enum QuestionDataProperties {
+    courseId = 'courseId',
+    userId = 'userId',
+    unitId = 'unitId',
+    questionId = 'questionId',
+    data = 'data',
+    state = 'state',
+    userAnswer = 'userAnswer',
+    points = 'points',
+}
+
+export interface QuestionData extends BaseModel {
+    [QuestionDataProperties.courseId]?: string;
+    [QuestionDataProperties.userId]?: string;
+    [QuestionDataProperties.unitId]?: string;
+    [QuestionDataProperties.questionId]: string;
+    [QuestionDataProperties.data]?: Partial<Question>;
+    [QuestionDataProperties.state]: QuestionStates;
+    [QuestionDataProperties.userAnswer]?: any;
+    [QuestionDataProperties.points]?: number;
+}
+
+export enum QuestionStates {
+    Correct = 'Correct',
+    Incorrect = 'Incorrect',
+    NotAnswered = 'NotAnswered',
+    GradeAwating = 'GradeAwating',
 }

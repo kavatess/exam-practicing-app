@@ -15,6 +15,7 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
+            "@libs/angular": ["libs/src/angular/index.ts"],
             "@libs/models": ["libs/src/models/index.ts"]
         }
     },

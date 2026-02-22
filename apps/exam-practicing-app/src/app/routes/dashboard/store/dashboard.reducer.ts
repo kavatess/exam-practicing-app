@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
-import { Quest } from '@libs/models';
+import { Course, Quest } from '@libs/models';
 import {
+    CourseActions,
     EnergyActions,
     GemActions,
     QuestActions,
@@ -8,6 +9,11 @@ import {
 } from './dashboard.actions';
 
 export interface DashboardStoreState {
+    course: {
+        list: Course[];
+        selectedCourseId: string;
+        data: Course;
+    };
     streak: {
         streakDays: number;
     };
@@ -24,6 +30,11 @@ export interface DashboardStoreState {
 }
 
 export const initialState: DashboardStoreState = {
+    course: {
+        list: [],
+        selectedCourseId: 'abc',
+        data: null,
+    },
     streak: {
         streakDays: 0,
     },
@@ -71,6 +82,25 @@ export const dashboardReducer = createReducer(
             ...state.quests,
             list,
             length: list.length,
+        },
+    })),
+
+    // Course Events
+    on(CourseActions.getCoursesSuccess, (state, { list }) => ({
+        ...state,
+        course: {
+            ...state.course,
+            list,
+            data: list.find(
+                (item) => item.id === state.course.selectedCourseId
+            ),
+        },
+    })),
+    on(CourseActions.selectCourseSuccess, (state, { data }) => ({
+        ...state,
+        course: {
+            ...state.course,
+            data,
         },
     }))
 );

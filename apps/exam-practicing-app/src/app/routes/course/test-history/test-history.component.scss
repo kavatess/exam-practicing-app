@@ -1,0 +1,60 @@
+.epa-test-history {
+    .epa-test-history-header {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 4px;
+        color: rgb(100, 100, 100);
+    }
+
+    .epa-test-history-list-header {
+        font-size: 17px;
+        font-weight: 500;
+        color: rgb(100, 100, 100);
+        margin: 12px 0 12px 0;
+    }
+
+    .epa-test-history-list {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .epa-test-history-item {
+            width: 100%;
+            box-sizing: border-box;
+            border: 2px solid rgb(229, 229, 229);
+            border-radius: 12px;
+            // min-height: 66px;
+            box-shadow: 0 0.125rem 0.25rem 0 #282e3e1a;
+
+            .epa-item-field {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                font-size: 16px;
+                line-height: 24px;
+            }
+        }
+
+        .epa-test-history-success {
+            background-color: var(--bs-success-bg-subtle);
+        }
+
+        .epa-test-history-danger {
+            background-color: var(--bs-danger-bg-subtle);
+        }
+    }
+
+    .epa-pagination {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        .page-item {
+            cursor: pointer;
+        }
+    }
+}

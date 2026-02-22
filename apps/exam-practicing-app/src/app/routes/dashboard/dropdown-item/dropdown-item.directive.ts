@@ -7,13 +7,13 @@ import { NgbDropdown, NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
     hostDirectives: [
         {
             directive: NgbDropdown,
-            inputs: ['placement', 'container'],
+            inputs: ['placement', 'container', 'display'],
         },
     ],
 })
 export class DropdownItemDirective {
     constructor(
-        private el: ElementRef,
+        private el: ElementRef<HTMLSpanElement>,
         private dropdown: NgbDropdown,
         private config: NgbDropdownConfig
     ) {
@@ -25,6 +25,9 @@ export class DropdownItemDirective {
     }
 
     @HostListener('mouseout') onMouseOut() {
-        this.dropdown.close();
+        setTimeout(() => {
+            if (this.el.nativeElement.classList.contains('hovering')) return;
+            this.dropdown.close();
+        }, 100);
     }
 }

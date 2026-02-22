@@ -1,0 +1,129 @@
+<div class="epa-unit-table mt-4">
+    <h2 class="epa-unit-table-title mb-3">Units</h2>
+
+    <div class="epa-unit-table-header row mb-1 px-2">
+        <div class="col-3">Tên</div>
+
+        <div class="col-3">Đúng/Sai</div>
+
+        <div class="col-4">Độ khó</div>
+
+        <div class="col-2"></div>
+    </div>
+
+    <div class="epa-unit-table-list">
+        @for(unit of units$ | async; track unit){
+        <div class="epa-unit-table-item mb-1 py-3 px-3">
+            <div class="row">
+                <ng-container
+                    *ngTemplateOutlet="
+                        tableColumn;
+                        context: { unit: unit, isSubUnit: false }
+                    "
+                ></ng-container>
+            </div>
+
+            <hr />
+
+            @for(subUnit of unit.subUnits; track subUnit){
+            <div class="row py-2">
+                <ng-container
+                    *ngTemplateOutlet="
+                        tableColumn;
+                        context: { unit: subUnit, isSubUnit: true }
+                    "
+                ></ng-container>
+            </div>
+            }
+        </div>
+        }
+    </div>
+</div>
+
+<ng-template #tableColumn let-unit="unit" let-isSubUnit="isSubUnit">
+    @let stats=unit.stats; @let diffStats = stats.difficulties;
+
+    <div class="col-3">
+        <div
+            class="epa-item-field"
+            [ngStyle]="{ 'font-weight': isSubUnit ? 400 : 600 }"
+        >
+            {{ unit.title }}
+        </div>
+    </div>
+
+    <div class="col-3">
+        <div class="epa-item-field">
+            <div class="progress-stacked w-100">
+                <div
+                    class="progress"
+                    role="progressbar"
+                    [attr.aria-valuenow]="getCorrectPercentage(stats)"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    [style.width.%]="getCorrectPercentage(stats)"
+                >
+                    <div class="progress-bar bg-success">
+                        {{ stats.correctAnswers | number }}
+                    </div>
+                </div>
+                <div
+                    class="progress"
+                    role="progressbar"
+                    [attr.aria-valuenow]="getIncorrectPercentage(stats)"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    [style.width.%]="getIncorrectPercentage(stats)"
+                >
+                    <div class="progress-bar bg-danger">
+                        {{ stats.incorrectAnswers | number }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="epa-item-field">
+            <div class="progress-stacked w-100">
+                @for(diff of diffStats; track diff; let i = $index) {
+                <ng-template #tooltip></ng-template>
+                <div
+                    class="progress"
+                    role="progressbar"
+                    [attr.aria-valuenow]="getDifficultyPercentage(stats, diff)"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    [style.width.%]="getDifficultyPercentage(stats, diff)"
+                    [ngbTooltip]="i | questionDiff"
+                >
+                    <div
+                        class="progress-bar"
+                        [ngClass]="{
+                            'epa-progress-bar-bg-green': i === 0,
+                            'epa-progress-bar-bg-yellow': i === 1,
+                            'epa-progress-bar-bg-orange': i === 2,
+                            'epa-progress-bar-bg-red': i === 3
+                        }"
+                    >
+                        {{ diff?.correct | number }}
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-2">
+        <div
+            class="epa-item-field"
+            [ngClass]="{
+                        'text-success': stats.avgScore >= 700,
+                        'text-danger': stats.avgScore < 700,
+                }"
+            style="font-weight: 600"
+        >
+            {{ stats.avgScore | number }}
+        </div>
+    </div>
+</ng-template>

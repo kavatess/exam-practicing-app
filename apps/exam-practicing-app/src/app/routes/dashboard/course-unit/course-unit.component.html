@@ -1,0 +1,76 @@
+<div class="epa-course-unit">
+    <button
+        class="btn btn-light"
+        type="button"
+        data-bs-toggle="collapse"
+        [attr.data-bs-target]="'#collapse-' + unit.id"
+        aria-expanded="false"
+        [attr.aria-controls]="'collapse-' + unit.id"
+    >
+        <img class="epa-unit-icon" [src]="unit.iconUrl" alt="" />
+        <div class="epa-text">
+            {{ unit.title }}
+        </div>
+    </button>
+
+    <div class="w-100 collapse mt-1" [id]="'collapse-' + unit.id">
+        <div class="epa-unit-details">
+            <div class="row">
+                @for(subUnit of unit.subUnits; track subUnit; let i = $index;
+                let isLast = $last) { @if(isLast && unit.subUnits.length % 3 ==
+                1) {
+                <div class="col-4"></div>
+                }
+                <div ngbDropdown class="col-4">
+                    <div ngbDropdownToggle class="epa-sub-unit">
+                        <img
+                            class="epa-sub-unit-icon"
+                            [src]="subUnit.iconUrl"
+                            alt=""
+                        />
+                        <div class="epa-text">
+                            {{ subUnit.title }}
+                        </div>
+                    </div>
+
+                    <div ngbDropdownMenu class="epa-sub-unit-menu">
+                        <h1 class="epa-menu-title">{{ subUnit.title }}</h1>
+
+                        <p class="epa-menu-description">
+                            Đã hoàn thành 50 (44/50)
+                        </p>
+
+                        <!-- <div class="epa-menu-description">Đã hoàn thành: 50 (44/50)</div>
+                                        <p class="epa-menu-description">Điểm năng lực: 550 (Tốt)</p> -->
+
+                        <button mat-fab extended (click)="openModal(popup)">
+                            <mat-icon>edit</mat-icon>
+                            PRACTICE
+                        </button>
+                    </div>
+                </div>
+                @if(isLast && unit.subUnits.length % 3 == 1) {
+                <div class="col-4"></div>
+                } }
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #popup let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Tình trạng</h4>
+    </div>
+
+    <div class="modal-body py-4">
+        <div class="epa-practice-creating">
+            <div class="spinner-border text-secondary" role="status" style="width: 7rem; height: 7rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+
+            <div class="epa-text text-center mt-3">
+                Đang khởi tạo bài luyện tập phù hợp cho bạn...
+            </div>
+        </div>
+    </div>
+</ng-template>

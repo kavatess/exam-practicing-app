@@ -1,0 +1,101 @@
+<div class="epa-container" *ngIf="result$ | async as result">
+    <div class="epa-header">
+        <h1 class="epa-header-title">
+            Bạn đã hoàn thành bài Test vào
+            {{ result.completedAt | date : 'dd/MM/YYYY hh:mm' }}
+        </h1>
+        <h3 class="epa-time-used">Thời gian: {{ result.timeUsed }}p</h3>
+    </div>
+
+    <div class="epa-progress-container">
+        <circle-progress
+            [percent]="
+                (result.correct / (result.correct + result.incorrect)) * 100
+            "
+            [radius]="100"
+            [outerStrokeWidth]="16"
+            [innerStrokeWidth]="8"
+            [outerStrokeColor]="'#78C000'"
+            [innerStrokeColor]="'#C7E596'"
+            [animation]="true"
+            [animationDuration]="300"
+            [showSubtitle]="false"
+            [titleFontSize]="'30px'"
+            [unitsFontSize]="'20px'"
+        ></circle-progress>
+
+        <div class="epa-answer-stats">
+            <p class="text-success">
+                <span class="badge rounded-pill text-bg-success">
+                    {{ result.correct }}
+                </span>
+                Đúng
+            </p>
+
+            <p class="text-danger">
+                <span class="badge rounded-pill text-bg-danger">
+                    {{ result.incorrect }}
+                </span>
+                Sai
+            </p>
+        </div>
+    </div>
+
+    <div class="epa-question-list">
+        <div
+            class="epa-question-card"
+            *ngFor="let question of result.practice.questions; let i = index"
+        >
+            <div class="epa-question-header">
+                <span>{{ question.data.level }}</span>
+                <span>{{ i + 1 }}/{{ result.practice.questions.length }}</span>
+            </div>
+
+            <div class="epa-question-body">
+                <div
+                    class="epa-question-content"
+                    [innerHTML]="question.data.content"
+                ></div>
+
+                <div *ngFor="let media of question.data.media">
+                    <img [src]="media.url" alt="" />
+                </div>
+
+                <div class="epa-choices">
+                    <div
+                        class="epa-choice"
+                        *ngFor="
+                            let choice of question.data.choices;
+                            let i = index
+                        "
+                        [ngClass]="{
+                            correct: choice.isCorrect,
+                            'user-correct':
+                                choice.isCorrect && i === question.userAnswer,
+                            'user-incorrect':
+                                !choice.isCorrect && i === question.userAnswer
+                        }"
+                    >
+                        <mat-icon
+                            class="epa-check-icon"
+                            *ngIf="choice.isCorrect"
+                        >
+                            check
+                        </mat-icon>
+
+                        <mat-icon
+                            class="epa-x-icon"
+                            *ngIf="
+                                i === question.userAnswer && !choice.isCorrect
+                            "
+                        >
+                            close
+                        </mat-icon>
+
+                        <span [innerHTML]="choice.content"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

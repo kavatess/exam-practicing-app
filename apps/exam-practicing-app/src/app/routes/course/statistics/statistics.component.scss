@@ -1,0 +1,100 @@
+:host {
+    ::ng-deep {
+        .accordion-item {
+            border: unset !important;
+
+            .accordion-body {
+                ul {
+                    margin-bottom: 0 !important;
+                }
+            }
+
+            .accordion-button.alert-success:not(.collapsed) {
+                background-color: #d1e7dd !important;
+            }
+
+            .accordion-button.alert-danger:not(.collapsed) {
+                background-color: #f8d7da !important;
+            }
+
+            .accordion-button.alert-warning:not(.collapsed) {
+                background-color: #fff3cd !important;
+            }
+
+            .accordion-button.alert-info:not(.collapsed) {
+                background-color: #9eeaf9 !important;
+            }
+
+            .accordion-collapse {
+                border-radius: 6px;
+                border: 1px solid #dee2e6;
+                border-top: 0;
+            }
+
+            .epa-stats-text {
+                padding: 2px 0;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 27px;
+            }
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .epa-academic-stats {
+        .epa-academic-stats-content {
+            .epa-chart-title {
+                font-size: 0.85rem !important;
+            }
+
+            .epa-other-evals-chart-container {
+                padding: 0 !important;
+            }
+        }
+    }
+}
+
+.epa-academic-stats {
+    padding: 16px;
+    border-radius: 16px;
+    box-shadow: 0 0 2rem 0 #282e3e1a;
+
+    .epa-academic-stats-nav-title {
+        font-size: 17px;
+        font-weight: 500;
+    }
+
+    .epa-academic-stats-content {
+        .epa-overall-stats {
+            width: 100%;
+
+            .epa-overall-evaluation {
+                width: 100%;
+            }
+
+            .epa-overall-stats-radar-chart {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+
+                .epa-overall-chart-container {
+                    width: 360px;
+                }
+            }
+        }
+
+        .epa-other-evals {
+            .epa-chart-title {
+                font-size: 1.1rem;
+                text-align: center;
+                font-weight: 600;
+            }
+
+            .epa-other-evals-chart-container {
+                width: 100%;
+                padding: 10px 16px;
+            }
+        }
+    }
+}
