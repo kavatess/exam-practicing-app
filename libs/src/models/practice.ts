@@ -1,6 +1,6 @@
 import { BaseModel } from './base';
 import { QuestionData } from './question';
-import { Course, SubjectUnit, SubUnit } from './subject';
+import { Course, CourseUnit, SubUnit } from './course';
 
 export enum PracticeQuestionProperties {
     userId = 'userId',
@@ -40,7 +40,7 @@ export interface PracticeExam extends BaseModel {
     [PracticeExamProperties.courseId]: string;
     [PracticeExamProperties.course]?: Course;
     [PracticeExamProperties.unitId]: string;
-    [PracticeExamProperties.unit]?: SubjectUnit;
+    [PracticeExamProperties.unit]?: CourseUnit;
     [PracticeExamProperties.subUnitId]: string;
     [PracticeExamProperties.subUnit]?: SubUnit;
     [PracticeExamProperties.userId]: string;
@@ -57,23 +57,23 @@ export enum PracticeExamStatuses {
     Completed = 'Completed',
 }
 
-export enum PracticeMoldProperties {
-    courseId = 'courseId',
-    course = 'course',
-    unitId = 'unitId',
-    unit = 'unit',
-    title = 'title',
-    structure = 'structure',
-}
-
-export interface PracticeMold extends BaseModel {
-    [PracticeMoldProperties.courseId]: string;
-    [PracticeMoldProperties.course]?: Course;
-    [PracticeMoldProperties.unitId]: string;
-    [PracticeMoldProperties.unit]?: string;
-    [PracticeMoldProperties.title]: string;
-    [PracticeMoldProperties.structure]: string;
-}
+// export enum PracticeMoldProperties {
+//     courseId = 'courseId',
+//     course = 'course',
+//     unitId = 'unitId',
+//     unit = 'unit',
+//     title = 'title',
+//     structure = 'structure',
+// }
+//
+// export interface PracticeMold extends BaseModel {
+//     [PracticeMoldProperties.courseId]: string;
+//     [PracticeMoldProperties.course]?: Course;
+//     [PracticeMoldProperties.unitId]: string;
+//     [PracticeMoldProperties.unit]?: string;
+//     [PracticeMoldProperties.title]: string;
+//     [PracticeMoldProperties.structure]: string;
+// }
 
 export interface PracticeResult {
     evalTxt: string;

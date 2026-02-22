@@ -3,7 +3,7 @@ import { Component, Input, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { APP_ROUTES } from '../../../app.routes';
-import { SubjectUnit } from '@libs/models';
+import { CourseUnit } from '@libs/models';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -29,7 +29,7 @@ import { CourseUnitService } from './course-unit.service';
     styleUrl: './course-unit.component.scss',
 })
 export class CourseUnitComponent {
-    @Input() unit: SubjectUnit = null;
+    @Input() unit: CourseUnit = null;
 
     constructor(
         private readonly router: Router,

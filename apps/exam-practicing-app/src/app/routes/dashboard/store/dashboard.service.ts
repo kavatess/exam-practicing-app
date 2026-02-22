@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@angular/core';
-import { Course, Quest, SubjectUnit } from '@libs/models';
+import { Course, Quest, CourseUnit } from '@libs/models';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -44,7 +44,7 @@ export class DashboardService {
                             },
                         ],
                         iconUrl: 'https://i.ibb.co/BfSBYGN/derivative-icon.png',
-                    } as SubjectUnit,
+                    } as CourseUnit,
                     {
                         id: 234,
                         title: 'Hàm số',
@@ -75,7 +75,7 @@ export class DashboardService {
                             },
                         ],
                         iconUrl: 'https://i.ibb.co/BfSBYGN/derivative-icon.png',
-                    } as SubjectUnit,
+                    } as CourseUnit,
                     {
                         id: 265,
                         title: 'Tích phân',
@@ -88,7 +88,7 @@ export class DashboardService {
                             },
                         ],
                         iconUrl: 'https://i.ibb.co/BfSBYGN/derivative-icon.png',
-                    } as SubjectUnit,
+                    } as CourseUnit,
                 ],
             } as Course,
         ]);
@@ -138,10 +138,7 @@ export class DashboardService {
     getCourseById(courseId: string): Observable<Course> {
         return of({
             name: 'Đề THPTQG Môn Toán',
-            subject: {
-                name: 'Toán',
-                description: 'Chương trình của bộ giáo dục',
-            },
+            description: 'Chương trình của bộ giáo dục',
             units: [
                 {
                     id: 213,
@@ -167,7 +164,7 @@ export class DashboardService {
                         },
                     ],
                     iconUrl: 'https://i.ibb.co/BfSBYGN/derivative-icon.png',
-                } as SubjectUnit,
+                } as CourseUnit,
                 {
                     id: 234,
                     title: 'Hàm số',
@@ -198,7 +195,7 @@ export class DashboardService {
                         },
                     ],
                     iconUrl: 'https://i.ibb.co/BfSBYGN/derivative-icon.png',
-                } as SubjectUnit,
+                } as CourseUnit,
                 {
                     id: 265,
                     title: 'Tích phân',
@@ -211,7 +208,7 @@ export class DashboardService {
                         },
                     ],
                     iconUrl: 'https://i.ibb.co/BfSBYGN/derivative-icon.png',
-                } as SubjectUnit,
+                } as CourseUnit,
             ],
         } as Course);
     }

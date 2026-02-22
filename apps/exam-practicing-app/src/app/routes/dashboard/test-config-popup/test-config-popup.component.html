@@ -110,7 +110,7 @@
 </div>
 
 <div class="modal-footer">
-    <button mat-fab extended>
+    <button mat-fab extended (click)="createTest(); $event.preventDefault()">
         <mat-icon fontIcon="build"></mat-icon>
         Let's go
     </button>

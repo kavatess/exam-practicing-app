@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@angular/core';
-import { Course, Pagination, SubjectUnit, Test } from '@libs/models';
+import { Course, Pagination, CourseUnit, Test } from '@libs/models';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -10,10 +10,6 @@ export class LibraryService {
     getCourseById(courseId: string): Observable<Course> {
         return of({
             name: 'Đề THPTQG Môn Toán',
-            subject: {
-                name: 'Toán',
-                description: 'Chương trình của bộ giáo dục',
-            },
             units: [
                 {
                     id: 213,
@@ -119,7 +115,7 @@ export class LibraryService {
                         ],
                         avgScore: 700,
                     },
-                } as SubjectUnit,
+                } as CourseUnit,
                 {
                     id: 234,
                     title: 'Hàm số',
@@ -250,7 +246,7 @@ export class LibraryService {
                         ],
                         avgScore: 300,
                     },
-                } as SubjectUnit,
+                } as CourseUnit,
                 {
                     id: 265,
                     title: 'Tích phân',
@@ -303,7 +299,7 @@ export class LibraryService {
                         ],
                         avgScore: 400,
                     },
-                } as SubjectUnit,
+                } as CourseUnit,
             ],
             stats: {
                 difficulties: [

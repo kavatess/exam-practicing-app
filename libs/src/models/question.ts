@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BaseModel } from './base';
 import { Media } from './media';
+import { MoldPage } from './mold';
 
 export enum QuestionProperties {
-    subjectId = 'subjectId',
-    subject = 'subject',
+    // subjectId = 'subjectId',
+    // subject = 'subject',
     courseId = 'courseId',
     course = 'course',
     unitIds = 'unitIds',
@@ -19,9 +20,12 @@ export enum QuestionProperties {
     mediaIds = 'mediaIds',
     media = 'media',
     description = 'description',
+    pageId = 'pageId',
+    page = 'page',
 }
 
 export enum QuestionDifficulties {
+    VeryEasy,
     Easy,
     Medium,
     Advanced,
@@ -59,7 +63,7 @@ export interface QuestionChoice extends BaseModel {
 }
 
 export interface Question extends BaseModel {
-    [QuestionProperties.subjectId]: string;
+    // [QuestionProperties.subjectId]: string;
     [QuestionProperties.courseId]: string;
     [QuestionProperties.unitIds]: string[];
     [QuestionProperties.difficulty]: QuestionDifficulties;
@@ -72,6 +76,8 @@ export interface Question extends BaseModel {
     [QuestionProperties.mediaIds]: string[];
     [QuestionProperties.media]?: Media[];
     [QuestionProperties.description]: string;
+    [QuestionProperties.pageId]?: string;
+    [QuestionProperties.page]?: MoldPage;
 }
 
 export enum QuestionDataProperties {
@@ -87,8 +93,8 @@ export enum QuestionDataProperties {
 
 export interface QuestionData extends BaseModel {
     [QuestionDataProperties.courseId]?: string;
-    [QuestionDataProperties.userId]?: string;
     [QuestionDataProperties.unitId]?: string;
+    [QuestionDataProperties.userId]?: string;
     [QuestionDataProperties.questionId]: string;
     [QuestionDataProperties.data]?: Partial<Question>;
     [QuestionDataProperties.state]: QuestionStates;
@@ -100,5 +106,6 @@ export enum QuestionStates {
     Correct = 'Correct',
     Incorrect = 'Incorrect',
     NotAnswered = 'NotAnswered',
+    Answered = 'Answered',
     GradeAwating = 'GradeAwating',
 }

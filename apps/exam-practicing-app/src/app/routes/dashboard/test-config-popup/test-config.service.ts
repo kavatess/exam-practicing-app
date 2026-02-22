@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Test } from '@libs/models';
-import { Observable, of } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -8,7 +8,7 @@ import { Observable, of } from 'rxjs';
 export class TestConfigService {
     createTest(config: Test): Observable<Test> {
         return of({
-            id: '0x89ef',
+            id: 'a1b2c3453deff',
             ...config,
             status: 'InProgress',
             testQuestions: [
@@ -107,6 +107,6 @@ export class TestConfigService {
                     },
                 },
             ],
-        });
+        }).pipe(delay(2000));
     }
 }

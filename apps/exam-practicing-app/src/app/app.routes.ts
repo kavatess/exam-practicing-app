@@ -16,6 +16,9 @@ import { PracticeEffects } from './routes/practice/store/practice.effects';
 import { historyStoreKey } from './routes/history/store/history.selectors';
 import { historyReducer } from './routes/history/store/history.reducer';
 import { HistoryEffects } from './routes/history/store/history.effects';
+import { testStoreKey } from './routes/test/store/test.selectors';
+import { testReducer } from './routes/test/store/test.reducer';
+import { TestEffects } from './routes/test/store/test.effects';
 
 export enum APP_ROUTES {
     LOGIN = 'login',
@@ -109,6 +112,14 @@ export const appRoutes: Route[] = [
                     import('./routes/test/test.component').then(
                         (c) => c.TestComponent
                     ),
+                providers: [
+                    provideState({
+                        name: testStoreKey,
+                        reducer: testReducer,
+                    }),
+
+                    provideEffects(TestEffects),
+                ],
             },
         ],
     },
@@ -156,9 +167,9 @@ export const appRoutes: Route[] = [
             {
                 path: ':testId',
                 loadComponent: () =>
-                    import('./routes/history/test-details/test-details.component').then(
-                        (c) => c.TestDetailsComponent
-                    ),
+                    import(
+                        './routes/history/test-details/test-details.component'
+                    ).then((c) => c.TestDetailsComponent),
             },
         ],
         providers: [

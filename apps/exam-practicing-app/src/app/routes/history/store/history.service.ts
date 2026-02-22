@@ -6,7 +6,7 @@ import {
     QuestionStates,
     Result,
     ResultTypes,
-    SubjectUnit,
+    CourseUnit,
 } from '@libs/models';
 import { map, Observable, of } from 'rxjs';
 
@@ -39,7 +39,7 @@ export class HistoryService {
                 unitId: 'def',
                 unit: {
                     title: 'Đạo hàm',
-                } as SubjectUnit,
+                } as CourseUnit,
                 subUnitId: 'ghi',
                 subUnit: {
                     title: 'Vi phân',

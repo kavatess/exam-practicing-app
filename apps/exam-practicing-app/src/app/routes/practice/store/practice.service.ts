@@ -9,7 +9,7 @@ import {
     Quest,
     Question,
     QuestionStates,
-    SubjectUnit,
+    CourseUnit,
     SubUnit,
 } from '@libs/models';
 import { Observable, of } from 'rxjs';
@@ -31,7 +31,7 @@ export class PracticeService {
             unitId: 'def',
             unit: {
                 title: 'Đạo hàm',
-            } as SubjectUnit,
+            } as CourseUnit,
             subUnitId: 'ghi',
             subUnit: {
                 title: 'Vi phân',

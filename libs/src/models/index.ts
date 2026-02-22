@@ -7,7 +7,7 @@ export * from './product';
 export * from './query';
 export * from './quest';
 export * from './question';
-export * from './subject';
+export * from './course';
 export * from './test';
 export * from './user';
 export * from './result';

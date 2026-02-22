@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@angular/core';
-import { Course, Quest, SubjectUnit } from '@libs/models';
+import { Course, Quest, CourseUnit } from '@libs/models';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -24,17 +24,17 @@ export class LibraryService {
                         id: 213,
                         title: 'Đạo hàm',
                         iconUrl: 'https://i.ibb.co/BfSBYGN/derivative-icon.png',
-                    } as SubjectUnit,
+                    } as CourseUnit,
                     {
                         id: 234,
                         title: 'Hàm số',
                         iconUrl: 'https://i.ibb.co/BfSBYGN/derivative-icon.png',
-                    } as SubjectUnit,
+                    } as CourseUnit,
                     {
                         id: 265,
                         title: 'Tích phân',
                         iconUrl: 'https://i.ibb.co/BfSBYGN/derivative-icon.png',
-                    } as SubjectUnit,
+                    } as CourseUnit,
                 ],
                 stats: {
                     currStudierCount: 9,
@@ -57,17 +57,17 @@ export class LibraryService {
                         id: 213,
                         title: 'Đạo hàm',
                         iconUrl: 'https://i.ibb.co/BfSBYGN/derivative-icon.png',
-                    } as SubjectUnit,
+                    } as CourseUnit,
                     {
                         id: 234,
                         title: 'Hàm số',
                         iconUrl: 'https://i.ibb.co/BfSBYGN/derivative-icon.png',
-                    } as SubjectUnit,
+                    } as CourseUnit,
                     {
                         id: 265,
                         title: 'Tích phân',
                         iconUrl: 'https://i.ibb.co/BfSBYGN/derivative-icon.png',
-                    } as SubjectUnit,
+                    } as CourseUnit,
                 ],
                 stats: {
                     currStudierCount: 12,
