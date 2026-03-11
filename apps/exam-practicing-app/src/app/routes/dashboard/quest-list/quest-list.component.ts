@@ -5,11 +5,12 @@ import { DashboardStoreState } from '../store/dashboard.reducer';
 import { QuestActions } from '../store/dashboard.actions';
 import { QuestsSelectors } from '../store/dashboard.selectors';
 import { Quest } from '@libs/models';
+import { CardListComponent } from '../../../shared/components/card-list/card-list.component';
 
 @Component({
     selector: 'epa-quest-list',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, CardListComponent],
     templateUrl: './quest-list.component.html',
     styleUrl: './quest-list.component.scss',
 })

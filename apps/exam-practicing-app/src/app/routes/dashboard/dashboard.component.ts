@@ -15,6 +15,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { TestConfigPopupComponent } from './test-config-popup/test-config-popup.component';
 import { Course } from '@libs/models';
+import { CourseUnitComponent } from './course-unit/course-unit.component';
 
 @Component({
     selector: 'epa-dashboard',
@@ -27,6 +28,7 @@ import { Course } from '@libs/models';
         MatIconModule,
         NgbModalModule,
         NgbDropdownModule,
+        CourseUnitComponent,
     ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss',

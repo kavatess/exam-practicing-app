@@ -1,0 +1,144 @@
+@media (max-width: 900px) {
+    .epa-shop {
+        .epa-shop-right-container {
+            display: none !important;
+        }
+
+        .epa-shop-left-container {
+            .epa-course-journey {
+                height: calc(100% + 90px);
+            }
+        }
+    }
+}
+
+@media (min-width: 900px) {
+    .epa-shop {
+        flex-direction: row-reverse;
+        padding: 0 24px 24px;
+    }
+}
+
+.epa-shop {
+    margin-top: 14px;
+    display: flex;
+    grid-gap: 48px;
+
+    .epa-shop-right-container {
+        display: flex;
+        flex-direction: column;
+        position: sticky;
+        z-index: 1;
+        top: 24px;
+        width: 368px;
+
+        .epa-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: sticky;
+            top: 24px;
+        }
+    }
+
+    .epa-shop-left-container {
+        min-width: 360px;
+        max-width: 590px;
+        flex: 1;
+        position: sticky;
+        z-index: 0;
+        box-sizing: border-box;
+
+      // New styles for the shop content
+      .shop-section {
+        margin-bottom: 48px;
+
+        .section-title {
+          font-size: 1.75rem;
+          font-weight: 700;
+          color: #3c3c3c;
+          margin-bottom: 24px;
+        }
+
+        .item-list {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .item-card {
+          display: flex;
+          align-items: center;
+          background-color: #ffffff;
+          border: 2px solid #e5e5e5;
+          border-radius: 16px;
+          padding: 24px;
+          transition: border-color 0.2s ease-in-out;
+
+          &:hover {
+            border-color: #c0c0c0;
+          }
+
+          .item-image {
+            flex-shrink: 0;
+            margin-right: 24px;
+
+            img {
+              width: 80px;
+              height: 80px;
+              object-fit: contain;
+            }
+          }
+
+          .item-details {
+            flex-grow: 1;
+
+            .item-title {
+              font-size: 1.25rem;
+              font-weight: 700;
+              color: #3c3c3c;
+              margin: 0 0 8px 0;
+            }
+
+            .item-description {
+              font-size: 1rem;
+              color: #777777;
+              margin: 0;
+            }
+          }
+
+          .item-action {
+            flex-shrink: 0;
+            margin-left: 24px;
+
+            .price-button {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background-color: #ffffff;
+              border: 2px solid #e5e5e5;
+              border-radius: 9999px; // Capsule shape
+              padding: 10px 24px;
+              font-weight: 700;
+              font-size: 1rem;
+              color: #58a700;
+              cursor: pointer;
+              transition: all 0.2s ease-in-out;
+
+              &:hover {
+                background-color: #f7f7f7;
+                border-color: #c0c0c0;
+              }
+
+              .currency-icon {
+                width: 24px;
+                height: 24px;
+                margin-right: 8px;
+              }
+            }
+          }
+        }
+      }
+
+    }
+}

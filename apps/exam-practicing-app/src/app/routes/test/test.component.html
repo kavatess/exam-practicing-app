@@ -1,1 +1,19 @@
-<p>test works!</p>
+<div class="epa-test-container">
+    <div class="epa-test-header">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <div class="epa-test-progress">
+                    <div class="epa-test-progress-txt">
+                        
+                    </div>
+
+                    <div class="epa-test-title">
+                        {{ (test$ | async)?.course?.name }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </div>
+</div>

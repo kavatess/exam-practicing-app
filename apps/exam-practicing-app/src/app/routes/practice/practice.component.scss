@@ -1,0 +1,194 @@
+.epa-practice-exam {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: min-content 1fr min-content;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    .epa-practice-header {
+        width: 100%;
+        margin: 0 auto;
+        max-width: 1080px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .epa-close-btn {
+            background-color: white;
+            border-radius: 50%;
+            padding: 0.5rem;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+            transition: background-color 0.2s ease;
+
+            &:hover {
+                background-color: #f0f0f0;
+            }
+        }
+
+        .progress-container {
+            flex-grow: 1;
+            margin: 0 20px;
+
+            .progress {
+                height: 20px;
+                border-radius: 10px;
+            }
+        }
+
+        .epa-hearts-container {
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .epa-hearts-icon {
+                height: 28px;
+            }
+
+            .epa-hearts-value {
+                color: rgb(255, 75, 75);
+                font-size: 17px;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .epa-practice-body {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .epa-practice-question-first-container {
+            display: grid;
+            height: 100%;
+            width: 100%;
+            position: relative;
+            align-content: center;
+            justify-content: center;
+
+            .epa-practice-question-second-container {
+                min-height: 450px;
+                overflow: visible;
+                min-width: 600px;
+                max-width: 660px;
+                grid-gap: 24px;
+                display: grid;
+                font-size: 19px;
+
+                .epa-question-unit {
+                    font-style: italic;
+                }
+
+                .epa-question-content {
+                    .epa-question-medias {
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                    }
+                }
+
+                .epa-question-solution {
+                    font-size: 19px;
+                }
+            }
+        }
+    }
+
+    .epa-practice-footer {
+        max-height: 140px;
+        border-top: 2px solid rgb(229, 229, 229);
+        display: flex;
+        justify-content: center;
+
+        &.correct-answer {
+            background-color: rgb(215, 255, 184);
+        }
+
+        &.incorrect-answer {
+            background-color: rgb(255, 228, 228);
+        }
+
+        .epa-footer-btn-group {
+            width: 100%;
+            height: 100%;
+            max-width: 1080px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .epa-footer-result {
+            padding: 0 40px;
+            width: 100%;
+            height: 100%;
+            max-width: 1080px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .epa-result-box {
+                display: flex;
+                align-items: center;
+            }
+
+            .epa-result-icon {
+                .correct-icon {
+                    color: white;
+                    background-color: rgb(88, 167, 0);
+                    border-radius: 50%;
+                    font-size: 60px;
+                    width: 60px;
+                    height: 60px;
+                }
+
+                .incorrect-icon {
+                    color: rgb(234, 43, 43);
+                    background-color: white;
+                    border-radius: 50%;
+                    font-size: 60px;
+                    width: 60px;
+                    height: 60px;
+                }
+            }
+
+            .epa-result-text {
+                font-size: 24px;
+                font-weight: bold;
+
+                &.correct-text {
+                    color: rgb(88, 167, 0);
+                }
+
+                &.incorrect-text {
+                    color: rgb(234, 43, 43);
+                }
+            }
+
+            .correct-button {
+                background-color: rgb(88, 167, 0);
+                color: white;
+            }
+
+            .incorrect-button {
+                background-color: rgb(234, 43, 43);
+                color: white;
+            }
+        }
+    }
+}
+
+@media (min-width: 700px) {
+    .epa-practice-exam {
+        grid-template-rows: 100px 1fr 140px;
+        min-height: 690px;
+        grid-gap: 0;
+
+        .epa-practice-header {
+            padding: 50px 40px 0;
+        }
+    }
+}

@@ -10,6 +10,15 @@ import { LibraryEffects } from './routes/library/store/library.effects';
 import { courseStoreKey } from './routes/course/store/course.selectors';
 import { courseReducer } from './routes/course/store/course.reducer';
 import { CourseEffects } from './routes/course/store/course.effects';
+import { practiceStoreKey } from './routes/practice/store/practice.selectors';
+import { practiceReducer } from './routes/practice/store/practice.reducer';
+import { PracticeEffects } from './routes/practice/store/practice.effects';
+import { historyStoreKey } from './routes/history/store/history.selectors';
+import { historyReducer } from './routes/history/store/history.reducer';
+import { HistoryEffects } from './routes/history/store/history.effects';
+import { shopStoreKey } from './routes/shop/store/shop.selectors';
+import { ShopEffects } from './routes/shop/store/shop.effects';
+import { shopReducer } from './routes/shop/store/shop.reducer';
 
 export enum APP_ROUTES {
     LOGIN = 'login',
@@ -20,6 +29,7 @@ export enum APP_ROUTES {
     PRACTICE = 'practice',
     SHOP = 'shop',
     PROFILE = 'profile',
+    HISTORY = 'history',
 }
 
 export const appRoutes: Route[] = [
@@ -95,20 +105,84 @@ export const appRoutes: Route[] = [
     },
     {
         path: APP_ROUTES.TEST,
-        loadComponent: () =>
-            import('./routes/test/test.component').then((c) => c.TestComponent),
+        children: [
+            {
+                path: ':testId',
+                loadComponent: () =>
+                    import('./routes/test/test.component').then(
+                        (c) => c.TestComponent
+                    ),
+            },
+        ],
     },
     {
         path: APP_ROUTES.PRACTICE,
-        loadComponent: () =>
-            import('./routes/practice/practice.component').then(
-                (c) => c.PracticeComponent
-            ),
+        children: [
+            {
+                path: ':practiceId',
+                children: [
+                    {
+                        path: '',
+                        loadComponent: () =>
+                            import('./routes/practice/practice.component').then(
+                                (c) => c.PracticeComponent
+                            ),
+                    },
+                    {
+                        path: 'result',
+                        loadComponent: () =>
+                            import(
+                                './routes/practice/result/result.component'
+                            ).then((c) => c.ResultComponent),
+                    },
+                ],
+                providers: [
+                    provideState({
+                        name: practiceStoreKey,
+                        reducer: practiceReducer,
+                    }),
+                    provideEffects(PracticeEffects),
+                ],
+            },
+        ],
+    },
+    {
+        path: APP_ROUTES.HISTORY,
+        children: [
+            {
+                path: '',
+                loadComponent: () =>
+                    import('./routes/history/history.component').then(
+                        (c) => c.HistoryComponent
+                    ),
+            },
+            {
+                path: ':testId',
+                loadComponent: () =>
+                    import(
+                        './routes/history/test-details/test-details.component'
+                    ).then((c) => c.TestDetailsComponent),
+            },
+        ],
+        providers: [
+            provideState({
+                name: historyStoreKey,
+                reducer: historyReducer,
+            }),
+            provideEffects(HistoryEffects),
+        ],
     },
     {
         path: APP_ROUTES.SHOP,
         loadComponent: () =>
             import('./routes/shop/shop.component').then((c) => c.ShopComponent),
+        providers: [
+            provideState({
+                name: shopStoreKey,
+                reducer: shopReducer,
+            }),
+            provideEffects(ShopEffects),
+        ],
     },
     {
         path: APP_ROUTES.PROFILE,

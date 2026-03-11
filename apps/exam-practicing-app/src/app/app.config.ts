@@ -8,6 +8,7 @@ import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideStore } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -22,6 +23,15 @@ export const appConfig: ApplicationConfig = {
                 autoPause: false, // Pauses recording actions and state changes when the extension window is not open
                 trace: true, //  If set to true, will include stack trace for every dispatched action, so you can see it in trace tab jumping directly to that part of code
                 traceLimit: 100, // maximum stack trace frames to be stored (in case trace option was provided as true)
+            }),
+            NgCircleProgressModule.forRoot({
+                // set defaults here
+                radius: 100,
+                outerStrokeWidth: 16,
+                innerStrokeWidth: 8,
+                outerStrokeColor: '#78C000',
+                innerStrokeColor: '#C7E596',
+                animationDuration: 300,
             })
         ),
     ],
