@@ -1,13 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@angular/core';
-import {
-    PracticeExam,
-    PracticeExamStatuses,
-    QuestionStates,
-    Result,
-    ResultTypes,
-    SubjectUnit,
-} from '@libs/models';
+import { PracticeExamStatuses, QuestionStates, Result, ResultTypes, SubjectUnit } from '@libs/models';
 import { map, Observable, of } from 'rxjs';
 
 @Injectable({
@@ -15,13 +8,104 @@ import { map, Observable, of } from 'rxjs';
 })
 export class HistoryService {
     getHistoryList(): Observable<Result[]> {
-        return of([]);
+        return of([
+            {
+                completedAt: new Date(),
+                timeUsed: 60 * 60 * 1000,
+                testId: '1',
+                score: 40,
+                maxScore: 50,
+                incorrect: 1,
+                type: ResultTypes.Test,
+                correct: 4,
+                test: {
+                    course: {
+                        code: 'MATH-THPTQG-2025',
+                        name: 'Đề THPTQG Môn Toán',
+                        description: 'Chương trình của bộ giáo dục',
+                        iconUrl: 'https://i.ibb.co/HFDbM1v/math-test-icon.png',
+                    },
+                },
+            } as Result,
+            {
+                completedAt: new Date(),
+                timeUsed: 120 * 60 * 1000,
+                testId: '2',
+                score: 20,
+                maxScore: 50,
+                type: ResultTypes.Practice,
+                incorrect: 3,
+                correct: 2,
+                practice: {
+                    course: {
+                        code: 'MATH-THPTQG-2025',
+                        name: 'Đề THPTQG Môn Toán',
+                        description: 'Chương trình của bộ giáo dục',
+                        iconUrl: 'https://i.ibb.co/HFDbM1v/math-test-icon.png',
+                    },
+                },
+            } as Result,
+            {
+                completedAt: new Date(),
+                timeUsed: 90 * 60 * 1000,
+                testId: '3',
+                score: 30,
+                maxScore: 100,
+                incorrect: 7,
+                correct: 3,
+                type: ResultTypes.Practice,
+                practice: {
+                    course: {
+                        code: 'MATH-THPTQG-2025',
+                        name: 'Đề THPTQG Môn Toán',
+                        description: 'Chương trình của bộ giáo dục',
+                        iconUrl: 'https://i.ibb.co/HFDbM1v/math-test-icon.png',
+                    },
+                },
+            } as Result,
+            {
+                completedAt: new Date(),
+                timeUsed: 180 * 60 * 1000,
+                testId: '4',
+                score: 100,
+                maxScore: 100,
+                incorrect: 0,
+                correct: 100,
+                type: ResultTypes.Test,
+                test: {
+                    course: {
+                        code: 'MATH-THPTQG-2025',
+                        name: 'Đề THPTQG Môn Toán',
+                        description: 'Chương trình của bộ giáo dục',
+                        iconUrl: 'https://i.ibb.co/HFDbM1v/math-test-icon.png',
+                    },
+                },
+            } as Result,
+            {
+                completedAt: new Date(),
+                timeUsed: 30 * 60 * 1000,
+                testId: '5',
+                score: 70,
+                maxScore: 100,
+                incorrect: 30,
+                correct: 70,
+                type: ResultTypes.Practice,
+                practice: {
+                    course: {
+                        code: 'MATH-THPTQG-2025',
+                        name: 'Đề THPTQG Môn Toán',
+                        description: 'Chương trình của bộ giáo dục',
+                        iconUrl: 'https://i.ibb.co/HFDbM1v/math-test-icon.png',
+                    },
+                },
+            } as Result,
+        ]);
     }
 
     getPracticeResult(practiceId: string): Observable<Result> {
         return of({
             completedAt: new Date(),
-            timeUsed: 60,
+            timeUsed: 60 * 60 * 1000,
             testId: '1',
             score: 4,
             maxScore: 5,

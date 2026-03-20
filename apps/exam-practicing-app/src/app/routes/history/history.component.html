@@ -1,1 +1,55 @@
-<p>history works!</p>
+<div class="epa-history-container">
+    <h1 class="epa-page-title">Lịch sử</h1>
+
+    <div class="epa-history-list-container">
+      <div class="epa-history-list-header">
+        <div class="epa-header-item epa-date">Date</div>
+        <div class="epa-header-item epa-type">Type</div>
+        <div class="epa-header-item epa-course">Course</div>
+        <div class="epa-header-item epa-score">Score</div>
+        <div class="epa-header-item epa-duration">Duration</div>
+      </div>
+
+      <div class="epa-history-list-body">
+        @for (result of historyList$ | async; track result.id) {
+          <div class="epa-history-row" (click)="viewResultDetails(result)">
+            <div class="epa-history-cell epa-date">
+              {{ result.completedAt | date:'dd/MM/yyyy HH:mm' }}
+            </div>
+            <div class="epa-history-cell epa-type">
+                <span class="badge" [ngClass]="{
+                    'bg-primary': result.type === ResultTypes.Practice,
+                    'bg-warning text-dark': result.type === ResultTypes.Test
+                }">
+                {{ result.type }}
+              </span>
+            </div>
+            <div class="epa-history-cell epa-course">
+              <img
+                [src]="result.test?.course?.iconUrl || result.practice?.course?.iconUrl || 'assets/default-course-icon.png'"
+                alt="Course Icon"
+                class="epa-course-icon">
+              <span class="epa-course-name">
+                {{ result.test?.course?.name || result.practice?.course?.name || 'Unknown Course' }}
+              </span>
+            </div>
+            <div
+              class="epa-history-cell epa-score"
+              [ngClass]="{
+                'text-danger': getScorePercentage(result) < 50,
+                'text-success': getScorePercentage(result) > 80
+              }">
+              {{ result.score || 0 }} / {{ result.maxScore || 0 }}
+            </div>
+            <div class="epa-history-cell epa-duration">
+              {{ formatDuration(result.timeUsed || 0) }}
+            </div>
+          </div>
+        } @empty {
+          <div class="epa-empty-state">
+            <p>No history yet. Complete a test or practice session to see your results here!</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>

@@ -5,6 +5,7 @@ import { Test } from './test';
 export enum ResultProperties {
     testId = 'testId',
     test = 'test',
+    practiceId = 'practiceId',
     practice = 'practice',
     type = 'type',
     maxScore = 'maxScore',
@@ -22,8 +23,9 @@ export enum ResultTypes {
 }
 
 export interface Result extends BaseModel {
-    [ResultProperties.testId]: string;
+    [ResultProperties.testId]?: string;
     [ResultProperties.test]?: Test;
+    [ResultProperties.practiceId]?: string;
     [ResultProperties.practice]?: PracticeExam;
     [ResultProperties.type]: ResultTypes;
     [ResultProperties.maxScore]?: number;
