@@ -1,0 +1,7 @@
+<div class="epa-alert-container">
+  @if (currentAlert) {
+    <ngb-alert [type]="currentAlert.type" (closed)="closeAlert()">
+      {{ currentAlert.message }}
+    </ngb-alert>
+  }
+</div>

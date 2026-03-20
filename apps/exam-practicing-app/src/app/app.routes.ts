@@ -182,6 +182,11 @@ export const appRoutes: Route[] = [
                 reducer: shopReducer,
             }),
             provideEffects(ShopEffects),
+            provideState({
+                name: dashboardStoreKey,
+                reducer: dashboardReducer,
+            }),
+            provideEffects(DashboardEffects),
         ],
     },
     {
