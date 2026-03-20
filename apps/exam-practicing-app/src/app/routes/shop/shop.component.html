@@ -21,11 +21,20 @@
                                 <p class="item-description">{{ item.description }}</p>
                             </div>
                             <div class="item-action">
-                                <button class="price-button">
-                                    @if (item.currency?.iconUrl) {
-                                        <img [src]="item.currency.iconUrl" class="currency-icon" alt="Currency">
+                                <button
+                                    class="price-button"
+                                    [disabled]="purchasing$ | async"
+                                    (click)="purchaseItem(item.id)">
+                                    @if (purchasing$ | async) {
+                                        <div class="spinner-border spinner-border-sm" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    } @else {
+                                        @if (item.currency?.iconUrl) {
+                                            <img [src]="item.currency.iconUrl" class="currency-icon" alt="Currency">
+                                        }
+                                        <span class="price-text">{{ item.price }}</span>
                                     }
-                                    <span class="price-text">{{ item.price }}</span>
                                 </button>
                             </div>
                         </div>

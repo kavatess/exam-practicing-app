@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ShopSection } from '@libs/models';
-import { Observable, of } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -36,9 +36,15 @@ export class ShopService {
                         iconUrl:
                             'https://d35aaqx5ub95lt.cloudfront.net/images/goals/2b5a211d830a24fab92e291d50f65d1d.svg', // Replace with your image path
                         price: 100000,
+                        // currency: {
+                        //     id: '333',
+                        //     title: 'Vietnamese Dong',
+                        // },
                         currency: {
-                            id: '333',
-                            title: 'Vietnamese Dong',
+                            id: 'abc',
+                            title: 'Gems',
+                            iconUrl:
+                                'https://d35aaqx5ub95lt.cloudfront.net/images/gems/45c14e05be9c1af1d7d0b54c6eed7eee.svg',
                         },
                         currencyId: '333',
                     },
@@ -67,5 +73,9 @@ export class ShopService {
                 ],
             },
         ]);
+    }
+
+    purchaseItem(itemId: string | number): Observable<any> {
+        return of({}).pipe(delay(1500));
     }
 }

@@ -8,5 +8,8 @@ export const ShopActions = createActionGroup({
         GetShopList: emptyProps,
         GetShopListSuccess: props<{ data: ShopSection[] }>(),
         GetShopListFailure: props<{ error: any }>(),
+        PurchaseItem: props<{ itemId: string | number }>(),
+        PurchaseItemSuccess: props<{ data: any }>(),
+        PurchaseItemFailure: props<{ error: any }>(),
     },
 });

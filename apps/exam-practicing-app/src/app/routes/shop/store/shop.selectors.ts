@@ -13,4 +13,8 @@ export const ShopSelectors = {
         shopFeatureSelector,
         (state: ShopStoreState) => state.data
     ),
+    IsPurchasing: createSelector(
+        shopFeatureSelector,
+        (state: ShopStoreState) => state.purchasing
+    ),
 };
