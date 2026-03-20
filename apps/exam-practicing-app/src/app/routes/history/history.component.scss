@@ -1,0 +1,144 @@
+// Variables
+$text-color: #4b4b4b;
+$header-color: #777;
+$border-color: #e5e5e5;
+$hover-bg: #f7f7f7;
+$row-bg: #ffffff;
+
+.epa-history-container {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .epa-page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $text-color;
+    margin-bottom: 32px;
+  }
+
+  .epa-history-list-container {
+    background-color: $row-bg;
+    border-radius: 16px;
+    border: 1px solid $border-color;
+    overflow: hidden;
+
+    .epa-history-list-header, .epa-history-row {
+      display: flex;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid $border-color;
+      font-size: 1rem;
+    }
+
+    .epa-history-list-header {
+      background-color: $hover-bg;
+      color: $header-color;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.85rem;
+    }
+
+    .epa-history-row {
+      background-color: $row-bg;
+      transition: background-color 0.2s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $hover-bg;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    .epa-header-item, .epa-history-cell {
+      &.epa-date { flex: 0 0 160px; }
+      &.epa-type { flex: 0 0 100px; }
+      &.epa-course {
+        flex: 1 1 40%;
+        display: flex;
+        align-items: center;
+      }
+      &.epa-score { flex: 0 0 120px; text-align: right; }
+      &.epa-duration { flex: 0 0 120px; text-align: right; }
+    }
+
+    .epa-history-cell {
+      color: $text-color;
+      font-weight: 500;
+
+      &.epa-course {
+        .epa-course-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin-right: 16px;
+          object-fit: contain;
+          border: 1px solid $border-color;
+        }
+        .epa-course-name {
+          font-weight: 700;
+        }
+      }
+
+      &.epa-score {
+        font-weight: 700;
+      }
+    }
+  }
+
+  .epa-empty-state {
+    padding: 48px;
+    text-align: center;
+    color: $header-color;
+    font-size: 1.1rem;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .epa-history-container {
+        padding: 20px;
+    }
+
+    .epa-history-list-container {
+        .epa-history-list-header {
+            display: none; // Hide header on mobile
+        }
+
+        .epa-history-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 20px;
+        }
+
+        .epa-header-item, .epa-history-cell {
+            flex-basis: auto !important;
+            width: 100%;
+            text-align: left !important;
+
+            // Add labels for context on mobile
+            &::before {
+                content: attr(data-label);
+                font-weight: 700;
+                color: $header-color;
+                margin-right: 8px;
+                display: inline-block;
+                width: 80px; // Align labels
+            }
+
+            &.epa-course {
+                order: -1; // Move course to top
+                &::before { display: none; }
+            }
+            &.epa-date::before { content: 'Date'; }
+            &.epa-type::before { content: 'Type'; }
+            &.epa-score::before { content: 'Score'; }
+            &.epa-duration::before { content: 'Duration'; }
+        }
+    }
+}
