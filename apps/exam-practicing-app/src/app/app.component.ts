@@ -4,10 +4,16 @@ import { NavigationMenuComponent } from './shared/components/navigation-menu/nav
 import { distinctUntilChanged, map } from 'rxjs';
 import { APP_ROUTES } from './app.routes';
 import { CommonModule } from '@angular/common';
+import { AlertComponent } from './shared/components/alert/alert.component';
 
 @Component({
     standalone: true,
-    imports: [CommonModule, RouterModule, NavigationMenuComponent],
+    imports: [
+        CommonModule,
+        RouterModule,
+        NavigationMenuComponent,
+        AlertComponent,
+    ],
     selector: 'epa-root',
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',

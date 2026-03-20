@@ -124,10 +124,23 @@
               color: #58a700;
               cursor: pointer;
               transition: all 0.2s ease-in-out;
+              min-width: 120px; // Ensure button width doesn't shrink too much for spinner
+              min-height: 48px; // Ensure button height doesn't shrink
 
-              &:hover {
+              &:hover:not(:disabled) {
                 background-color: #f7f7f7;
                 border-color: #c0c0c0;
+              }
+
+              &:disabled {
+                cursor: not-allowed;
+                background-color: #f7f7f7;
+                color: #b0b0b0;
+                border-color: #e5e5e5;
+
+                .spinner-border {
+                  color: #58a700;
+                }
               }
 
               .currency-icon {

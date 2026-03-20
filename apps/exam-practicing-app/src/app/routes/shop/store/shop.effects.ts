@@ -2,9 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { ShopService } from './shop.service';
-import { catchError, exhaustMap, map, of } from 'rxjs';
+import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import { ShopActions } from './shop.actions';
 import { ShopStoreState } from './shop.reducer';
+import { AlertService } from '../../../shared/components/alert/alert.service';
 
 @Injectable()
 export class ShopEffects {
@@ -13,9 +14,12 @@ export class ShopEffects {
         Store<ShopStoreState>
     );
 
-    constructor(private readonly service: ShopService) {}
+    constructor(
+        private readonly service: ShopService,
+        private readonly alertService: AlertService
+    ) {}
 
-    readonly getTest$ = createEffect(() =>
+    readonly getShopList$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ShopActions.getShopList),
             exhaustMap(() =>
@@ -27,5 +31,33 @@ export class ShopEffects {
                 )
             )
         )
+    );
+
+    readonly purchaseItem$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ShopActions.purchaseItem),
+            exhaustMap((action) =>
+                this.service.purchaseItem(action.itemId).pipe(
+                    map((data) => ShopActions.purchaseItemSuccess({ data })),
+                    catchError((error) =>
+                        of(ShopActions.purchaseItemFailure({ error }))
+                    )
+                )
+            )
+        )
+    );
+
+    readonly purchaseItemSuccess$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(ShopActions.purchaseItemSuccess),
+                tap((action) => {
+                    this.alertService.showAlert(
+                        'Item thanh toán thành công',
+                        'success'
+                    );
+                })
+            ),
+        { dispatch: false }
     );
 }

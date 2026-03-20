@@ -24,12 +24,19 @@ import { ShopSection } from '@libs/models';
 })
 export class ShopComponent implements OnInit {
     shopList$: Observable<ShopSection[] | null>;
+    purchasing$: Observable<boolean>;
+
 
     constructor(private readonly store: Store<ShopStoreState>) {
         this.shopList$ = this.store.select(ShopSelectors.ShopList);
+        this.purchasing$ = this.store.select(ShopSelectors.IsPurchasing);
     }
 
     ngOnInit(): void {
         this.store.dispatch(ShopActions.getShopList());
+    }
+
+    purchaseItem(itemId: string | number): void {
+        this.store.dispatch(ShopActions.purchaseItem({ itemId }));
     }
 }
