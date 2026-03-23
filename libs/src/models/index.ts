@@ -12,3 +12,4 @@ export * from './test';
 export * from './user';
 export * from './result';
 export * from './shop';
+export * from './profile';

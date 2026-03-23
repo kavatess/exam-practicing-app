@@ -1,0 +1,47 @@
+<div class="epa-achievements-container">
+    @for (achievement of achievements; track achievement.id) {
+    <div class="epa-achievement-card">
+        <!-- Left Section: Icon -->
+        <div
+            class="epa-achievement-icon"
+            [class.locked]="achievement.currentProgress === 0"
+        >
+            <img [src]="achievement.iconUrl" [alt]="achievement.name" />
+        </div>
+
+        <!-- Center Section: Details & Progress -->
+        <div class="epa-achievement-details">
+            <h3 class="epa-achievement-title">{{ achievement.name }}</h3>
+            <p class="epa-achievement-description">
+                {{ achievement.description }}
+            </p>
+            <div class="epa-progress-bar-container">
+                <div
+                    class="epa-progress-bar-fill"
+                    [style.width.%]="
+                        getProgressPercentage(
+                            achievement.currentProgress,
+                            achievement.targetProgress
+                        )
+                    "
+                ></div>
+            </div>
+            <div class="epa-progress-text">
+                {{ achievement.currentProgress }} /
+                {{ achievement.targetProgress }}
+            </div>
+        </div>
+
+        <!-- Right Section: Level -->
+        <div class="epa-achievement-level">
+            <span class="epa-level-text">
+                Level {{ achievement.currentLevel }}
+            </span>
+        </div>
+    </div>
+    } @empty {
+    <div class="epa-empty-state">
+        <p>No achievements to display yet.</p>
+    </div>
+    }
+</div>

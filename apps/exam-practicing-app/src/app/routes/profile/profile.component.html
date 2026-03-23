@@ -1,1 +1,112 @@
-<p>profile works!</p>
+<div class="epa-profile">
+    <div class="epa-profile-right-container container-fluid">
+        <div class="epa-container">
+            <epa-dropdown-item [showCourseSelect]="true"></epa-dropdown-item>
+            <epa-quest-list></epa-quest-list>
+        </div>
+    </div>
+
+    <div class="epa-profile-left-container container-fluid">
+        <div class="epa-profile-container" *ngIf="profile$ | async as profile">
+            <!-- Profile Header -->
+            <div class="epa-profile-header">
+                <div class="epa-avatar-container">
+                    <img
+                        [src]="profile.profilePictureUrl"
+                        alt="Profile Avatar"
+                        class="epa-avatar-img"
+                    />
+                    <button class="epa-edit-avatar-btn">
+                        <mat-icon>photo_camera</mat-icon>
+                    </button>
+                </div>
+                <h2 class="epa-nickname">{{ profile.username }}</h2>
+                <p class="epa-username">{{ profile.username }}</p>
+                <div class="epa-joined-date">
+                    <mat-icon>calendar_today</mat-icon>
+                    <span
+                        >Joined
+                        {{ profile.joinedDate | date : 'MMMM yyyy' }}</span
+                    >
+                </div>
+            </div>
+
+            <hr class="epa-separator" />
+
+            <!-- Statistics Section -->
+            <div class="epa-profile-section">
+                <h3 class="epa-section-title">Statistics</h3>
+                <div class="epa-stats-grid">
+                    <!-- Day Streak -->
+                    <div class="epa-stat-card">
+                        <img
+                            src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/8a6dca76019d059a81c4c7c1145aa7a4.svg"
+                            alt="Day Streak"
+                            class="epa-stat-icon"
+                        />
+                        <div class="epa-stat-details">
+                            <span class="epa-stat-value">{{
+                                profile.stats.maxDayStreak
+                            }}</span>
+                            <span class="epa-stat-label">Day streak</span>
+                        </div>
+                    </div>
+                    <!-- Total XP -->
+                    <div class="epa-stat-card">
+                        <img
+                            src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/01ce3a817dd01842581c3d18debcbc46.svg"
+                            alt="Total XP"
+                            class="epa-stat-icon"
+                        />
+                        <div class="epa-stat-details">
+                            <span class="epa-stat-value">{{
+                                profile.stats.totalXP | number
+                            }}</span>
+                            <span class="epa-stat-label">Total XP</span>
+                        </div>
+                    </div>
+                    <!-- Questions Completed -->
+                    <div class="epa-stat-card">
+                        <img
+                            src="https://d35aaqx5ub95lt.cloudfront.net/images/leagues/8148b17e32d8706a82c02688f559e9ef.svg"
+                            alt="Questions Completed"
+                            class="epa-stat-icon"
+                        />
+                        <div class="epa-stat-details">
+                            <span class="epa-stat-value">{{
+                                profile.stats.questionCompleted | number
+                            }}</span>
+                            <span class="epa-stat-label">Questions</span>
+                        </div>
+                    </div>
+                    <!-- Average Score -->
+                    <div class="epa-stat-card">
+                        <img
+                            src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/105f8a43d07cdbbe393f9588eba784f8.svg"
+                            alt="Average Score"
+                            class="epa-stat-icon"
+                        />
+                        <div class="epa-stat-details">
+                            <span class="epa-stat-value"
+                                >{{
+                                    profile.stats.avgScore | number : '1.0-1'
+                                }}%</span
+                            >
+                            <span class="epa-stat-label">Avg. Score</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="epa-separator" />
+
+            <!-- Achievements Section -->
+            <div class="epa-profile-section">
+                <h3 class="epa-section-title">Achievements</h3>
+                <epa-achievements
+                    [achievements]="profile.achievements"
+                ></epa-achievements>
+            </div>
+        </div>
+    </div>
+</div>
