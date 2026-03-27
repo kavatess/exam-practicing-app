@@ -6,7 +6,17 @@ export enum AchievementProperties {
     description = 'description',
     rewards = 'rewards',
     conditions = 'conditions',
-    imgUrl = 'imgUrl',
+    iconUrl = 'iconUrl',
+}
+
+export enum UserAchievementProperties {
+    userId = 'userId',
+    achievementId = 'achievementId',
+    currentLevel = 'currentLevel',
+    maxLevel = 'maxLevel',
+    currentProgress = 'currentProgress',
+    targetProgress = 'targetProgress',
+    isCompleted = 'isCompleted',
 }
 
 export enum RewardProperties {
@@ -31,5 +41,15 @@ export interface Achievement extends BaseModel {
     [AchievementProperties.name]: string;
     [AchievementProperties.description]: string;
     [AchievementProperties.rewards]: Reward[];
-    [AchievementProperties.imgUrl]: string;
+    [AchievementProperties.iconUrl]: string;
+}
+
+export interface UserAchievement extends Achievement {
+    [UserAchievementProperties.userId]?: string;
+    [UserAchievementProperties.achievementId]?: string;
+    [UserAchievementProperties.currentLevel]: number;
+    [UserAchievementProperties.maxLevel]: number;
+    [UserAchievementProperties.currentProgress]: number;
+    [UserAchievementProperties.targetProgress]: number;
+    [UserAchievementProperties.isCompleted]: boolean;
 }

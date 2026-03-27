@@ -1,0 +1,102 @@
+// Variables
+$border-color: #e5e5e5;
+$text-color-dark: #3c3c3c;
+$text-color-light: #777777;
+$progress-bar-bg: #e5e5e5;
+$progress-bar-fill: #ffc800; // Duolingo Gold/Orange
+
+.epa-achievements-container {
+  width: 100%;
+
+  .epa-achievement-card {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border: 2px solid $border-color;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .epa-achievement-icon {
+    flex-shrink: 0;
+    margin-right: 16px;
+
+    img {
+      width: 80px;
+      height: 80px;
+      transition: filter 0.3s ease, opacity 0.3s ease;
+    }
+
+    &.locked img {
+      filter: grayscale(100%);
+      opacity: 0.5;
+    }
+  }
+
+  .epa-achievement-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .epa-achievement-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: $text-color-dark;
+      margin: 0;
+    }
+
+    .epa-achievement-description {
+      font-size: 0.9rem;
+      color: $text-color-light;
+      margin: 0;
+    }
+
+    .epa-progress-bar-container {
+      width: 100%;
+      height: 12px;
+      background-color: $progress-bar-bg;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .epa-progress-bar-fill {
+      height: 100%;
+      background-color: $progress-bar-fill;
+      border-radius: 10px;
+      transition: width 0.5s ease-in-out;
+    }
+
+    .epa-progress-text {
+      font-size: 0.8rem;
+      color: $text-color-light;
+      font-weight: 700;
+      text-align: center; // Or remove if you want it above the bar
+    }
+  }
+
+  .epa-achievement-level {
+    flex-shrink: 0;
+    margin-left: 16px;
+    text-align: center;
+
+    .epa-level-text {
+      font-size: 1rem;
+      font-weight: 700;
+      color: $text-color-light;
+    }
+
+    .epa-max-level-badge img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .epa-empty-state {
+    text-align: center;
+    padding: 32px;
+    color: $text-color-light;
+  }
+}
