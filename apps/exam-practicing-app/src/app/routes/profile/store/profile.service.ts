@@ -25,7 +25,7 @@ export class ProfileService {
                 {
                     id: 'ach1',
                     name: 'Sage',
-                    description: 'Earn 2000 XP in a single day',
+                    description: 'Đạt 2000XP trong 1 ngày',
                     iconUrl:
                         'https://d35aaqx5ub95lt.cloudfront.net/images/achievements/217492e7baf0961abdd2ddfb5881e7f9.svg',
                     currentLevel: 3,
@@ -37,7 +37,7 @@ export class ProfileService {
                 {
                     id: 'ach2',
                     name: 'Scholar',
-                    description: 'Learn 100 new words or concepts',
+                    description: 'Hoàn thành 100 câu hỏi luyện tập',
                     iconUrl:
                         'https://d35aaqx5ub95lt.cloudfront.net/images/achievements/c2b4bc98d8229b08fd45e85087868c24.svg',
                     currentLevel: 5,
@@ -49,7 +49,7 @@ export class ProfileService {
                 {
                     id: 'ach3',
                     name: 'Wildfire',
-                    description: 'Reach a 100-day streak',
+                    description: 'Đạt chuỗi 100 ngày học liên tiếp',
                     iconUrl:
                         'https://d35aaqx5ub95lt.cloudfront.net/images/achievements/a7018d3f4a89422f851e65a983ac94a8.svg',
                     currentLevel: 1,
