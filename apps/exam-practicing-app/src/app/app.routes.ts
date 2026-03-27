@@ -19,6 +19,9 @@ import { HistoryEffects } from './routes/history/store/history.effects';
 import { shopStoreKey } from './routes/shop/store/shop.selectors';
 import { ShopEffects } from './routes/shop/store/shop.effects';
 import { shopReducer } from './routes/shop/store/shop.reducer';
+import { profileReducer } from './routes/profile/store/profile.reducer';
+import { profileStoreKey } from './routes/profile/store/profile.selectors';
+import { ProfileEffects } from './routes/profile/store/profile.effects';
 
 export enum APP_ROUTES {
     LOGIN = 'login',
@@ -195,5 +198,17 @@ export const appRoutes: Route[] = [
             import('./routes/profile/profile.component').then(
                 (c) => c.ProfileComponent
             ),
+        providers: [
+            provideState({
+                name: dashboardStoreKey,
+                reducer: dashboardReducer,
+            }),
+            provideEffects(DashboardEffects),
+            provideState({
+                name: profileStoreKey,
+                reducer: profileReducer,
+            }),
+            provideEffects(ProfileEffects),
+        ],
     },
 ];
