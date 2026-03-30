@@ -1,19 +1,315 @@
-<div class="epa-test-container">
-    <div class="epa-test-header">
-        <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4">
-                <div class="epa-test-progress">
-                    <div class="epa-test-progress-txt">
-                        
-                    </div>
+<div class="epa-test-layout">
+    <!-- Sticky Header -->
+    <header class="epa-test-header">
+        <div class="header-content-wrapper">
+            <div class="header-left">
+                <img
+                    [src]="
+                        (test$ | async)?.course?.iconUrl ||
+                        'assets/default-exam-icon.png'
+                    "
+                    class="exam-icon"
+                    alt="Exam Icon"
+                />
+                <span class="exam-name">{{
+                    (test$ | async)?.course?.name
+                }}</span>
+            </div>
 
-                    <div class="epa-test-title">
-                        {{ (test$ | async)?.course?.name }}
+            <div
+                class="header-center"
+                *ngIf="{
+                    total: totalQuestions$ | async,
+                    progress: progress$ | async
+                } as counts"
+            >
+                <div class="question-counter">
+                    <span class="answered-count">{{
+                        (counts.progress! / 100) * counts.total!
+                            | number : '1.0-0'
+                    }}</span>
+                    <span class="divider">/</span>
+                    <span class="total-count">{{ counts.total }}</span>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="timer">
+                    <mat-icon>timer</mat-icon>
+                    <span>{{ formattedTime }}</span>
+                </div>
+                <button mat-icon-button class="close-btn" (click)="closeExam()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="header-progress-bar">
+            <mat-progress-bar
+                mode="determinate"
+                [value]="progress$ | async"
+            ></mat-progress-bar>
+        </div>
+    </header>
+
+    <div class="epa-test-body">
+        <!-- Left Navigation Sidebar -->
+        <aside class="epa-test-sidebar" [class.collapsed]="!isMenuVisible">
+            <div class="sidebar-toggle" (click)="toggleMenu()">
+                <mat-icon>menu</mat-icon>
+            </div>
+
+            <div class="sidebar-content" *ngIf="isMenuVisible">
+                <div class="question-tree">
+                    <div
+                        class="question-group"
+                        *ngFor="let page of pages$ | async; let pIndex = index"
+                    >
+                        <div
+                            class="group-title"
+                            (click)="setPage(pIndex)"
+                            [class.active-group]="
+                                (currentPageIndex$ | async) === pIndex
+                            "
+                        >
+                            {{ page.name }}
+                        </div>
+                        <div
+                            class="group-items"
+                            *ngIf="(currentPageIndex$ | async) === pIndex"
+                        >
+                            <div
+                                class="question-link"
+                                *ngFor="
+                                    let q of page.questions;
+                                    let qIndex = index
+                                "
+                                [class.active]="
+                                    activeQuestionId === q.questionId
+                                "
+                                [class.answered]="
+                                    q.userAnswer !== undefined &&
+                                    q.userAnswer !== null &&
+                                    q.userAnswer !== ''
+                                "
+                                (click)="jumpToQuestion(pIndex, q.questionId)"
+                            >
+                                Question {{ qIndex + 1 }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-4"></div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="epa-test-main">
+            <div class="page-container" *ngIf="currentPage$ | async as page">
+                <div class="page-header">
+                    <h2>{{ page.name }}</h2>
+                </div>
+
+                <form [formGroup]="testForm" class="questions-list">
+                    <div
+                        class="question-item-container"
+                        *ngFor="let q of page.questions; let qIndex = index"
+                        [id]="'question-' + q.questionId"
+                    >
+                        <div class="question-header">
+                            <span class="question-number"
+                                >Question {{ qIndex + 1 }}</span
+                            >
+                        </div>
+
+                        <div class="question-content">
+                            <div
+                                class="question-text"
+                                [innerHTML]="q.data?.content"
+                            ></div>
+
+                            <div
+                                class="question-media"
+                                *ngIf="q.data?.media?.length"
+                            >
+                                <div
+                                    class="media-item"
+                                    *ngFor="let media of q.data?.media"
+                                >
+                                    <img
+                                        [src]="media.url"
+                                        alt="Question Media"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="question-choices">
+                                <ng-container [ngSwitch]="q.data?.type">
+                                    <!-- Multiple Choice -->
+                                    <mat-radio-group
+                                        *ngSwitchCase="
+                                            QuestionTypes.MultipleChoice
+                                        "
+                                        class="choice-group"
+                                        [formControlName]="
+                                            getControlName(
+                                                (currentPageIndex$ | async)!,
+                                                qIndex
+                                            )
+                                        "
+                                    >
+                                        <mat-radio-button
+                                            *ngFor="
+                                                let choice of q.data?.choices;
+                                                let cIndex = index
+                                            "
+                                            [value]="cIndex"
+                                            class="choice-item"
+                                        >
+                                            <span
+                                                class="choice-txt"
+                                                [innerHTML]="choice"
+                                            ></span>
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+
+                                    <!-- True/False -->
+                                    <mat-radio-group
+                                        *ngSwitchCase="QuestionTypes.TrueFalse"
+                                        class="choice-group"
+                                        [formControlName]="
+                                            getControlName(
+                                                (currentPageIndex$ | async)!,
+                                                qIndex
+                                            )
+                                        "
+                                    >
+                                        <mat-radio-button
+                                            value="True"
+                                            class="choice-item"
+                                        >
+                                            <span class="choice-txt">True</span>
+                                        </mat-radio-button>
+                                        <mat-radio-button
+                                            value="False"
+                                            class="choice-item"
+                                        >
+                                            <span class="choice-txt"
+                                                >False</span
+                                            >
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+
+                                    <!-- Fallback -->
+                                    <div *ngSwitchDefault>
+                                        Unsupported question type.
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bottom Pagination & Action Bar -->
+    <footer class="epa-test-footer">
+        <div class="footer-left">
+            <!-- Spacer -->
+        </div>
+
+        <div class="footer-center">
+            <div class="pagination-controls">
+                <button
+                    mat-icon-button
+                    (click)="prevPage()"
+                    [disabled]="(currentPageIndex$ | async) === 0"
+                >
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+                <span class="page-indicator">
+                    Page {{ (currentPageIndex$ | async)! + 1 }} /
+                    {{ (pages$ | async)?.length }}
+                </span>
+                <button
+                    mat-icon-button
+                    (click)="nextPage()"
+                    [disabled]="
+                        (currentPageIndex$ | async) ===
+                        ((pages$ | async)?.length || 0) - 1
+                    "
+                >
+                    <mat-icon>chevron_right</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div class="footer-right">
+            <button
+                mat-raised-button
+                color="primary"
+                class="submit-btn"
+                (click)="submitExam(submissionModalContent)"
+            >
+                Submit Exam
+            </button>
+        </div>
+    </footer>
+</div>
+
+<!-- Submission Modal Template -->
+<ng-template #submissionModalContent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Note</h4>
+        <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="modal.dismiss('Cross click')"
+        ></button>
+    </div>
+    <div class="modal-body" *ngIf="unansweredQuestions$ | async as unanswered">
+        <p>Are you sure you want to submit the test?</p>
+
+        <div *ngIf="unanswered.length > 0" class="unanswered-section">
+            <p class="fw-bold">
+                You have not answered the following questions:
+            </p>
+            <ul class="list-group list-group-flush">
+                <li
+                    *ngFor="let q of unanswered"
+                    class="list-group-item list-group-item-action"
+                    (click)="jumpToQuestionFromModal(q.pageIndex, q.questionId)"
+                >
+                    {{ q.pageName }} - Question {{ q.questionIndex }}
+                </li>
+            </ul>
         </div>
     </div>
-</div>
+    <div class="modal-footer">
+        <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="modal.dismiss('cancel click')"
+        >
+            Cancel
+        </button>
+        <button
+            type="button"
+            class="btn btn-primary"
+            (click)="confirmSubmit()"
+            [disabled]="
+                (loading$ | async) || (unansweredQuestions$ | async)?.length
+            "
+        >
+            @if ((loading$ | async)) {
+            <span
+                class="spinner-border"
+                style="width: 1rem; height: 1rem"
+                role="status"
+            >
+                <span class="visually-hidden">Loading...</span>
+            </span>
+            } Submit
+        </button>
+    </div>
+</ng-template>

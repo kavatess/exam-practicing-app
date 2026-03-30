@@ -22,6 +22,9 @@ import { shopReducer } from './routes/shop/store/shop.reducer';
 import { profileReducer } from './routes/profile/store/profile.reducer';
 import { profileStoreKey } from './routes/profile/store/profile.selectors';
 import { ProfileEffects } from './routes/profile/store/profile.effects';
+import { testStoreKey } from './routes/test/store/test.selectors';
+import { testReducer } from './routes/test/store/test.reducer';
+import { TestEffects } from './routes/test/store/test.effects';
 
 export enum APP_ROUTES {
     LOGIN = 'login',
@@ -115,6 +118,14 @@ export const appRoutes: Route[] = [
                     import('./routes/test/test.component').then(
                         (c) => c.TestComponent
                     ),
+                providers: [
+                    provideState({
+                        name: testStoreKey,
+                        reducer: testReducer,
+                    }),
+
+                    provideEffects(TestEffects),
+                ],
             },
         ],
     },
