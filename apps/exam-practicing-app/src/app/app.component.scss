@@ -22,8 +22,16 @@
         width: 100%;
         max-width: 1100px;
     }
+
+    .epa-main-test-container {
+        width: 100%;
+    }
 }
 
-.epa-practice-container{
+.epa-practice-container {
+    padding-left: 0 !important;
+}
+
+.epa-test-container {
     padding-left: 0 !important;
 }

@@ -3,13 +3,19 @@
     [class.epa-practice-container]="
         (currRoute$ | async) === APP_ROUTES.PRACTICE
     "
+    [class.epa-test-container]="(currRoute$ | async) === APP_ROUTES.TEST"
 >
-    @if ((currRoute$ | async) !== APP_ROUTES.PRACTICE) {
+    @if ((currRoute$ | async) !== APP_ROUTES.PRACTICE && (currRoute$ | async)
+    !== APP_ROUTES.TEST) {
     <epa-navigation-menu></epa-navigation-menu>
     }
-    <div class="epa-main-container">
+    <div
+        [ngClass]="
+            (currRoute$ | async) !== APP_ROUTES.TEST
+                ? 'epa-main-container'
+                : 'epa-main-test-container'
+        "
+    >
         <router-outlet></router-outlet>
     </div>
 </div>
-
-<epa-alert></epa-alert>

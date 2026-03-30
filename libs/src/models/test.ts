@@ -1,7 +1,8 @@
 import { BaseModel } from './base';
 import { QuestionData, QuestionTypes } from './question';
-import { Course, Subject, SubjectUnit } from './subject';
 import { User } from './user';
+import { MoldPage } from './mold';
+import { Course, Subject, SubUnit } from './subject';
 
 export enum TestProperties {
     // structureId = 'structureId',
@@ -26,6 +27,7 @@ export enum TestProperties {
     score = 'score',
     status = 'status',
     questions = 'questions',
+    pages = 'pages',
     // description = 'description',
 }
 
@@ -48,14 +50,14 @@ export interface Test extends BaseModel {
     [TestProperties.courseId]: string;
     [TestProperties.course]?: Course;
     // [TestProperties.structure]?: TestStructure;
-    [TestProperties.userId]?: string;
+    [TestProperties.userId]: string;
     [TestProperties.user]?: User;
     [TestProperties.name]: string;
     [TestProperties.type]: TestTypes;
     [TestProperties.numOfQuestions]: number;
     [TestProperties.difficulty]: TestDifficulties;
     [TestProperties.unitIds]: string[];
-    [TestProperties.units]?: SubjectUnit[];
+    [TestProperties.units]?: SubUnit[];
     [TestProperties.questionTypes]: QuestionTypes[];
     [TestProperties.duration]: number;
     [TestProperties.startTime]: Date;
@@ -63,7 +65,8 @@ export interface Test extends BaseModel {
     [TestProperties.totalScore]: number;
     [TestProperties.score]: number;
     [TestProperties.status]: string;
-    [TestProperties.questions]: TestQuestion[];
+    [TestProperties.questions]?: TestQuestion[];
+    [TestProperties.pages]?: TestPage[];
     // [TestProperties.description]: string;
 }
 
@@ -77,43 +80,26 @@ export enum TestQuestionProperties {
 }
 
 export interface TestQuestion extends QuestionData {
-    [TestQuestionProperties.testId]: string;
+    [TestQuestionProperties.testId]?: string;
 }
 
-// export enum TestStructureProperties {
-//     testId = 'testId',
-//     test = 'test',
-//     subjectId = 'subjectId',
-//     subject = 'subject',
-//     courseId = 'courseId',
-//     course = 'course',
-//     type = 'type',
-//     numOfQuestions = 'numOfQuestions',
-//     difficulty = 'difficulty',
-//     unitIds = 'unitIds',
-//     units = 'units',
-//     // subUnitIds = 'subUnitIds',
-//     // subUnits = 'subUnits',
-//     questionTypes = 'questionTypes',
-// }
+export interface TestPage extends MoldPage {
+    questions: TestQuestion[];
+}
 
 export enum TestDifficulties {
+    VeryEasy = 'VeryEasy',
     Easy = 'Easy',
     Normal = 'Normal',
     Advanced = 'Advanced',
-}
-
-export enum TestMoldTypes {
-    Base = 'Base',
-    Predefined = 'Predefined',
-    Customized = 'Customized',
+    Hard = 'Hard',
 }
 
 // export interface TestStructure extends BaseModel {
 //     [TestStructureProperties.testId]: string;
 //     [TestStructureProperties.test]?: Test;
 //     [TestStructureProperties.subjectId]: string;
-//     [TestStructureProperties.subject]?: Subject;
+//     [TestStructureProperties.subject]?: Course;
 //     [TestStructureProperties.courseId]: string;
 //     [TestStructureProperties.course]?: Course;
 //     [TestStructureProperties.type]: TestStructureTypes;
@@ -125,30 +111,3 @@ export enum TestMoldTypes {
 //     // [TestStructureProperties.subUnits]?: SubUnit[];
 //     [TestStructureProperties.questionTypes]?: QuestionTypes[];
 // }
-
-export enum TestMoldProperties {
-    testId = 'testId',
-    // testStructure = 'testStructure',
-    // index = 'index',
-    type = 'type',
-    numOfQuestions = 'numOfQuestions',
-    difficulty = 'difficulty',
-    unitIds = 'unitIds',
-    units = 'units',
-    // subUnitIds = 'subUnitIds',
-    // subUnits = 'subUnits',
-    questionTypes = 'questionTypes',
-}
-
-export interface TestMold extends BaseModel {
-    [TestMoldProperties.testId]?: string;
-    // [TestMoldProperties.testStructure]?: TestStructure;
-    [TestMoldProperties.type]: TestMoldTypes;
-    [TestMoldProperties.numOfQuestions]: number;
-    [TestMoldProperties.difficulty]: TestDifficulties;
-    [TestMoldProperties.unitIds]: string[];
-    [TestMoldProperties.units]?: SubjectUnit[];
-    // [TestMoldProperties.subUnitIds]: string[];
-    // [TestMoldProperties.subUnits]?: SubUnit[];
-    [TestMoldProperties.questionTypes]: QuestionTypes[];
-}

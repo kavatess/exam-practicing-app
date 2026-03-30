@@ -79,8 +79,8 @@ export class TestConfigPopupComponent {
 
     createTest() {
         this.service.createTest(this.form.value as any).subscribe((test) => {
+            this.activeModal.close();
             this.router.navigate([APP_ROUTES.TEST, test.id]);
         });
-        this.activeModal.close();
     }
 }
