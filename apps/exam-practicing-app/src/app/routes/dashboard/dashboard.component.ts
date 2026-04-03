@@ -12,10 +12,14 @@ import {
     NgbModal,
     NgbModalConfig,
     NgbModalModule,
+    NgbNavModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { TestConfigPopupComponent } from './test-config-popup/test-config-popup.component';
 import { Course } from '@libs/models';
 import { CourseUnitComponent } from './course-unit/course-unit.component';
+import { StatisticsComponent } from './statistics/statistics.component';
+import { TestHistoryComponent } from './test-history/test-history.component';
+import { UnitTableComponent } from './unit-table/unit-table.component';
 
 @Component({
     selector: 'epa-dashboard',
@@ -29,6 +33,13 @@ import { CourseUnitComponent } from './course-unit/course-unit.component';
         NgbModalModule,
         NgbDropdownModule,
         CourseUnitComponent,
+        NgbNavModule,
+        StatisticsComponent,
+        TestHistoryComponent,
+        UnitTableComponent,
+        StatisticsComponent,
+        TestHistoryComponent,
+        UnitTableComponent,
     ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss',
@@ -44,6 +55,10 @@ export class DashboardComponent {
 
     get course$() {
         return this.store.select(CourseSelectors.CourseData);
+    }
+
+    get courseId() {
+        return this.store.select(CourseSelectors.CourseID);
     }
 
     get units$() {

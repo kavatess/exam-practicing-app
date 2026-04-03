@@ -37,9 +37,41 @@
             </div>
 
             <div class="epa-course-journey mt-2">
-                @for(unit of (units$ | async); track unit) {
-                <epa-course-unit [unit]="unit"></epa-course-unit>
-                }
+                <ul
+                    ngbNav
+                    #nav="ngbNav"
+                    class="nav-tabs"
+                    [destroyOnHide]="false"
+                >
+                    <li [ngbNavItem]="1">
+                        <button ngbNavLink>
+                            <div class="epa-course-nav-title">Chương trình</div>
+                        </button>
+
+                        <ng-template ngbNavContent>
+                            @for(unit of (units$ | async); track unit) {
+                            <epa-course-unit [unit]="unit"></epa-course-unit>
+                            }
+                        </ng-template>
+                    </li>
+
+                    <li [ngbNavItem]="2">
+                        <button ngbNavLink>
+                            <div class="epa-course-nav-title">Thống kê</div>
+                        </button>
+
+                        <ng-template ngbNavContent>
+                            <epa-statistics></epa-statistics>
+                            <epa-test-history></epa-test-history>
+                            <epa-unit-table></epa-unit-table>
+                        </ng-template>
+                    </li>
+                </ul>
+
+                <div
+                    [ngbNavOutlet]="nav"
+                    class="epa-course-content mt-2"
+                ></div>
             </div>
         </ng-container>
     </div>
