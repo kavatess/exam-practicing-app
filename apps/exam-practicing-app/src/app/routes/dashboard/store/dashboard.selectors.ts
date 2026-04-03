@@ -46,18 +46,30 @@ export const QuestsSelectors = {
 export const CourseSelectors = {
     CourseList: createSelector(
         dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.course.list || []
+        (state: DashboardStoreState) => state.courses.list || []
     ),
     SelectedCourseId: createSelector(
         dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.course.selectedCourseId || ''
+        (state: DashboardStoreState) => state.courses.selectedCourseId || ''
     ),
     CourseData: createSelector(
         dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.course.data || null
+        (state: DashboardStoreState) => state.courses.data || null
     ),
     CourseUnits: createSelector(
         dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.course.data?.units || []
+        (state: DashboardStoreState) => state.courses.data?.units || []
+    ),
+    CourseID: createSelector(
+        dashboardFeatureSelector,
+        (state: DashboardStoreState) => state.courses.selectedCourseId || ''
+    ),
+    TestHistoryList: createSelector(
+        dashboardFeatureSelector,
+        (state: DashboardStoreState) => state.testHistory.list || []
+    ),
+    TestHistoryPagination: createSelector(
+        dashboardFeatureSelector,
+        (state: DashboardStoreState) => state.testHistory.pagination || null
     ),
 };

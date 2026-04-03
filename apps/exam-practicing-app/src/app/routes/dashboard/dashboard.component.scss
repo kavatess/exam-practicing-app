@@ -107,6 +107,11 @@
 
         .epa-course-journey {
             width: calc(100% - 8px);
+
+            .epa-course-nav-title {
+                font-size: 17px;
+                font-weight: 500;
+            }
         }
     }
 }

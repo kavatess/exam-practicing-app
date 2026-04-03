@@ -4,12 +4,12 @@ import { provideEffects } from '@ngrx/effects';
 import { dashboardStoreKey } from './routes/dashboard/store/dashboard.selectors';
 import { dashboardReducer } from './routes/dashboard/store/dashboard.reducer';
 import { DashboardEffects } from './routes/dashboard/store/dashboard.effects';
-import { libraryStoreKey } from './routes/library/store/library.selectors';
-import { libraryReducer } from './routes/library/store/library.reducer';
-import { LibraryEffects } from './routes/library/store/library.effects';
-import { courseStoreKey } from './routes/course/store/course.selectors';
-import { courseReducer } from './routes/course/store/course.reducer';
-import { CourseEffects } from './routes/course/store/course.effects';
+// import { libraryStoreKey } from './routes/library/store/library.selectors';
+// import { libraryReducer } from './routes/library/store/library.reducer';
+// import { LibraryEffects } from './routes/library/store/library.effects';
+// import { courseStoreKey } from './routes/course/store/course.selectors';
+// import { courseReducer } from './routes/course/store/course.reducer';
+// import { CourseEffects } from './routes/course/store/course.effects';
 import { practiceStoreKey } from './routes/practice/store/practice.selectors';
 import { practiceReducer } from './routes/practice/store/practice.reducer';
 import { PracticeEffects } from './routes/practice/store/practice.effects';
@@ -64,51 +64,51 @@ export const appRoutes: Route[] = [
             provideEffects(DashboardEffects),
         ],
     },
-    {
-        path: APP_ROUTES.LIBRARY,
-        children: [
-            {
-                path: '',
-                loadComponent: () =>
-                    import('./routes/library/library.component').then(
-                        (c) => c.LibraryComponent
-                    ),
-                providers: [
-                    provideState({
-                        name: libraryStoreKey,
-                        reducer: libraryReducer,
-                    }),
-                    provideEffects(LibraryEffects),
-                ],
-            },
-            {
-                path: ':courseId',
-                loadComponent: () =>
-                    import('./routes/course/course.component').then(
-                        (c) => c.CourseComponent
-                    ),
-                providers: [
-                    provideState({
-                        name: dashboardStoreKey,
-                        reducer: dashboardReducer,
-                    }),
-                    provideEffects(DashboardEffects),
-                    provideState({
-                        name: courseStoreKey,
-                        reducer: courseReducer,
-                    }),
-                    provideEffects(CourseEffects),
-                ],
-            },
-        ],
-    },
-    {
-        path: APP_ROUTES.COURSE,
-        loadComponent: () =>
-            import('./routes/course/course.component').then(
-                (c) => c.CourseComponent
-            ),
-    },
+    // {
+    //     path: APP_ROUTES.LIBRARY,
+    //     children: [
+    //         {
+    //             path: '',
+    //             loadComponent: () =>
+    //                 import('./routes/library/library.component').then(
+    //                     (c) => c.LibraryComponent
+    //                 ),
+    //             providers: [
+    //                 provideState({
+    //                     name: libraryStoreKey,
+    //                     reducer: libraryReducer,
+    //                 }),
+    //                 provideEffects(LibraryEffects),
+    //             ],
+    //         },
+    //         {
+    //             path: ':courseId',
+    //             loadComponent: () =>
+    //                 import('./routes/course/course.component').then(
+    //                     (c) => c.CourseComponent
+    //                 ),
+    //             providers: [
+    //                 provideState({
+    //                     name: dashboardStoreKey,
+    //                     reducer: dashboardReducer,
+    //                 }),
+    //                 provideEffects(DashboardEffects),
+    //                 provideState({
+    //                     name: courseStoreKey,
+    //                     reducer: courseReducer,
+    //                 }),
+    //                 provideEffects(CourseEffects),
+    //             ],
+    //         },
+    //     ],
+    // },
+    // {
+    //     path: APP_ROUTES.COURSE,
+    //     loadComponent: () =>
+    //         import('./routes/course/course.component').then(
+    //             (c) => c.CourseComponent
+    //         ),
+    // },
     {
         path: APP_ROUTES.TEST,
         children: [

@@ -68,6 +68,7 @@ export class DropdownItemComponent implements OnInit {
     ngOnInit(): void {
         if (this.showCourseSelect) {
             this.store.dispatch(CourseActions.getCourses());
+            this.store.dispatch(CourseActions.getCurrCourse());
         }
         this.store.dispatch(StreakActions.getStreakDays());
         this.store.dispatch(EnergyActions.getEnergyAmount());

@@ -133,5 +133,65 @@ export class DashboardEffects {
         )
     );
 
+    readonly getCurrCourse$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CourseActions.getCurrCourse),
+            withLatestFrom(this.store.select(CourseSelectors.CourseID)),
+            exhaustMap(([, courseId]) =>
+                this.service.getCourseById(courseId).pipe(
+                    map((data) => CourseActions.getCurrCourseSuccess({ data })),
+                    catchError((error) =>
+                        of(CourseActions.getCurrCourseFailure({ error }))
+                    )
+                )
+            )
+        )
+    );
+
+    readonly getTestHistory$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CourseActions.getTestHistory),
+            withLatestFrom(
+                this.store.select(CourseSelectors.CourseID),
+                this.store.select(CourseSelectors.TestHistoryPagination)
+            ),
+            exhaustMap(([, courseId, pagination]) =>
+                this.service.getTestHistory(courseId, pagination).pipe(
+                    map((list) =>
+                        CourseActions.getTestHistorySuccess({ list })
+                    ),
+                    catchError((error) =>
+                        of(CourseActions.getTestHistoryFailure({ error }))
+                    )
+                )
+            )
+        )
+    );
+
+    readonly changeHistoryPage$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CourseActions.changeHistoryPage),
+            withLatestFrom(
+                this.store.select(CourseSelectors.CourseID),
+                this.store.select(CourseSelectors.TestHistoryPagination)
+            ),
+            exhaustMap(([action, courseId, pagination]) =>
+                this.service
+                    .getTestHistory(courseId, {
+                        ...pagination,
+                        page: action.page,
+                    })
+                    .pipe(
+                        map((list) =>
+                            CourseActions.getTestHistorySuccess({ list })
+                        ),
+                        catchError((error) =>
+                            of(CourseActions.getTestHistoryFailure({ error }))
+                        )
+                    )
+            )
+        )
+    );
+
     constructor(private readonly service: DashboardService) {}
 }
