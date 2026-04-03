@@ -39,10 +39,11 @@ export enum APP_ROUTES {
 }
 
 export const appRoutes: Route[] = [
-    // {
-    //     path: '',
-    //     redirectTo: `/${APP_ROUTES.DASHBOARD}`,
-    // },
+    {
+        path: '',
+        redirectTo: APP_ROUTES.DASHBOARD,
+        pathMatch: 'full'
+    },
     {
         path: APP_ROUTES.LOGIN,
         loadComponent: () =>
