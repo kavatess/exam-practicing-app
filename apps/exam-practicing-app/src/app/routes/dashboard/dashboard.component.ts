@@ -75,6 +75,7 @@ export class DashboardComponent {
                 value: unit.id,
             })
         );
+        modalRef.componentInstance.ngOnInit();
         // modalRef.result.then(
         //     (result) => {
         //         console.log(`Closed with: ${result}`);

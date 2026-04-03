@@ -16,6 +16,21 @@
 </div>
 
 <div class="modal-body">
+    @if (loading){
+    <div class="epa-test-creating">
+        <div
+            class="spinner-border text-secondary"
+            role="status"
+            style="width: 7rem; height: 7rem"
+        >
+            <span class="visually-hidden">Loading...</span>
+        </div>
+
+        <div class="epa-text text-center mt-3">
+            Khởi tạo bài test phù hợp cho bạn...
+        </div>
+    </div>
+    } @else {
     <div class="epa-config-body" [formGroup]="form">
         <div class="epa-config-item">
             <label class="epa-config-item-title" for="durationSelect">
@@ -107,10 +122,11 @@
         <!--            </div>-->
         <!--        </div>-->
     </div>
+    }
 </div>
 
 <div class="modal-footer">
-    <button mat-fab extended (click)="createTest(); $event.preventDefault()">
+    <button mat-fab extended (click)="createTest(); $event.preventDefault()" [disabled]="loading">
         <mat-icon fontIcon="build"></mat-icon>
         Let's go
     </button>

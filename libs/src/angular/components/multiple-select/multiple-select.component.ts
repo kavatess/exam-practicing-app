@@ -58,15 +58,29 @@ export class MultipleSelectComponent
     @Input()
     options: Option[] = [];
 
+    // @Input()
+    // defaultSelectAll = false;
+
     onChange = (val: any[]) => {};
     onTouched = () => {};
 
     multiSelect = this.fb.array([]);
     selectedOptions: Option[] = [];
-    subscription: Subscription = null;
+    subscription: Subscription | null = null;
+
+    // private isInitialized = false;
 
     get displayText(): string {
-        return this.selectedOptions.map((opt) => opt.title).join(', ');
+        if (
+            this.selectedOptions.length === this.options.length &&
+            this.options.length > 0
+        ) {
+            return 'Tất cả';
+        }
+        return (
+            this.selectedOptions.map((opt) => opt.title).join(', ') ||
+            'Select...'
+        );
     }
 
     ngOnInit(): void {
@@ -78,37 +92,52 @@ export class MultipleSelectComponent
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['options']) {
-            console.log(this.options)
-            this.multiSelect.clear({
-                emitEvent: false,
-            });
-            this.options.forEach(() => {
-                this.multiSelect.push(this.fb.control(false), {
-                    emitEvent: false,
-                });
-            });
+            this.rebuildFormControls();
+            // if (
+            //     this.defaultSelectAll &&
+            //     !this.isInitialized &&
+            //     this.options.length > 0
+            // ) {
+            //     this.selectAllOnInit();
+            // }
         }
     }
 
+    private rebuildFormControls(): void {
+        this.multiSelect.clear({ emitEvent: false });
+        this.options.forEach(() => {
+            this.multiSelect.push(this.fb.control(false), { emitEvent: false });
+        });
+    }
+
+    // private selectAllOnInit(): void {
+    //     const allValues = this.options.map((opt) => opt.value);
+    //     this.writeValue(allValues);
+    //     // Propagate the change upwards
+    //     this.onChange(allValues);
+    //     this.isInitialized = true;
+    // }
+
     writeValue(items: any[]): void {
-        if (this.options.length > 0) {
-            this.selectedOptions = this.options.filter((opt) =>
-                items.includes(opt.value)
+        if (!items) {
+            this.multiSelect.patchValue(
+                this.options.map(() => false),
+                { emitEvent: false }
             );
-        } else {
-            this.selectedOptions = items.map((item) => ({
-                value: item,
-                title: item,
-            }));
+            return;
         }
 
-        this.options.forEach(({ value }, index) => {
-            if (items.includes(value)) {
-                this.multiSelect.at(index).patchValue(true, {
-                    emitEvent: false,
-                });
-            }
-        });
+        const selectedValues = new Set(items);
+        const newFormValues = this.options.map((opt) =>
+            selectedValues.has(opt.value)
+        );
+
+        this.multiSelect.patchValue(newFormValues, { emitEvent: false });
+
+        // Update the selectedOptions for display text
+        this.selectedOptions = this.options.filter((opt) =>
+            selectedValues.has(opt.value)
+        );
     }
 
     registerOnChange(fn: any): void {
@@ -121,6 +150,11 @@ export class MultipleSelectComponent
 
     setDisabledState(disabled: boolean): void {
         this.disabled = disabled;
+        if (disabled) {
+            this.multiSelect.disable();
+        } else {
+            this.multiSelect.enable();
+        }
     }
 
     ngOnDestroy(): void {

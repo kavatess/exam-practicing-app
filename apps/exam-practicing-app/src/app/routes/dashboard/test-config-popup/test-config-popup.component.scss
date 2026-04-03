@@ -27,6 +27,14 @@
 }
 
 .modal-body {
+    .epa-test-creating {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
     .epa-config-body {
         .epa-config-item {
             display: flex;
