@@ -58,10 +58,17 @@
     display: flex;
     justify-content: space-between;
     padding: 1rem 1.5rem;
-    background-color: #f5f5f5;
     border-bottom: 1px solid #ccc;
     font-size: 16px;
+}
+
+.epa-correct-answer {
     background-color: #defacf;
+}
+
+.epa-incorrect-answer {
+  background-color: #ed9891;
+  color: #fff;
 }
 
 .epa-question-body {

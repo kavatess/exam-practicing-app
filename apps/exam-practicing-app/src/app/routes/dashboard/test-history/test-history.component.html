@@ -57,7 +57,13 @@
 
                 <div class="col-2">
                     <div class="epa-item-field">
-                        <button class="btn btn-light">
+                        <button
+                            class="btn btn-light"
+                            (click)="
+                                navigateToHistoryDetails(test.id);
+                                $event.preventDefault()
+                            "
+                        >
                             <i class="bi bi-arrow-bar-right"></i>
                         </button>
                     </div>

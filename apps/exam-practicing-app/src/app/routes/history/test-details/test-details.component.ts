@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { HistoryStoreState } from '../store/history.reducer';
 import { HistoryActions } from '../store/history.actions';
 import { HistorySelectors } from '../store/history.selectors';
-import { ResultTypes } from '@libs/models';
+import { QuestionStates, ResultTypes } from '@libs/models';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { NgCircleProgressModule } from 'ng-circle-progress';
@@ -24,6 +24,8 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     styleUrl: './test-details.component.scss',
 })
 export class TestDetailsComponent implements OnInit {
+    readonly QuestionStates = QuestionStates;
+
     constructor(
         private readonly activatedRoute: ActivatedRoute,
         private readonly store: Store<HistoryStoreState>

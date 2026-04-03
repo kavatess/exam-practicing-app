@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TestDifficulties, TestProperties, TestTypes } from '@libs/models';
@@ -33,7 +33,7 @@ import { TestConfigService } from './test-config.service';
     templateUrl: './test-config-popup.component.html',
     styleUrl: './test-config-popup.component.scss',
 })
-export class TestConfigPopupComponent {
+export class TestConfigPopupComponent implements OnInit {
     public readonly activeModal = inject(NgbActiveModal);
     private readonly fb = inject(FormBuilder);
 
@@ -48,6 +48,8 @@ export class TestConfigPopupComponent {
 
     @Input()
     unitOptions: Option[] = [];
+
+    loading = false;
 
     readonly form = this.fb.group({
         [TestProperties.duration]: [
@@ -77,10 +79,23 @@ export class TestConfigPopupComponent {
         private readonly router: Router
     ) {}
 
+    ngOnInit(): void {
+        if (this.unitOptions.length) {
+            this.form.controls.unitIds.patchValue(
+                this.unitOptions.map((opt) => opt.value) as any,
+                {
+                    emitEvent: false,
+                }
+            );
+        }
+    }
+
     createTest() {
+        this.loading = true;
         this.service.createTest(this.form.value as any).subscribe((test) => {
             this.activeModal.close();
             this.router.navigate([APP_ROUTES.TEST, test.id]);
+            this.loading = false;
         });
     }
 }
