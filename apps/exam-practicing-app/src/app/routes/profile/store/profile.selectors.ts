@@ -14,4 +14,8 @@ export const ProfileSelectors = {
         profileFeatureSelector,
         (state: ProfileStoreState) => state.profile.data || null
     ),
+    IsUploading: createSelector(
+        profileFeatureSelector,
+        (state: ProfileStoreState) => state.profile.isUploading
+    ),
 };

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Profile } from '@libs/models';
 import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
@@ -60,5 +61,13 @@ export class ProfileService {
                 },
             ],
         } as Profile);
+    }
+
+    uploadProfilePicture(file: File): Observable<{ profilePictureUrl: string }> {
+        // Mock API call
+        console.log('Uploading file:', file.name);
+        // Create a new URL for the uploaded image to simulate a real upload
+        const newImageUrl = URL.createObjectURL(file);
+        return of({ profilePictureUrl: newImageUrl }).pipe(delay(1500)); // Simulate network delay
     }
 }

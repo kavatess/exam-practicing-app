@@ -3,7 +3,7 @@
   bottom: 20px;
   right: 20px;
   z-index: 1050; /* Bootstrap modal z-index is 1050, so this should be on top */
-  width: 300px; /* Adjust as needed */
+  width: 360px;
 
   ngb-alert {
     margin-bottom: 0; /* Remove default margin */
