@@ -32,4 +32,18 @@ export class ProfileEffects {
             )
         )
     );
+
+    readonly uploadProfilePicture$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ProfileActions.uploadProfilePicture),
+            exhaustMap(({ file }) =>
+                this.service.uploadProfilePicture(file).pipe(
+                    map((response) => ProfileActions.uploadProfilePictureSuccess({ profilePictureUrl: response.profilePictureUrl })),
+                    catchError((error) =>
+                        of(ProfileActions.uploadProfilePictureFailure({ error }))
+                    )
+                )
+            )
+        )
+    );
 }

@@ -9,5 +9,10 @@ export const ProfileActions = createActionGroup({
         initProfile: emptyProps(),
         initProfileSuccess: props<{ data: Profile }>(),
         initProfileFailure: props<{ error: any }>(),
+
+        // Upload Profile Picture
+        uploadProfilePicture: props<{ file: File }>(),
+        uploadProfilePictureSuccess: props<{ profilePictureUrl: string }>(),
+        uploadProfilePictureFailure: props<{ error: any }>(),
     },
 });

@@ -8,6 +8,9 @@
 
     <div class="epa-profile-left-container container-fluid">
         <div class="epa-profile-container" *ngIf="profile$ | async as profile">
+            <!-- Hidden file input -->
+            <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+
             <!-- Profile Header -->
             <div class="epa-profile-header">
                 <div class="epa-avatar-container">
@@ -16,8 +19,14 @@
                         alt="Profile Avatar"
                         class="epa-avatar-img"
                     />
-                    <button class="epa-edit-avatar-btn">
-                        <mat-icon>photo_camera</mat-icon>
+                    <button class="epa-edit-avatar-btn" (click)="triggerFileInput()" [disabled]="isUploading$ | async">
+                        @if (isUploading$ | async) {
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        } @else {
+                            <mat-icon>photo_camera</mat-icon>
+                        }
                     </button>
                 </div>
                 <h2 class="epa-nickname">{{ profile.username }}</h2>
@@ -76,7 +85,7 @@
                             <span class="epa-stat-value">{{
                                 profile.stats.questionCompleted | number
                             }}</span>
-                            <span class="epa-stat-label">Câu hỏi</span>
+                            <span class="epa-stat-label">Questions</span>
                         </div>
                     </div>
                     <!-- Average Score -->
@@ -92,7 +101,7 @@
                                     profile.stats.avgScore | number : '1.0-1'
                                 }}%</span
                             >
-                            <span class="epa-stat-label">Điểm TB</span>
+                            <span class="epa-stat-label">Avg. Score</span>
                         </div>
                     </div>
                 </div>
