@@ -91,9 +91,9 @@ export const appRoutes: Route[] = [
     //             providers: [
     //                 provideState({
     //                     name: dashboardStoreKey,
-    //                     reducer: dashboardReducer,
+    //                     reducer: subjectManagementReducer,
     //                 }),
-    //                 provideEffects(DashboardEffects),
+    //                 provideEffects(SubjectManagementEffects),
     //                 provideState({
     //                     name: courseStoreKey,
     //                     reducer: courseReducer,

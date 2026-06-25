@@ -1,1 +1,63 @@
-<app-nx-welcome></app-nx-welcome> <router-outlet></router-outlet>
+<div class="adm-admin-layout">
+  <!-- Sidebar Navigation -->
+  <nav class="adm-sidebar" *ngIf="authService.isAuthenticated$ | async">
+    <div class="adm-sidebar-header">
+      <a [routerLink]="['/', ADMIN_APP_ROUTES.DASHBOARD]">Admin Panel</a>
+    </div>
+    <ul class="adm-nav-list">
+      <li class="adm-nav-item">
+        <a [routerLink]="['/', ADMIN_APP_ROUTES.DASHBOARD]" routerLinkActive="active" class="adm-nav-link">
+          <i class="bi bi-grid-1x2-fill me-2"></i>
+          Dashboard
+        </a>
+      </li>
+      <li class="adm-nav-item">
+        <a [routerLink]="['/', ADMIN_APP_ROUTES.SUBJECT_MANAGEMENT]" routerLinkActive="active" class="adm-nav-link">
+          <i class="bi bi-book-fill me-2"></i>
+          Subjects
+        </a>
+      </li>
+      <li class="adm-nav-item">
+        <a [routerLink]="['/', ADMIN_APP_ROUTES.QUESTION_BANK]" routerLinkActive="active" class="adm-nav-link">
+          <i class="bi bi-patch-question-fill me-2"></i>
+          Questions
+        </a>
+      </li>
+      <li class="adm-nav-item">
+        <a [routerLink]="['/', ADMIN_APP_ROUTES.ACHIEVEMENT_MANAGEMENT]" routerLinkActive="active" class="adm-nav-link">
+          <i class="bi bi-trophy-fill me-2"></i>
+          Achievements
+        </a>
+      </li>
+      <li class="adm-nav-item">
+        <a [routerLink]="['/', ADMIN_APP_ROUTES.QUEST_MANAGEMENT]" routerLinkActive="active" class="adm-nav-link">
+          <i class="bi bi-flag-fill me-2"></i>
+          Quests
+        </a>
+      </li>
+      <li class="adm-nav-item">
+        <a [routerLink]="['/', ADMIN_APP_ROUTES.SHOP_MANAGEMENT]" routerLinkActive="active" class="adm-nav-link">
+          <i class="bi bi-shop me-2"></i>
+          Shop
+        </a>
+      </li>
+      <li class="adm-nav-item">
+        <a [routerLink]="['/', ADMIN_APP_ROUTES.USER_MANAGEMENT]" routerLinkActive="active" class="adm-nav-link">
+          <i class="bi bi-people-fill me-2"></i>
+          Users
+        </a>
+      </li>
+    </ul>
+    <div class="adm-sidebar-footer">
+      <a (click)="authService.logout()" [routerLink]="['/', ADMIN_APP_ROUTES.LOGIN]" class="adm-nav-link">
+        <i class="bi bi-box-arrow-left me-2"></i>
+        Logout
+      </a>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="adm-main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

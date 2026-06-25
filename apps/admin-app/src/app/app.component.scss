@@ -1,0 +1,81 @@
+// Variables
+$sidebar-width: 260px;
+$sidebar-bg: #212529; // Bootstrap dark background
+$sidebar-text-color: #adb5bd;
+$sidebar-active-bg: #343a40;
+$sidebar-hover-color: #ffffff;
+$main-content-bg: #f8f9fa; // Bootstrap light gray
+
+.adm-admin-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.adm-sidebar {
+  width: $sidebar-width;
+  background-color: $sidebar-bg;
+  color: $sidebar-text-color;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+
+  .adm-sidebar-header {
+    padding: 1.25rem 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+
+    a {
+      color: #ffffff;
+      text-decoration: none;
+    }
+  }
+
+  .adm-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  .adm-nav-item {
+    .adm-nav-link {
+      display: flex;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      color: $sidebar-text-color;
+      text-decoration: none;
+      transition: background-color 0.2s, color 0.2s;
+
+      i {
+        font-size: 1.1rem;
+      }
+
+      &:hover {
+        background-color: $sidebar-active-bg;
+        color: $sidebar-hover-color;
+      }
+
+      &.active {
+        background-color: $sidebar-active-bg;
+        color: #ffffff;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .adm-sidebar-footer {
+    padding: 1.5rem;
+    border-top: 1px solid #343a40;
+    text-align: center;
+  }
+}
+
+.adm-main-content {
+  flex-grow: 1;
+  background-color: $main-content-bg;
+  padding: 2rem;
+  overflow-y: auto;
+}

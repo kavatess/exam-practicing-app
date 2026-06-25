@@ -1,0 +1,52 @@
+// Variables
+$primary-color: #0d6efd; // Bootstrap primary blue
+
+.adm-login-wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+// Left Column Styling
+.adm-login-left {
+  width: 50%;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80');
+  background-size: cover;
+  background-position: center;
+}
+
+// Right Column Styling
+.adm-login-right {
+  width: 50%;
+  background-color: #ffffff;
+}
+
+.adm-login-form-container {
+  width: 100%;
+  max-width: 450px;
+}
+
+// Password toggle button
+.form-floating {
+  position: relative;
+
+  .adm-password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: #6c757d; // Bootstrap muted color
+    z-index: 3; // Ensure it's above the input
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 991.98px) {
+  .adm-login-right {
+    width: 100%;
+  }
+}
