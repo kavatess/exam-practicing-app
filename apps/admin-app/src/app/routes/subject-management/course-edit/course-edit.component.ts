@@ -29,21 +29,23 @@ export interface CourseEditDialogData {
   styleUrl: './course-edit.component.scss',
 })
 export class CourseEditComponent {
-  readonly isEditMode = !!this.data.course;
-
-  readonly form = this.fb.group({
-    code: [this.data.course?.code || '', [Validators.required, Validators.maxLength(20)]],
-    name: [this.data.course?.name || '', [Validators.required, Validators.maxLength(100)]],
-    description: [this.data.course?.description || '', [Validators.maxLength(500)]],
-    iconUrl: [this.data.course?.iconUrl || ''],
-  });
+  readonly isEditMode: boolean;
+  readonly form: ReturnType<FormBuilder['group']>;
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly store: Store,
     private readonly dialogRef: MatDialogRef<CourseEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CourseEditDialogData
-  ) {}
+  ) {
+    this.isEditMode = !!this.data.course;
+    this.form = this.fb.group({
+      code: [this.data.course?.code || '', [Validators.required, Validators.maxLength(20)]],
+      name: [this.data.course?.name || '', [Validators.required, Validators.maxLength(100)]],
+      description: [this.data.course?.description || '', [Validators.maxLength(500)]],
+      iconUrl: [this.data.course?.iconUrl || ''],
+    });
+  }
 
   cancel(): void {
     this.dialogRef.close();

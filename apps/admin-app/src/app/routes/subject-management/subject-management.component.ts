@@ -36,11 +36,11 @@ import { SubjectEditComponent } from './subject-edit/subject-edit.component';
   styleUrl: './subject-management.component.scss',
 })
 export class SubjectManagementComponent implements OnInit {
-  readonly subjects$: Observable<Subject[]> = this.store.select(selectAllSubjects);
-  readonly selectedSubjectId$: Observable<string | null> = this.store.select(selectSelectedSubjectId);
-  readonly selectedSubject$: Observable<Subject | null> = this.store.select(selectSelectedSubject);
-  readonly courses$: Observable<Course[]> = this.store.select(selectAllCourses);
-  readonly loading$: Observable<boolean> = this.store.select(selectLoading);
+  readonly subjects$: Observable<Subject[]>;
+  readonly selectedSubjectId$: Observable<string | null>;
+  readonly selectedSubject$: Observable<Subject | null>;
+  readonly courses$: Observable<Course[]>;
+  readonly loading$: Observable<boolean>;
 
   readonly courseColumns = ['code', 'name', 'description', 'actions'];
 
@@ -51,7 +51,13 @@ export class SubjectManagementComponent implements OnInit {
     private readonly store: Store,
     private readonly dialog: MatDialog,
     private readonly snackBar: MatSnackBar
-  ) {}
+  ) {
+    this.subjects$ = this.store.select(selectAllSubjects);
+    this.selectedSubjectId$ = this.store.select(selectSelectedSubjectId);
+    this.selectedSubject$ = this.store.select(selectSelectedSubject);
+    this.courses$ = this.store.select(selectAllCourses);
+    this.loading$ = this.store.select(selectLoading);
+  }
 
   ngOnInit(): void {
     this.store.dispatch(SubjectActions.loadSubjects());

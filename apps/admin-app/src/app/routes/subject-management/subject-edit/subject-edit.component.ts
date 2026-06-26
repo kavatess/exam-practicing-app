@@ -24,19 +24,21 @@ import { SubjectActions } from '../store/subject-management.actions';
   styleUrl: './subject-edit.component.scss',
 })
 export class SubjectEditComponent {
-  readonly isEditMode = !!this.data;
-
-  readonly form = this.fb.group({
-    name: [this.data?.name || '', [Validators.required, Validators.maxLength(100)]],
-    description: [this.data?.description || '', [Validators.maxLength(500)]],
-  });
+  readonly isEditMode: boolean;
+  readonly form: ReturnType<FormBuilder['group']>;
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly store: Store,
     private readonly dialogRef: MatDialogRef<SubjectEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Subject | null
-  ) {}
+  ) {
+    this.isEditMode = !!this.data;
+    this.form = this.fb.group({
+      name: [this.data?.name || '', [Validators.required, Validators.maxLength(100)]],
+      description: [this.data?.description || '', [Validators.maxLength(500)]],
+    });
+  }
 
   cancel(): void {
     this.dialogRef.close();
