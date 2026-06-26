@@ -1,1 +1,46 @@
-<p>dashboard works!</p>
+<div class="adm-stat-row">
+  <mat-card class="adm-stat-card" *ngFor="let card of statCards">
+    <div class="adm-stat-icon" [ngClass]="card.colorClass">
+      <mat-icon>{{ card.icon }}</mat-icon>
+    </div>
+    <div class="adm-stat-body">
+      <span class="adm-stat-label">{{ card.label }}</span>
+      <span class="adm-stat-value">{{ card.value | number }}</span>
+    </div>
+  </mat-card>
+</div>
+
+<div class="adm-panel-row">
+  <mat-card class="adm-panel adm-panel--wide">
+    <h3 class="adm-panel-title">Recent Activity</h3>
+    <table mat-table [dataSource]="recentActivity" class="adm-activity-table">
+      <ng-container matColumnDef="user">
+        <th mat-header-cell *matHeaderCellDef>User</th>
+        <td mat-cell *matCellDef="let row">{{ row.user }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let row">{{ row.action }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let row">{{ row.date }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="activityColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: activityColumns"></tr>
+    </table>
+  </mat-card>
+
+  <mat-card class="adm-panel adm-panel--narrow">
+    <h3 class="adm-panel-title">Questions by Subject</h3>
+    <ul class="adm-subject-list">
+      <li class="adm-subject-row" *ngFor="let item of questionsBySubject">
+        <span class="adm-subject-name">{{ item.subject }}</span>
+        <span class="adm-subject-count">{{ item.count | number }}</span>
+      </li>
+    </ul>
+  </mat-card>
+</div>

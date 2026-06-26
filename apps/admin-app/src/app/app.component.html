@@ -1,63 +1,51 @@
-<div class="adm-admin-layout">
-  <!-- Sidebar Navigation -->
-  <nav class="adm-sidebar" *ngIf="authService.isAuthenticated$ | async">
-    <div class="adm-sidebar-header">
-      <a [routerLink]="['/', ADMIN_APP_ROUTES.DASHBOARD]">Admin Panel</a>
-    </div>
-    <ul class="adm-nav-list">
-      <li class="adm-nav-item">
-        <a [routerLink]="['/', ADMIN_APP_ROUTES.DASHBOARD]" routerLinkActive="active" class="adm-nav-link">
-          <i class="bi bi-grid-1x2-fill me-2"></i>
-          Dashboard
-        </a>
-      </li>
-      <li class="adm-nav-item">
-        <a [routerLink]="['/', ADMIN_APP_ROUTES.SUBJECT_MANAGEMENT]" routerLinkActive="active" class="adm-nav-link">
-          <i class="bi bi-book-fill me-2"></i>
-          Subjects
-        </a>
-      </li>
-      <li class="adm-nav-item">
-        <a [routerLink]="['/', ADMIN_APP_ROUTES.QUESTION_BANK]" routerLinkActive="active" class="adm-nav-link">
-          <i class="bi bi-patch-question-fill me-2"></i>
-          Questions
-        </a>
-      </li>
-      <li class="adm-nav-item">
-        <a [routerLink]="['/', ADMIN_APP_ROUTES.ACHIEVEMENT_MANAGEMENT]" routerLinkActive="active" class="adm-nav-link">
-          <i class="bi bi-trophy-fill me-2"></i>
-          Achievements
-        </a>
-      </li>
-      <li class="adm-nav-item">
-        <a [routerLink]="['/', ADMIN_APP_ROUTES.QUEST_MANAGEMENT]" routerLinkActive="active" class="adm-nav-link">
-          <i class="bi bi-flag-fill me-2"></i>
-          Quests
-        </a>
-      </li>
-      <li class="adm-nav-item">
-        <a [routerLink]="['/', ADMIN_APP_ROUTES.SHOP_MANAGEMENT]" routerLinkActive="active" class="adm-nav-link">
-          <i class="bi bi-shop me-2"></i>
-          Shop
-        </a>
-      </li>
-      <li class="adm-nav-item">
-        <a [routerLink]="['/', ADMIN_APP_ROUTES.USER_MANAGEMENT]" routerLinkActive="active" class="adm-nav-link">
-          <i class="bi bi-people-fill me-2"></i>
-          Users
-        </a>
-      </li>
-    </ul>
-    <div class="adm-sidebar-footer">
-      <a (click)="authService.logout()" [routerLink]="['/', ADMIN_APP_ROUTES.LOGIN]" class="adm-nav-link">
-        <i class="bi bi-box-arrow-left me-2"></i>
-        Logout
-      </a>
-    </div>
-  </nav>
+<ng-container *ngIf="authService.isAuthenticated$ | async; else routerOnly">
+  <mat-sidenav-container class="adm-shell">
+    <mat-sidenav class="adm-sidebar" mode="side" [opened]="true" disableClose>
+      <div class="adm-sidebar-brand">
+        <span class="adm-sidebar-brand-text">Admin Panel</span>
+      </div>
 
-  <!-- Main Content Area -->
-  <main class="adm-main-content">
-    <router-outlet></router-outlet>
-  </main>
-</div>
+      <nav class="adm-nav-list">
+        <a
+          *ngFor="let link of navLinks"
+          [routerLink]="['/', link.route]"
+          routerLinkActive="adm-nav-link--active"
+          class="adm-nav-link"
+        >
+          <mat-icon class="adm-nav-link-icon">{{ link.icon }}</mat-icon>
+          <span class="adm-nav-link-label">{{ link.label }}</span>
+        </a>
+      </nav>
+
+      <div class="adm-sidebar-footer" *ngIf="currentUser as user">
+        <div class="adm-user-avatar">{{ userInitials }}</div>
+        <span class="adm-user-name">{{ user.username }}</span>
+        <button
+          mat-icon-button
+          class="adm-logout-btn"
+          aria-label="Logout"
+          (click)="logout()"
+        >
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="adm-content">
+      <header class="adm-topbar">
+        <span class="adm-topbar-title">{{ pageTitle }}</span>
+        <button mat-icon-button class="adm-topbar-bell" aria-label="Notifications">
+          <mat-icon>notifications</mat-icon>
+        </button>
+      </header>
+
+      <main class="adm-page">
+        <router-outlet></router-outlet>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-container>
+
+<ng-template #routerOnly>
+  <router-outlet></router-outlet>
+</ng-template>

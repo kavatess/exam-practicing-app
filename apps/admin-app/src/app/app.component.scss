@@ -1,15 +1,17 @@
-// Variables
-$sidebar-width: 260px;
-$sidebar-bg: #212529; // Bootstrap dark background
-$sidebar-text-color: #adb5bd;
-$sidebar-active-bg: #343a40;
-$sidebar-hover-color: #ffffff;
-$main-content-bg: #f8f9fa; // Bootstrap light gray
+$sidebar-width: 240px;
+$sidebar-bg: #1e1e2e;
+$sidebar-text-color: #c7c7d9;
+$sidebar-text-muted: #8a8aa3;
+$accent-color: #6366f1;
+$topbar-height: 56px;
 
-.adm-admin-layout {
-  display: flex;
+:host {
+  display: block;
   height: 100vh;
-  overflow: hidden;
+}
+
+.adm-shell {
+  height: 100vh;
 }
 
 .adm-sidebar {
@@ -18,64 +20,135 @@ $main-content-bg: #f8f9fa; // Bootstrap light gray
   color: $sidebar-text-color;
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  border-right: none;
+}
 
-  .adm-sidebar-header {
-    padding: 1.25rem 1.5rem;
-    font-size: 1.5rem;
+.adm-sidebar-brand {
+  padding: 1.25rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  .adm-sidebar-brand-text {
+    color: #ffffff;
+    font-size: 1.15rem;
     font-weight: 700;
-    text-align: center;
-
-    a {
-      color: #ffffff;
-      text-decoration: none;
-    }
-  }
-
-  .adm-nav-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    flex-grow: 1;
-  }
-
-  .adm-nav-item {
-    .adm-nav-link {
-      display: flex;
-      align-items: center;
-      padding: 1rem 1.5rem;
-      color: $sidebar-text-color;
-      text-decoration: none;
-      transition: background-color 0.2s, color 0.2s;
-
-      i {
-        font-size: 1.1rem;
-      }
-
-      &:hover {
-        background-color: $sidebar-active-bg;
-        color: $sidebar-hover-color;
-      }
-
-      &.active {
-        background-color: $sidebar-active-bg;
-        color: #ffffff;
-        font-weight: 500;
-      }
-    }
-  }
-
-  .adm-sidebar-footer {
-    padding: 1.5rem;
-    border-top: 1px solid #343a40;
-    text-align: center;
+    letter-spacing: 0.02em;
   }
 }
 
-.adm-main-content {
-  flex-grow: 1;
-  background-color: $main-content-bg;
-  padding: 2rem;
+.adm-nav-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 0.75rem;
+  gap: 0.2rem;
+  flex: 1;
   overflow-y: auto;
+}
+
+.adm-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  color: $sidebar-text-color;
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  .adm-nav-link-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: inherit;
+  }
+
+  .adm-nav-link-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+  }
+
+  &--active {
+    background-color: rgba(99, 102, 241, 0.15);
+    color: #ffffff;
+    border-left-color: $accent-color;
+
+    .adm-nav-link-icon {
+      color: $accent-color;
+    }
+  }
+}
+
+.adm-sidebar-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  .adm-user-avatar {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: $accent-color;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .adm-user-name {
+    flex: 1;
+    font-size: 0.85rem;
+    color: $sidebar-text-color;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .adm-logout-btn {
+    color: $sidebar-text-muted;
+
+    &:hover {
+      color: #ffffff;
+    }
+  }
+}
+
+.adm-content {
+  background-color: #f4f5f9;
+}
+
+.adm-topbar {
+  height: $topbar-height;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  .adm-topbar-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .adm-topbar-bell {
+    color: #6b7280;
+  }
+}
+
+.adm-page {
+  padding: 1.5rem;
 }

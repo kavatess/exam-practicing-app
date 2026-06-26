@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { User, UserRoles, UserStatus } from '@libs/models';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +10,27 @@ export class AuthService {
   // Initially, the user is not authenticated.
   private _isAuthenticated = new BehaviorSubject<boolean>(false);
 
+  private _currentUser = new BehaviorSubject<User | null>({
+    id: 'admin-1',
+    username: 'admin',
+    firstName: 'Admin',
+    lastName: 'User',
+    schoolName: '',
+    city: '',
+    yob: 2000,
+    phone: '',
+    email: 'admin@example.com',
+    role: UserRoles.Admin,
+    status: UserStatus.Active,
+  });
+
   /**
    * Observable to check if the user is authenticated.
    * Components can subscribe to this to show/hide content.
    */
   public isAuthenticated$: Observable<boolean> = this._isAuthenticated.asObservable();
+
+  public currentUser$: Observable<User | null> = this._currentUser.asObservable();
 
   constructor() { }
 
@@ -23,6 +40,10 @@ export class AuthService {
    */
   isLoggedIn(): boolean {
     return this._isAuthenticated.getValue();
+  }
+
+  getCurrentUser(): User | null {
+    return this._currentUser.getValue();
   }
 
   /**

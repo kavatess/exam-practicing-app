@@ -1,75 +1,44 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { DashboardStoreState } from './subject-management.reducer';
+import { SubjectManagementState } from './subject-management.reducer';
 
-// Feature Key
-export const dashboardStoreKey = 'dashboard';
+export const subjectManagementFeatureKey = 'subjectManagement';
 
-// Selectors
-export const dashboardFeatureSelector =
-    createFeatureSelector<DashboardStoreState>(dashboardStoreKey);
+export const subjectManagementFeatureSelector =
+  createFeatureSelector<SubjectManagementState>(subjectManagementFeatureKey);
 
-// Dropdown Item Selectors
-export const StreakSelectors = {
-    StreakDays: createSelector(
-        dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.streak.streakDays || 0
-    ),
-};
+export const selectAllSubjects = createSelector(
+  subjectManagementFeatureSelector,
+  (state) => state.subjects
+);
 
-export const EnergiesSelectors = {
-    EnergyAmount: createSelector(
-        dashboardFeatureSelector,
-        (state: DashboardStoreState) => state?.energies.value || 0
-    ),
-};
+export const selectSelectedSubjectId = createSelector(
+  subjectManagementFeatureSelector,
+  (state) => state.selectedSubjectId
+);
 
-export const GemsSelectors = {
-    GemAmount: createSelector(
-        dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.gems.value || 0
-    ),
-};
+export const selectSelectedSubject = createSelector(
+  selectAllSubjects,
+  selectSelectedSubjectId,
+  (subjects, selectedSubjectId) =>
+    subjects.find((subject) => subject.id === selectedSubjectId) || null
+);
 
-// Quest Selectors
-export const QuestsSelectors = {
-    QuestList: createSelector(
-        dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.quests.list || []
-    ),
-    QuestLength: createSelector(
-        dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.quests.length || 0
-    ),
-};
+export const selectAllCourses = createSelector(
+  subjectManagementFeatureSelector,
+  (state) => state.courses
+);
 
-// Course Selectors
-export const CourseSelectors = {
-    CourseList: createSelector(
-        dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.courses.list || []
-    ),
-    SelectedCourseId: createSelector(
-        dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.courses.selectedCourseId || ''
-    ),
-    CourseData: createSelector(
-        dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.courses.data || null
-    ),
-    CourseUnits: createSelector(
-        dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.courses.data?.units || []
-    ),
-    CourseID: createSelector(
-        dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.courses.selectedCourseId || ''
-    ),
-    TestHistoryList: createSelector(
-        dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.testHistory.list || []
-    ),
-    TestHistoryPagination: createSelector(
-        dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.testHistory.pagination || null
-    ),
-};
+export const selectSelectedCourseId = createSelector(
+  subjectManagementFeatureSelector,
+  (state) => state.selectedCourseId
+);
+
+export const selectLoading = createSelector(
+  subjectManagementFeatureSelector,
+  (state) => state.loading
+);
+
+export const selectError = createSelector(
+  subjectManagementFeatureSelector,
+  (state) => state.error
+);

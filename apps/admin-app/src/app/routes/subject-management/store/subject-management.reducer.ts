@@ -1,79 +1,87 @@
 import { createReducer, on } from '@ngrx/store';
-import { Course, Pagination, Quest, Test } from '@libs/models';
-import {
-    CourseActions,
+import { Course, Subject } from '@libs/models';
+import { CourseActions, SubjectActions } from './subject-management.actions';
 
-} from './subject-management.actions';
-
-export interface DashboardStoreState {
-    courses: {
-        list: Course[];
-        selectedCourseId: string;
-        data: Course;
-        loading: boolean;
-    };
-
+export interface SubjectManagementState {
+  subjects: Subject[];
+  selectedSubjectId: string | null;
+  courses: Course[];
+  selectedCourseId: string | null;
+  loading: boolean;
+  error: string | null;
 }
 
-export const initialState: DashboardStoreState = {
-    courses: {
-        list: [],
-        selectedCourseId: 'abc',
-        data: null,
-        loading: false,
-    },
-
+export const initialState: SubjectManagementState = {
+  subjects: [],
+  selectedSubjectId: null,
+  courses: [],
+  selectedCourseId: null,
+  loading: false,
+  error: null,
 };
 
 export const subjectManagementReducer = createReducer(
-    initialState,
-    // Course Events
-    on(CourseActions.getCoursesSuccess, (state, { list }) => ({
-        ...state,
-        courses: {
-            ...state.courses,
-            list,
-            data: {
-                ...state.courses?.data,
-                ...list[0],
-            },
-        },
-    })),
-    on(CourseActions.selectCourseSuccess, (state, { data }) => ({
-        ...state,
-        courses: {
-            ...state.courses,
-            data,
-        },
-    })),
+  initialState,
 
-    on(CourseActions.getCurrCourseSuccess, (state, { data }) => ({
-        ...state,
-        courses: {
-            ...state.courses,
-            data: {
-                ...state.courses?.data,
-                ...data,
-            },
-        },
-    })),
+  on(SubjectActions.loadSubjects, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(SubjectActions.loadSubjectsSuccess, (state, { subjects }) => ({
+    ...state,
+    subjects,
+    loading: false,
+  })),
+  on(SubjectActions.loadSubjectsFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
 
-    // Test History events
-    on(CourseActions.getTestHistorySuccess, (state, { list }) => ({
-        ...state,
-        testHistory: {
-            ...state.testHistory,
-            list,
-        },
-    })),
-    on(CourseActions.changeHistoryPage, (state, { page }) => ({
-        ...state,
-        testHistory: {
-            ...state.testHistory,
-            pagination: {
-                ...state.testHistory.pagination,
-                page,
-            },
-        },
-    }))
+  on(SubjectActions.createSubject, (state) => ({ ...state, loading: true, error: null })),
+  on(SubjectActions.createSubjectFailure, (state, { error }) => ({ ...state, loading: false, error })),
+
+  on(SubjectActions.updateSubject, (state) => ({ ...state, loading: true, error: null })),
+  on(SubjectActions.updateSubjectFailure, (state, { error }) => ({ ...state, loading: false, error })),
+
+  on(SubjectActions.deleteSubject, (state) => ({ ...state, loading: true, error: null })),
+  on(SubjectActions.deleteSubjectFailure, (state, { error }) => ({ ...state, loading: false, error })),
+
+  on(SubjectActions.selectSubject, (state, { id }) => ({
+    ...state,
+    selectedSubjectId: id,
+    courses: [],
+    selectedCourseId: null,
+  })),
+
+  on(CourseActions.loadCourses, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(CourseActions.loadCoursesSuccess, (state, { courses }) => ({
+    ...state,
+    courses,
+    loading: false,
+  })),
+  on(CourseActions.loadCoursesFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+
+  on(CourseActions.createCourse, (state) => ({ ...state, loading: true, error: null })),
+  on(CourseActions.createCourseFailure, (state, { error }) => ({ ...state, loading: false, error })),
+
+  on(CourseActions.updateCourse, (state) => ({ ...state, loading: true, error: null })),
+  on(CourseActions.updateCourseFailure, (state, { error }) => ({ ...state, loading: false, error })),
+
+  on(CourseActions.deleteCourse, (state) => ({ ...state, loading: true, error: null })),
+  on(CourseActions.deleteCourseFailure, (state, { error }) => ({ ...state, loading: false, error })),
+
+  on(CourseActions.selectCourse, (state, { id }) => ({
+    ...state,
+    selectedCourseId: id,
+  }))
 );

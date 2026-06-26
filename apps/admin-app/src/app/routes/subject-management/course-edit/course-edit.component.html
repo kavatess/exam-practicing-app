@@ -1,7 +1,12 @@
-<h2 mat-dialog-title>{{ isEditMode ? 'Edit Subject' : 'New Subject' }}</h2>
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit Course' : 'New Course' }}</h2>
 
 <form [formGroup]="form">
   <mat-dialog-content>
+    <mat-form-field appearance="outline" class="adm-full-width">
+      <mat-label>Code</mat-label>
+      <input matInput formControlName="code" maxlength="20" />
+    </mat-form-field>
+
     <mat-form-field appearance="outline" class="adm-full-width">
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" maxlength="100" />
@@ -10,6 +15,11 @@
     <mat-form-field appearance="outline" class="adm-full-width">
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description" maxlength="500" rows="4"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="adm-full-width">
+      <mat-label>Icon URL</mat-label>
+      <input matInput formControlName="iconUrl" />
     </mat-form-field>
   </mat-dialog-content>
 

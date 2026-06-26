@@ -1,197 +1,151 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { map, exhaustMap, catchError, withLatestFrom } from 'rxjs/operators';
-import { SubjectManagementService } from './subject-management.service';
-import {
-    CourseActions,
-    EnergyActions,
-    GemActions,
-    QuestActions,
-    StreakActions,
-} from './subject-management.actions';
 import { Store } from '@ngrx/store';
-import { DashboardStoreState } from './subject-management.reducer';
-import { CourseSelectors } from './subject-management.selectors';
+import { catchError, exhaustMap, filter, map, of, withLatestFrom } from 'rxjs';
+import { CourseActions, SubjectActions } from './subject-management.actions';
+import { SubjectManagementState } from './subject-management.reducer';
+import { selectSelectedSubjectId } from './subject-management.selectors';
+import { SubjectManagementService } from './subject-management.service';
 
 @Injectable()
 export class SubjectManagementEffects {
-    private readonly actions$: Actions = inject(Actions);
-    private readonly store: Store<DashboardStoreState> = inject(
-        Store<DashboardStoreState>
-    );
+  private readonly actions$ = inject(Actions);
+  private readonly service = inject(SubjectManagementService);
+  private readonly store = inject(Store<SubjectManagementState>);
 
-    readonly getCourseList$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(CourseActions.getCourses),
-            exhaustMap(() =>
-                this.service.getAvailableCourses().pipe(
-                    map((list) => CourseActions.getCoursesSuccess({ list })),
-                    catchError((error) =>
-                        of(CourseActions.getCoursesFailure({ error }))
-                    )
-                )
-            )
+  loadSubjects$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SubjectActions.loadSubjects),
+      exhaustMap(() =>
+        this.service.getSubjects().pipe(
+          map((subjects) => SubjectActions.loadSubjectsSuccess({ subjects })),
+          catchError((error) =>
+            of(SubjectActions.loadSubjectsFailure({ error: error.message }))
+          )
         )
-    );
+      )
+    )
+  );
 
-    readonly selectDefaultCourse$ = createEffect(
-        () =>
-            this.actions$.pipe(
-                ofType(CourseActions.getCoursesSuccess),
-                withLatestFrom(
-                    this.store.select(CourseSelectors.SelectedCourseId)
-                ),
-                exhaustMap(([, id]) =>
-                    this.service.getCourseById(id).pipe(
-                        map((data) =>
-                            CourseActions.selectCourseSuccess({ data })
-                        ),
-                        catchError((error) =>
-                            of(CourseActions.getCoursesFailure({ error }))
-                        )
-                    )
-                )
-            ),
-        { dispatch: false }
-    );
-
-    readonly getUserStreakDays$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(StreakActions.getStreakDays),
-            exhaustMap(() =>
-                this.service.getUserStreakDays().pipe(
-                    map((streakDays) =>
-                        StreakActions.getStreakDaysSuccess({ streakDays })
-                    ),
-                    catchError((error) =>
-                        of(StreakActions.getStreakDaysFailure({ error }))
-                    )
-                )
-            )
+  createSubject$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SubjectActions.createSubject),
+      exhaustMap(({ subject }) =>
+        this.service.createSubject(subject).pipe(
+          map((created) => SubjectActions.createSubjectSuccess({ subject: created })),
+          catchError((error) =>
+            of(SubjectActions.createSubjectFailure({ error: error.message }))
+          )
         )
-    );
+      )
+    )
+  );
 
-    readonly getUserEnergyAmount$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(EnergyActions.getEnergyAmount),
-            exhaustMap(() =>
-                this.service.getUserEnergyAmount().pipe(
-                    map((energy) =>
-                        EnergyActions.getEnergyAmountSuccess({ value: energy })
-                    ),
-                    catchError((error) =>
-                        of(EnergyActions.getEnergyAmountFailure({ error }))
-                    )
-                )
-            )
+  updateSubject$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SubjectActions.updateSubject),
+      exhaustMap(({ id, subject }) =>
+        this.service.updateSubject(id, subject).pipe(
+          map((updated) => SubjectActions.updateSubjectSuccess({ subject: updated })),
+          catchError((error) =>
+            of(SubjectActions.updateSubjectFailure({ error: error.message }))
+          )
         )
-    );
+      )
+    )
+  );
 
-    readonly getUserGemAmount$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(GemActions.getGemAmount),
-            exhaustMap(() =>
-                this.service.getUserGemAmount().pipe(
-                    map((gem) =>
-                        GemActions.getGemAmountSuccess({ value: gem })
-                    ),
-                    catchError((error) =>
-                        of(GemActions.getGemAmountFailure({ error }))
-                    )
-                )
-            )
+  deleteSubject$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SubjectActions.deleteSubject),
+      exhaustMap(({ id }) =>
+        this.service.deleteSubject(id).pipe(
+          map(() => SubjectActions.deleteSubjectSuccess({ id })),
+          catchError((error) =>
+            of(SubjectActions.deleteSubjectFailure({ error: error.message }))
+          )
         )
-    );
+      )
+    )
+  );
 
-    readonly getQuests$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(QuestActions.getQuests),
-            exhaustMap(() =>
-                this.service.getUserQuests().pipe(
-                    map((list) => QuestActions.getQuestsSuccess({ list })),
-                    catchError((error) =>
-                        of(QuestActions.getQuestsFailure({ error }))
-                    )
-                )
-            )
+  refreshSubjectsAfterMutation$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(
+        SubjectActions.createSubjectSuccess,
+        SubjectActions.updateSubjectSuccess,
+        SubjectActions.deleteSubjectSuccess
+      ),
+      map(() => SubjectActions.loadSubjects())
+    )
+  );
+
+  loadCourses$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CourseActions.loadCourses),
+      exhaustMap(({ subjectId }) =>
+        this.service.getCourses(subjectId).pipe(
+          map((courses) => CourseActions.loadCoursesSuccess({ courses })),
+          catchError((error) =>
+            of(CourseActions.loadCoursesFailure({ error: error.message }))
+          )
         )
-    );
+      )
+    )
+  );
 
-    readonly selectCourse$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(CourseActions.selectCourse),
-            withLatestFrom(this.store.select(CourseSelectors.SelectedCourseId)),
-            exhaustMap(([, selectedCourseId]) =>
-                this.service.getCourseById(selectedCourseId).pipe(
-                    map((data) => CourseActions.selectCourseSuccess({ data })),
-                    catchError((error) =>
-                        of(CourseActions.selectCourseFailure({ error }))
-                    )
-                )
-            )
+  createCourse$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CourseActions.createCourse),
+      exhaustMap(({ course }) =>
+        this.service.createCourse(course).pipe(
+          map((created) => CourseActions.createCourseSuccess({ course: created })),
+          catchError((error) =>
+            of(CourseActions.createCourseFailure({ error: error.message }))
+          )
         )
-    );
+      )
+    )
+  );
 
-    readonly getCurrCourse$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(CourseActions.getCurrCourse),
-            withLatestFrom(this.store.select(CourseSelectors.CourseID)),
-            exhaustMap(([, courseId]) =>
-                this.service.getCourseById(courseId).pipe(
-                    map((data) => CourseActions.getCurrCourseSuccess({ data })),
-                    catchError((error) =>
-                        of(CourseActions.getCurrCourseFailure({ error }))
-                    )
-                )
-            )
+  updateCourse$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CourseActions.updateCourse),
+      exhaustMap(({ id, course }) =>
+        this.service.updateCourse(id, course).pipe(
+          map((updated) => CourseActions.updateCourseSuccess({ course: updated })),
+          catchError((error) =>
+            of(CourseActions.updateCourseFailure({ error: error.message }))
+          )
         )
-    );
+      )
+    )
+  );
 
-    readonly getTestHistory$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(CourseActions.getTestHistory),
-            withLatestFrom(
-                this.store.select(CourseSelectors.CourseID),
-                this.store.select(CourseSelectors.TestHistoryPagination)
-            ),
-            exhaustMap(([, courseId, pagination]) =>
-                this.service.getTestHistory(courseId, pagination).pipe(
-                    map((list) =>
-                        CourseActions.getTestHistorySuccess({ list })
-                    ),
-                    catchError((error) =>
-                        of(CourseActions.getTestHistoryFailure({ error }))
-                    )
-                )
-            )
+  deleteCourse$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CourseActions.deleteCourse),
+      exhaustMap(({ id }) =>
+        this.service.deleteCourse(id).pipe(
+          map(() => CourseActions.deleteCourseSuccess({ id })),
+          catchError((error) =>
+            of(CourseActions.deleteCourseFailure({ error: error.message }))
+          )
         )
-    );
+      )
+    )
+  );
 
-    readonly changeHistoryPage$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(CourseActions.changeHistoryPage),
-            withLatestFrom(
-                this.store.select(CourseSelectors.CourseID),
-                this.store.select(CourseSelectors.TestHistoryPagination)
-            ),
-            exhaustMap(([action, courseId, pagination]) =>
-                this.service
-                    .getTestHistory(courseId, {
-                        ...pagination,
-                        page: action.page,
-                    })
-                    .pipe(
-                        map((list) =>
-                            CourseActions.getTestHistorySuccess({ list })
-                        ),
-                        catchError((error) =>
-                            of(CourseActions.getTestHistoryFailure({ error }))
-                        )
-                    )
-            )
-        )
-    );
-
-    constructor(private readonly service: SubjectManagementService) {}
+  refreshCoursesAfterMutation$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(
+        CourseActions.createCourseSuccess,
+        CourseActions.updateCourseSuccess,
+        CourseActions.deleteCourseSuccess
+      ),
+      withLatestFrom(this.store.select(selectSelectedSubjectId)),
+      filter(([, subjectId]) => !!subjectId),
+      map(([, subjectId]) => CourseActions.loadCourses({ subjectId: subjectId as string }))
+    )
+  );
 }
