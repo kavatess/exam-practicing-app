@@ -1,19 +1,19 @@
 <epa-card-list title="Tasks">
     <div class="epa-card-items">
-        <ng-container *ngFor="let quest of quests$ | async">
+        <ng-container *ngFor="let userQuest of quests$ | async">
             <div class="epa-quest-item">
-                <img class="epa-quest-icon" [src]="quest.iconUrl" alt="" />
+                <img class="epa-quest-icon" [src]="userQuest.quest?.iconUrl" alt="" />
 
                 <div class="epa-quest-description">
-                    <div class="epa-quest-name">{{ quest.name }}</div>
+                    <div class="epa-quest-name">{{ userQuest.quest?.name }}</div>
 
                     <div class="epa-quest-progress">
                         <div class="progress" role="progressbar">
                             <div
                                 class="progress-bar bg-success"
-                                [style.width.%]="getQuestPercentage(quest)"
+                                [style.width.%]="getQuestPercentage(userQuest)"
                             >
-                                {{ quest.progress }} / {{ quest.totalProgress }}
+                                {{ userQuest.progress }} / {{ userQuest.quest?.totalProgress }}
                             </div>
                         </div>
                     </div>
