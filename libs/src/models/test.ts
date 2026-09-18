@@ -7,6 +7,7 @@ import { Course, Subject, SubUnit } from './subject';
 export enum TestProperties {
     // structureId = 'structureId',
     structure = 'structure',
+    moldId = 'moldId', // updated
     userId = 'userId',
     user = 'user',
     name = 'name',
@@ -45,6 +46,7 @@ export enum TestStatus {
 
 export interface Test extends BaseModel {
     // [TestProperties.structureId]: string;
+    [TestProperties.moldId]?: string; // updated
     [TestProperties.subjectId]: string;
     [TestProperties.subject]?: Subject;
     [TestProperties.courseId]: string;
@@ -77,10 +79,12 @@ export enum TestQuestionProperties {
     question = 'question',
     isCorrect = 'isCorrect',
     points = 'points',
+    testPageId = 'testPageId', // updated
 }
 
 export interface TestQuestion extends QuestionData {
     [TestQuestionProperties.testId]?: string;
+    [TestQuestionProperties.testPageId]?: string; // updated
 }
 
 export interface TestPage extends MoldPage {

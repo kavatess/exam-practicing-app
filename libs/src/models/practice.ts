@@ -34,6 +34,8 @@ export enum PracticeExamProperties {
     status = 'status',
     maxPoints = 'maxPoints',
     score = 'score',
+    startTime = 'startTime', // updated
+    endTime = 'endTime', // updated
 }
 
 export interface PracticeExam extends BaseModel {
@@ -49,6 +51,10 @@ export interface PracticeExam extends BaseModel {
     // [PracticeExamProperties.questionIds]: string[];
     [PracticeExamProperties.questions]: PracticeQuestion[];
     [PracticeExamProperties.status]: PracticeExamStatuses;
+    [PracticeExamProperties.maxPoints]?: number; // updated
+    [PracticeExamProperties.score]?: number; // updated
+    [PracticeExamProperties.startTime]?: Date; // updated
+    [PracticeExamProperties.endTime]?: Date; // updated
 }
 
 export enum PracticeExamStatuses {

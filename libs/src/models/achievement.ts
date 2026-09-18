@@ -1,5 +1,6 @@
 import { BaseModel } from './base';
-import { Currency } from './currency';
+import { Reward } from './reward'; // updated
+import { Condition } from './condition'; // updated
 
 export enum AchievementProperties {
     name = 'name',
@@ -19,28 +20,11 @@ export enum UserAchievementProperties {
     isCompleted = 'isCompleted',
 }
 
-export enum RewardProperties {
-    type = 'type',
-    currencyId = 'currencyId',
-    currency = 'currency',
-    amount = 'amount',
-}
-
-export enum RewardTypes {
-    Currency = 'Currency',
-}
-
-export interface Reward {
-    [RewardProperties.type]: string;
-    [RewardProperties.currencyId]: string;
-    [RewardProperties.currency]?: Currency;
-    [RewardProperties.amount]: number;
-}
-
 export interface Achievement extends BaseModel {
     [AchievementProperties.name]: string;
     [AchievementProperties.description]: string;
     [AchievementProperties.rewards]: Reward[];
+    [AchievementProperties.conditions]: Condition[]; // updated
     [AchievementProperties.iconUrl]: string;
 }
 

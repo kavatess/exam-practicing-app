@@ -2,6 +2,7 @@ import { BaseModel } from './base';
 import { UserAchievement } from './achievement';
 
 export enum ProfileProperties {
+    userId = 'userId', // updated
     username = 'username',
     school = 'school',
     grade = 'grade',
@@ -12,6 +13,7 @@ export enum ProfileProperties {
 }
 
 export interface Profile extends BaseModel {
+    [ProfileProperties.userId]: string; // updated
     [ProfileProperties.username]: string;
     [ProfileProperties.profilePictureUrl]: string;
     [ProfileProperties.school]: string;

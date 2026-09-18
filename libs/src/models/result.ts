@@ -3,6 +3,7 @@ import { PracticeExam } from './practice';
 import { Test } from './test';
 
 export enum ResultProperties {
+    userId = 'userId', // updated
     testId = 'testId',
     test = 'test',
     practiceId = 'practiceId',
@@ -23,6 +24,7 @@ export enum ResultTypes {
 }
 
 export interface Result extends BaseModel {
+    [ResultProperties.userId]: string; // updated
     [ResultProperties.testId]?: string;
     [ResultProperties.test]?: Test;
     [ResultProperties.practiceId]?: string;

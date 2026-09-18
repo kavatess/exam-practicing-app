@@ -1,5 +1,6 @@
 import { Currency } from './currency';
 import { BaseModel } from './base';
+import { ProductTypes } from './product'; // updated
 
 export enum ShopSectionProperties {
     title = 'title',
@@ -15,6 +16,8 @@ export enum ShopItemProperties {
     currencyId = 'currencyId',
     currency = 'currency',
     offer = 'offer',
+    type = 'type', // updated
+    inStock = 'inStock', // updated
 }
 
 export interface ShopItem extends BaseModel {
@@ -25,6 +28,8 @@ export interface ShopItem extends BaseModel {
     [ShopItemProperties.currencyId]: string;
     [ShopItemProperties.currency]?: Partial<Currency>;
     [ShopItemProperties.offer]?: string;
+    [ShopItemProperties.type]?: ProductTypes; // updated
+    [ShopItemProperties.inStock]?: boolean; // updated
 }
 
 export interface ShopSection extends BaseModel {

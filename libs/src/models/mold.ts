@@ -10,6 +10,8 @@ export enum ExamMoldProperties {
     description = 'description',
     numOfQuestions = 'numOfQuestions',
     status = 'status',
+    duration = 'duration', // updated
+    passingScore = 'passingScore', // updated
 }
 
 export enum MoldStatuses {
@@ -26,9 +28,11 @@ export interface TestMold extends BaseModel {
     [ExamMoldProperties.courseId]?: string;
     [ExamMoldProperties.type]: MoldTypes;
     [ExamMoldProperties.name]: string;
-    [ExamMoldProperties.description]: QuestionTypes[];
+    [ExamMoldProperties.description]: string; // updated
     [ExamMoldProperties.numOfQuestions]: number;
     [ExamMoldProperties.status]: MoldStatuses;
+    [ExamMoldProperties.duration]?: number; // updated
+    [ExamMoldProperties.passingScore]?: number; // updated
 }
 
 export enum MoldPageProperties {

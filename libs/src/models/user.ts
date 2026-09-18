@@ -11,6 +11,7 @@ export enum UserProperties {
     role = 'role',
     status = 'status',
     password = 'password',
+    gemBalance = 'gemBalance', // updated
 }
 
 export enum UserRoles {
@@ -37,4 +38,5 @@ export interface User {
     [UserProperties.role]?: UserRoles;
     [UserProperties.status]: UserStatus;
     [UserProperties.password]?: string;
+    [UserProperties.gemBalance]: number; // updated
 }

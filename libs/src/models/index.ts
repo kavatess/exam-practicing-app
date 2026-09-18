@@ -1,5 +1,6 @@
 export * from './achievement';
 export * from './base';
+export * from './condition'; // updated
 export * from './currency';
 export * from './media';
 export * from './practice';
@@ -7,7 +8,9 @@ export * from './product';
 export * from './query';
 export * from './quest';
 export * from './question';
+export * from './reward'; // updated
 export * from './subject';
+export * from './subscription'; // updated
 export * from './test';
 export * from './user';
 export * from './result';
