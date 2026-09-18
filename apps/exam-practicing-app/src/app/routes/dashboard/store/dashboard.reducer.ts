@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { Course, Pagination, Quest, Test } from '@libs/models';
+import { Course, Pagination, Test, UserQuest } from '@libs/models';
 import {
     CourseActions,
     EnergyActions,
@@ -24,10 +24,7 @@ export interface DashboardStoreState {
     gems: {
         value: number;
     };
-    quests: {
-        list: Quest[];
-        length: number;
-    };
+    userQuests: UserQuest[];
     testHistory: {
         loading: boolean;
         list: Test[];
@@ -51,10 +48,7 @@ export const initialState: DashboardStoreState = {
     gems: {
         value: 0,
     },
-    quests: {
-        list: [],
-        length: 0,
-    },
+    userQuests: [],
     testHistory: {
         loading: false,
         list: [],
@@ -94,11 +88,7 @@ export const dashboardReducer = createReducer(
     // Quest Events
     on(QuestActions.getQuestsSuccess, (state, { list }) => ({
         ...state,
-        quests: {
-            ...state.quests,
-            list,
-            length: list.length,
-        },
+        userQuests: list,
     })),
 
     // Course Events

@@ -1,5 +1,5 @@
     /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Course, Quest } from '@libs/models';
+import { Course, UserQuest } from '@libs/models';
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
 // Course Actions
@@ -59,7 +59,7 @@ export const QuestActions = createActionGroup({
     source: 'Quest',
     events: {
         GetQuests: emptyProps(),
-        GetQuestsSuccess: props<{ list: Quest[] }>(),
+        GetQuestsSuccess: props<{ list: UserQuest[] }>(),
         GetQuestsFailure: props<{ error: any }>(),
     },
 });

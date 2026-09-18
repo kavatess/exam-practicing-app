@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@angular/core';
-import { Course, Pagination, Quest, SubjectUnit, Test } from '@libs/models';
+import {
+    Course,
+    Pagination,
+    QuestTypes,
+    SubjectUnit,
+    Test,
+    UserQuest,
+} from '@libs/models';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -106,32 +113,50 @@ export class DashboardService {
         return of(195);
     }
 
-    getUserQuests(): Observable<Quest[]> {
+    getUserQuests(): Observable<UserQuest[]> {
         return of([
             {
-                type: 'EnergiesEarned',
-                name: 'Kiếm 100 energies',
-                totalProgress: 100,
+                userId: 'user123',
+                questId: 'quest1',
                 progress: 100,
-                iconUrl:
-                    'https://d35aaqx5ub95lt.cloudfront.net/images/goals/2b5a211d830a24fab92e291d50f65d1d.svg',
-            } as Quest,
+                isCompleted: true,
+                quest: {
+                    type: QuestTypes.EnergiesEarned,
+                    name: 'Kiếm 100 energies',
+                    totalProgress: 100,
+                    progress: 100,
+                    iconUrl:
+                        'https://d35aaqx5ub95lt.cloudfront.net/images/goals/2b5a211d830a24fab92e291d50f65d1d.svg',
+                },
+            } as UserQuest,
             {
-                type: 'TestsCompleted',
-                name: 'Hoàn thành 2 bài test',
-                totalProgress: 2,
+                userId: 'user123',
+                questId: 'quest2',
                 progress: 1,
-                iconUrl:
-                    'https://d35aaqx5ub95lt.cloudfront.net/images/goals/39f13d2de304cad2ac2f88b31a7e2ff4.svg',
-            } as Quest,
+                isCompleted: false,
+                quest: {
+                    type: QuestTypes.TestsCompleted,
+                    name: 'Hoàn thành 2 bài test',
+                    totalProgress: 2,
+                    progress: 1,
+                    iconUrl:
+                        'https://d35aaqx5ub95lt.cloudfront.net/images/goals/39f13d2de304cad2ac2f88b31a7e2ff4.svg',
+                },
+            } as UserQuest,
             {
-                type: 'QuestionsCompleted',
-                name: 'Hoàn thành 50 câu hỏi môn Toán',
-                totalProgress: 50,
+                userId: 'user123',
+                questId: 'quest3',
                 progress: 40,
-                iconUrl:
-                    'https://d35aaqx5ub95lt.cloudfront.net/images/goals/39f13d2de304cad2ac2f88b31a7e2ff4.svg',
-            } as Quest,
+                isCompleted: false,
+                quest: {
+                    type: QuestTypes.QuestionsCompleted,
+                    name: 'Hoàn thành 50 câu hỏi môn Toán',
+                    totalProgress: 50,
+                    progress: 40,
+                    iconUrl:
+                        'https://d35aaqx5ub95lt.cloudfront.net/images/goals/39f13d2de304cad2ac2f88b31a7e2ff4.svg',
+                },
+            } as UserQuest,
         ]);
     }
 

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { DashboardStoreState } from '../store/dashboard.reducer';
 import { QuestActions } from '../store/dashboard.actions';
 import { QuestsSelectors } from '../store/dashboard.selectors';
-import { Quest } from '@libs/models';
+import { UserQuest } from '@libs/models';
 import { CardListComponent } from '../../../shared/components/card-list/card-list.component';
 
 @Component({
@@ -21,8 +21,8 @@ export class QuestListComponent implements OnInit {
         return this.store.select(QuestsSelectors.QuestList);
     }
 
-    getQuestPercentage(quest: Quest) {
-        return (quest.progress / quest.totalProgress) * 100;
+    getQuestPercentage(userQuest: UserQuest) {
+        return (userQuest.progress / userQuest.quest?.totalProgress) * 100;
     }
 
     ngOnInit(): void {

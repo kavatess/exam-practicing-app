@@ -34,11 +34,11 @@ export const GemsSelectors = {
 export const QuestsSelectors = {
     QuestList: createSelector(
         dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.quests.list || []
+        (state: DashboardStoreState) => state.userQuests || []
     ),
     QuestLength: createSelector(
         dashboardFeatureSelector,
-        (state: DashboardStoreState) => state.quests.length || 0
+        (state: DashboardStoreState) => state.userQuests?.length || 0
     ),
 };
 

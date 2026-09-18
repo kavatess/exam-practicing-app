@@ -10,6 +10,7 @@ export class ProfileService {
     getUserProfile(): Observable<Profile> {
         return of({
             id: 'user123',
+            userId: 'user123',
             username: 'code-ninja',
             profilePictureUrl:
                 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
