@@ -1,0 +1,110 @@
+@use '../../styles/tokens' as *;
+
+:host {
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.sm-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: $sm-scrim;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.sm-scrim-hit {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: default;
+}
+
+.sm-modal {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: $sm-surface-modal;
+  border-radius: 16px;
+  box-shadow: $sm-shadow-modal;
+}
+
+.sm-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 22px;
+  background: $sm-surface;
+  border-bottom: 1px solid #e9eae5;
+  border-radius: 16px 16px 0 0;
+}
+
+.sm-modal-eyebrow {
+  @include sm-mono-label(10px, 0.1em);
+}
+
+.sm-modal-title {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 4px 0 0;
+}
+
+.sm-modal-close {
+  @include sm-icon-button(30px, 9px);
+  border: 1px solid $sm-border;
+  color: $sm-text-body;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover {
+    background: $sm-surface-hover;
+  }
+}
+
+.sm-modal-body {
+  padding: 20px 22px;
+  overflow: auto;
+}
+
+.sm-modal-foot {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 15px 22px;
+  background: $sm-surface;
+  border-top: 1px solid #e9eae5;
+  border-radius: 0 0 16px 16px;
+}
+
+.sm-modal-note {
+  flex: 1;
+  margin: 0;
+  font-size: 12px;
+  color: $sm-muted-light;
+  line-height: 1.5;
+}
+
+.sm-modal-cancel {
+  @include sm-button-ghost(38px);
+  margin-left: auto;
+  padding: 0 16px;
+  font-size: 13.5px;
+}
+
+.sm-modal-confirm {
+  @include sm-button-primary(38px);
+  padding: 0 16px;
+  font-size: 13.5px;
+}

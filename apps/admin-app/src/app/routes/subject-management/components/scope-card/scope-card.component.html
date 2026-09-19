@@ -1,0 +1,18 @@
+<section class="sm-card">
+  <div class="sm-card-head">
+    <div>
+      <h3 class="sm-card-title">Units in scope</h3>
+      <p class="sm-card-sub">Which of {{ subjectName }}’s units this exam draws from</p>
+    </div>
+    <button type="button" class="sm-link" (click)="editScope.emit()">Edit scope</button>
+  </div>
+
+  <div class="sm-chips">
+    @for (unit of units; track unit.id) {
+      <span class="sm-chip">
+        {{ unit.title }}<span class="sm-chip-count">{{ unit.questionCount }} q</span>
+      </span>
+    }
+    <button type="button" class="sm-chip-add" (click)="editScope.emit()">+ Add unit</button>
+  </div>
+</section>

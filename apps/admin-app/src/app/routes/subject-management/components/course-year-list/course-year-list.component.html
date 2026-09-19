@@ -1,0 +1,74 @@
+<div class="sm-section-head">
+  <span class="sm-eyebrow">By exam year</span>
+  <button type="button" class="sm-btn-primary" (click)="create.emit()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+      <path d="M12 5v14M5 12h14"></path>
+    </svg>
+    New course
+  </button>
+</div>
+
+@if (courses.length) {
+  <div class="sm-scroll">
+    @for (group of yearGroups; track group.year) {
+      <div>
+        <button
+          type="button"
+          class="sm-year-head"
+          [attr.aria-expanded]="isOpen(group.year)"
+          (click)="toggleYear(group.year)"
+        >
+          <svg
+            class="sm-chevron"
+            [class.open]="isOpen(group.year)"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"
+          >
+            <path d="M9 6l6 6-6 6"></path>
+          </svg>
+          <span class="sm-year">{{ group.year }}</span>
+          <span class="sm-year-count">{{ courseLabel(group) }}</span>
+          @if (group.year === currentYear) {
+            <span class="sm-pill-current">Current</span>
+          }
+        </button>
+
+        @if (isOpen(group.year)) {
+          <div class="sm-course-list">
+            @for (course of group.courses; track course.id) {
+              <button
+                type="button"
+                class="sm-course"
+                [class.selected]="course.id === selectedCourseId"
+                (click)="select.emit(course.id)"
+              >
+                <span class="sm-course-text">
+                  <span class="sm-course-name">{{ course.name }}</span>
+                  <span class="sm-course-tags">
+                    <span class="sm-pill" [class]="typeClass(course)">{{ course.courseType }}</span>
+                    <span class="sm-course-code">{{ course.code }}</span>
+                  </span>
+                </span>
+                <svg class="sm-course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 6l6 6-6 6"></path>
+                </svg>
+              </button>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+} @else {
+  <div class="sm-empty">
+    <div class="sm-empty-art">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 5a2 2 0 0 1 2-2h11v16H7a2 2 0 0 0-2 2V5Zm2 12h11"></path>
+      </svg>
+    </div>
+    <p class="sm-empty-title">No courses yet</p>
+    <p class="sm-empty-text">
+      Create a course for this subject to start building exam structures for an exam year.
+    </p>
+    <button type="button" class="sm-btn-primary" (click)="create.emit()">New course</button>
+  </div>
+}

@@ -1,0 +1,80 @@
+@use 'styles/tokens' as *;
+
+:host {
+  display: block;
+  height: 100%;
+  min-height: 0;
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.sm-page {
+  height: 100%;
+  min-height: 560px;
+  display: flex;
+  flex-direction: column;
+  background: $sm-surface;
+  border: 1px solid $sm-border;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.sm-page-head {
+  flex: 0 0 auto;
+  padding: 14px 22px;
+  border-bottom: 1px solid $sm-border;
+  background: $sm-surface;
+}
+
+.sm-breadcrumb {
+  @include sm-mono-label(9.5px, 0.1em);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.sm-page-title {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 3px 0 0;
+}
+
+.sm-panels {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.sm-panel {
+  min-height: 0;
+}
+
+.sm-panel-list {
+  width: 220px;
+  flex: 0 0 220px;
+  border-right: 1px solid $sm-border;
+}
+
+.sm-panel-detail {
+  width: 360px;
+  flex: 0 0 360px;
+  border-right: 1px solid $sm-border;
+}
+
+.sm-panel-course {
+  flex: 1;
+  min-width: 0;
+  background: $sm-surface-hover;
+}
+
+@media (max-width: 1180px) {
+  .sm-panel-list {
+    width: 190px;
+    flex-basis: 190px;
+  }
+
+  .sm-panel-detail {
+    width: 300px;
+    flex-basis: 300px;
+  }
+}

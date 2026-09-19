@@ -1,0 +1,9 @@
+@use '../../../styles/tokens' as *;
+
+@include sm-form-field;
+
+.sm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}

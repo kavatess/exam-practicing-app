@@ -1,0 +1,28 @@
+<adm-modal-shell
+  eyebrow="Subject"
+  [title]="title"
+  [width]="480"
+  (dismiss)="dismiss.emit()"
+  (confirm)="save.emit(draft)"
+>
+  <div class="sm-form">
+    <label class="sm-field">
+      <span class="sm-field-label">Name</span>
+      <input class="sm-field-control" type="text" placeholder="Subject name" [(ngModel)]="draft.name" />
+    </label>
+
+    <label class="sm-field">
+      <span class="sm-field-label">Description</span>
+      <textarea
+        class="sm-field-control"
+        rows="3"
+        placeholder="What this subject covers…"
+        [(ngModel)]="draft.description"
+      ></textarea>
+    </label>
+
+    <p class="sm-field-hint">
+      Subjects are stable across years — courses handle the yearly exam variants.
+    </p>
+  </div>
+</adm-modal-shell>

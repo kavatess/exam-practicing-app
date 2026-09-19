@@ -1,0 +1,67 @@
+<adm-modal-shell
+  [eyebrow]="eyebrow"
+  [title]="title"
+  [width]="560"
+  confirmLabel="Save mold"
+  note="Pages and blocks are edited inline on the course panel after saving."
+  (dismiss)="dismiss.emit()"
+  (confirm)="save.emit(draft)"
+>
+  <div class="sm-form">
+    <label class="sm-field">
+      <span class="sm-field-label">Name</span>
+      <input class="sm-field-control" type="text" placeholder="Mold name" [(ngModel)]="draft.name" />
+    </label>
+
+    <div class="sm-field">
+      <span class="sm-field-label">Type</span>
+      <div class="sm-segmented">
+        <button
+          type="button"
+          [class.on]="draft.type === moldTypes.Test"
+          (click)="setType(moldTypes.Test)"
+        >
+          Test
+        </button>
+        <button
+          type="button"
+          [class.on]="draft.type === moldTypes.Practice"
+          (click)="setType(moldTypes.Practice)"
+        >
+          Practice
+        </button>
+      </div>
+    </div>
+
+    <div class="sm-grid">
+      <label class="sm-field">
+        <span class="sm-field-label">Duration</span>
+        <input class="sm-field-control" type="number" min="1" [(ngModel)]="draft.duration" />
+      </label>
+      <label class="sm-field">
+        <span class="sm-field-label">Questions</span>
+        <input class="sm-field-control" type="number" min="1" [(ngModel)]="draft.numOfQuestions" />
+      </label>
+      <label class="sm-field">
+        <span class="sm-field-label">Passing score</span>
+        <input class="sm-field-control" type="number" min="0" [(ngModel)]="draft.passingScore" />
+      </label>
+    </div>
+
+    <div class="sm-toggle-card">
+      <button
+        type="button"
+        class="sm-toggle"
+        [class.on]="isActive"
+        [attr.aria-pressed]="isActive"
+        (click)="toggleActive()"
+      >
+        <span class="sm-toggle-knob"></span>
+      </button>
+      <div>
+        <div class="sm-toggle-title">Active</div>
+        <div class="sm-toggle-text">Inactive molds stay editable but generate no tests</div>
+      </div>
+    </div>
+  </div>
+</adm-modal-shell>

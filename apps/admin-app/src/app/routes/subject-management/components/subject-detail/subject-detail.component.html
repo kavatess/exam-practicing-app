@@ -1,0 +1,54 @@
+<div class="sm-head">
+  <div class="sm-head-row">
+    <div class="sm-head-text">
+      <h2 class="sm-title">{{ subject.name }}</h2>
+      <p class="sm-meta">{{ meta }}</p>
+    </div>
+    <button type="button" class="sm-head-edit" title="Edit subject" (click)="editSubject.emit()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 20h4L19 9l-4-4L4 16v4ZM14 6l4 4"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div class="sm-tabs" role="tablist">
+    <button
+      type="button"
+      role="tab"
+      class="sm-tab"
+      [class.active]="tab() === 'units'"
+      [attr.aria-selected]="tab() === 'units'"
+      (click)="tab.set('units')"
+    >
+      Units <span class="sm-tab-count">{{ subject.units.length }}</span>
+    </button>
+    <button
+      type="button"
+      role="tab"
+      class="sm-tab"
+      [class.active]="tab() === 'courses'"
+      [attr.aria-selected]="tab() === 'courses'"
+      (click)="tab.set('courses')"
+    >
+      Courses <span class="sm-tab-count">{{ subject.courses.length }}</span>
+    </button>
+  </div>
+</div>
+
+@if (tab() === 'units') {
+  <adm-unit-tree
+    class="sm-tab-panel"
+    [units]="subject.units"
+    (create)="createUnit.emit()"
+    (edit)="editUnit.emit($event)"
+    (remove)="removeUnit.emit($event)"
+  ></adm-unit-tree>
+} @else {
+  <adm-course-year-list
+    class="sm-tab-panel"
+    [courses]="subject.courses"
+    [selectedCourseId]="selectedCourseId"
+    (create)="createCourse.emit()"
+    (select)="selectCourse.emit($event)"
+  ></adm-course-year-list>
+}

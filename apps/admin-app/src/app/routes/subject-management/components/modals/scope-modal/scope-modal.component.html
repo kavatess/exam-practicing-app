@@ -1,0 +1,16 @@
+<adm-modal-shell
+  [eyebrow]="eyebrow"
+  title="Edit units in scope"
+  [width]="680"
+  confirmLabel="Save scope"
+  note="Removing a unit also drops it from any test mold block that uses it."
+  (dismiss)="dismiss.emit()"
+  (confirm)="save.emit(unitIds)"
+>
+  <adm-unit-transfer
+    [units]="units"
+    [selectedIds]="unitIds"
+    [listHeight]="300"
+    (selectedIdsChange)="unitIds = $event"
+  ></adm-unit-transfer>
+</adm-modal-shell>

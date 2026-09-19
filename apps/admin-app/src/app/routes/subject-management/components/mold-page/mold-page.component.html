@@ -1,0 +1,90 @@
+<section class="sm-page">
+  <header class="sm-page-head">
+    <svg class="sm-grip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M5 9h14M5 15h14"></path>
+    </svg>
+    <span class="sm-page-order">{{ order }}</span>
+    <span class="sm-page-name">{{ page.name }}</span>
+    <span class="sm-page-meta">{{ meta }}</span>
+  </header>
+
+  <div class="sm-grid sm-grid-head">
+    <span>Unit</span><span>Question type</span><span>Difficulty</span><span>Count</span><span></span>
+  </div>
+
+  @for (block of page.blocks; track block.id) {
+    <div class="sm-block">
+      <div class="sm-grid">
+        <select class="sm-select" [ngModel]="block.courseUnitId" (ngModelChange)="onUnitChange(block, $event)">
+          @for (unit of units; track unit.id) {
+            <option [ngValue]="unit.id">{{ unit.title }}</option>
+          }
+        </select>
+
+        <select class="sm-select" [ngModel]="block.qType" (ngModelChange)="onTypeChange(block, $event)">
+          @for (type of questionTypes; track type) {
+            <option [ngValue]="type">{{ typeLabel(type) }}</option>
+          }
+        </select>
+
+        <select
+          class="sm-select"
+          [class]="difficultyClass(block.difficulty)"
+          [ngModel]="block.difficulty"
+          (ngModelChange)="onDifficultyChange(block, $event)"
+        >
+          @for (level of difficulties; track level) {
+            <option [ngValue]="level">{{ difficultyLabel(level) }}</option>
+          }
+        </select>
+
+        <input
+          class="sm-count"
+          type="number"
+          min="0"
+          [value]="block.questionCount"
+          (change)="onCountChange(block, $any($event.target).value)"
+        />
+
+        <button type="button" class="sm-remove" title="Remove block" (click)="removeBlock.emit(block.id)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M6 6l12 12M18 6L6 18"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="sm-subrow">
+        <span class="sm-subrow-label">Sub-units</span>
+        <div class="sm-chips">
+          @for (subId of block.subUnitIds; track subId) {
+            <span class="sm-chip">
+              {{ subUnitTitle(subId) }}
+              <button type="button" title="Remove sub-unit" (click)="onSubUnitRemove(block, subId)">×</button>
+            </span>
+          }
+          @if (availableSubUnits(block).length) {
+            <select
+              class="sm-chip-add"
+              (change)="onSubUnitAdd(block, $any($event.target).value); $any($event.target).value = ''"
+            >
+              <option value="">+ Add</option>
+              @for (sub of availableSubUnits(block); track sub.id) {
+                <option [value]="sub.id">{{ sub.title }}</option>
+              }
+            </select>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  <footer class="sm-page-foot">
+    <button type="button" class="sm-add-block" (click)="addBlock.emit()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+        <path d="M12 5v14M5 12h14"></path>
+      </svg>
+      Add block
+    </button>
+    <span class="sm-page-total">{{ questionTotal }} of {{ moldQuestionCount }} questions</span>
+  </footer>
+</section>

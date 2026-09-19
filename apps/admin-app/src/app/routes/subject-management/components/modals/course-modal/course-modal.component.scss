@@ -1,0 +1,43 @@
+@use '../../../styles/tokens' as *;
+
+@include sm-form-field;
+
+.sm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sm-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.sm-grid-name {
+  grid-template-columns: 1.6fr 1fr;
+}
+
+.sm-grid-meta {
+  grid-template-columns: 1fr 1.4fr;
+}
+
+.sm-scope-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+
+  .sm-field-label {
+    margin-bottom: 0;
+  }
+}
+
+select.sm-field-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239AA09A' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 13px;
+  padding-right: 32px;
+}

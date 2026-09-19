@@ -1,0 +1,209 @@
+@use '../../styles/tokens' as *;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.sm-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+}
+
+.sm-eyebrow {
+  @include sm-mono-label;
+  text-transform: uppercase;
+}
+
+.sm-btn-ghost {
+  @include sm-button-ghost(30px);
+  padding: 0 11px;
+  gap: 6px;
+  border-radius: 8px;
+  color: $sm-green;
+  font-size: 12.5px;
+  font-weight: 600;
+
+  svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  &:hover {
+    border-color: $sm-green;
+  }
+}
+
+.sm-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 0 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.sm-chevron {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 13px;
+  color: $sm-muted;
+  transition: transform 0.15s ease;
+
+  &.open {
+    transform: rotate(90deg);
+  }
+}
+
+.sm-unit {
+  flex: 0 0 auto;
+  background: $sm-surface;
+  border: 1px solid $sm-border-card;
+  border-radius: 11px;
+  overflow: hidden;
+}
+
+.sm-unit-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 12px;
+
+  &:hover {
+    background: $sm-surface-sunken;
+  }
+}
+
+.sm-unit-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: $sm-font-sans;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sm-unit-order {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  border-radius: 8px;
+  background: $sm-green-chip;
+  color: $sm-green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $sm-font-mono;
+  font-size: 10px;
+}
+
+.sm-unit-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sm-unit-title {
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.sm-unit-meta {
+  font-size: 11px;
+  color: $sm-muted;
+  margin-top: 1px;
+}
+
+.sm-mini {
+  @include sm-icon-button;
+  color: $sm-text-muted;
+
+  svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  &:hover {
+    background: $sm-surface-alt;
+  }
+
+  &.danger {
+    color: $sm-red;
+
+    &:hover {
+      background: $sm-red-soft;
+    }
+  }
+}
+
+.sm-subs {
+  border-top: 1px solid $sm-border-faint;
+  background: $sm-surface-sunken;
+  padding: 8px 12px 10px 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sm-sub {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  background: $sm-surface;
+  border: 1px solid #ebece7;
+  border-radius: 9px;
+}
+
+.sm-sub-dot {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 5px;
+  border-radius: 50%;
+  background: $sm-icon-soft;
+}
+
+.sm-sub-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 12.5px;
+}
+
+.sm-sub-count {
+  font-family: $sm-font-mono;
+  font-size: 10px;
+  color: $sm-muted-light;
+}
+
+.sm-sub-add {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 2px;
+  border: none;
+  background: none;
+  font-family: $sm-font-sans;
+  font-size: 12px;
+  font-weight: 500;
+  color: $sm-green;
+  cursor: pointer;
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+}

@@ -1,0 +1,55 @@
+<div class="sm-transfer">
+  <div class="sm-list">
+    <div class="sm-list-head">Available units · {{ units.length }}</div>
+    <div class="sm-list-body" [style.max-height.px]="listHeight">
+      @for (unit of units; track unit.id) {
+        <button type="button" class="sm-list-row" (click)="toggleHighlight(unit)">
+          <span class="sm-check" [class.on]="isIncluded(unit)" [class.marked]="isHighlighted(unit)">
+            @if (isIncluded(unit)) {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round">
+                <path d="M5 13l4 4L19 7"></path>
+              </svg>
+            }
+          </span>
+          <span class="sm-list-title">{{ unit.title }}</span>
+          <span class="sm-list-count">{{ unit.questionCount }} q</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="sm-transfer-actions">
+    <button type="button" class="sm-arrow primary" title="Add to scope" (click)="include()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <path d="M9 6l6 6-6 6"></path>
+      </svg>
+    </button>
+    <button type="button" class="sm-arrow" title="Remove from scope" (click)="exclude()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <path d="M15 6l-6 6 6 6"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div class="sm-list">
+    <div class="sm-list-head included">Included units · {{ includedUnits.length }}</div>
+    <div class="sm-list-body" [style.max-height.px]="listHeight">
+      @for (unit of includedUnits; track unit.id) {
+        <div class="sm-list-row static">
+          <svg class="sm-grip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M5 9h14M5 15h14"></path>
+          </svg>
+          <span class="sm-list-title">{{ unit.title }}</span>
+          <span class="sm-list-count">{{ unit.questionCount }} q</span>
+          <button type="button" class="sm-list-remove" title="Remove unit" (click)="removeUnit(unit)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+              <path d="M6 6l12 12M18 6L6 18"></path>
+            </svg>
+          </button>
+        </div>
+      } @empty {
+        <p class="sm-list-empty">Pick units on the left, then use the arrow to add them.</p>
+      }
+    </div>
+  </div>
+</div>

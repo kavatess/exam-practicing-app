@@ -1,0 +1,60 @@
+@use '../../../styles/tokens' as *;
+
+@include sm-form-field;
+
+.sm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sm-field-narrow {
+  max-width: 140px;
+}
+
+.sm-subs {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.sm-sub-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.sm-sub-remove {
+  @include sm-icon-button(30px, 8px);
+  border: 1px solid $sm-border-control;
+  background: $sm-surface;
+  color: $sm-red;
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  &:hover {
+    border-color: $sm-red-border;
+    background: $sm-red-soft;
+  }
+}
+
+.sm-sub-add {
+  align-self: flex-start;
+  padding: 7px 11px;
+  border: 1px dashed $sm-border-dashed;
+  border-radius: 8px;
+  background: none;
+  font-family: $sm-font-sans;
+  font-size: 12px;
+  font-weight: 500;
+  color: $sm-muted-dim;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $sm-green;
+    color: $sm-green;
+  }
+}

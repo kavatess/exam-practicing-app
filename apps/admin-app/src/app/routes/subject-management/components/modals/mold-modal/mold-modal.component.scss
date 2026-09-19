@@ -1,0 +1,90 @@
+@use '../../../styles/tokens' as *;
+
+@include sm-form-field;
+
+.sm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sm-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.sm-segmented {
+  display: flex;
+  gap: 6px;
+  width: fit-content;
+  padding: 4px;
+  border: 1px solid $sm-border-card;
+  border-radius: 10px;
+  background: $sm-surface;
+
+  button {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 7px;
+    background: none;
+    font-family: $sm-font-sans;
+    font-size: 13px;
+    color: $sm-text-body;
+    cursor: pointer;
+
+    &.on {
+      background: $sm-ink;
+      color: $sm-surface;
+      font-weight: 600;
+    }
+  }
+}
+
+.sm-toggle-card {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 14px 15px;
+  background: $sm-surface;
+  border: 1px solid $sm-border-card;
+  border-radius: 11px;
+}
+
+.sm-toggle {
+  width: 40px;
+  height: 22px;
+  flex: 0 0 40px;
+  padding: 2px;
+  border: none;
+  border-radius: 999px;
+  background: $sm-border-dashed;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+
+  &.on {
+    background: $sm-green;
+    justify-content: flex-end;
+  }
+}
+
+.sm-toggle-knob {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: $sm-surface;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.sm-toggle-title {
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.sm-toggle-text {
+  font-size: 12px;
+  color: $sm-muted;
+  margin-top: 1px;
+}

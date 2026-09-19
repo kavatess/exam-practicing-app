@@ -1,0 +1,181 @@
+$sm-font-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$sm-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+$sm-ink: #16211d;
+$sm-text: #232823;
+$sm-text-soft: #3c453d;
+$sm-text-body: #4a524b;
+$sm-text-muted: #6e756d;
+$sm-muted: #8a8f89;
+$sm-muted-light: #9aa09a;
+$sm-muted-dim: #7c827b;
+
+$sm-surface: #ffffff;
+$sm-surface-sunken: #fafbf9;
+$sm-surface-input: #fafaf8;
+$sm-surface-modal: #f7f8f5;
+$sm-surface-hover: #f4f5f2;
+$sm-surface-alt: #eff1ed;
+$sm-surface-accent: #f2f6f3;
+$sm-surface-empty: #eaede8;
+
+$sm-border: #e3e5df;
+$sm-border-card: #e5e6e2;
+$sm-border-control: #dddfd9;
+$sm-border-soft: #edeeea;
+$sm-border-faint: #f0f1ed;
+$sm-border-hair: #f5f6f3;
+$sm-border-row: #f3f4f1;
+$sm-border-strong: #c2c6be;
+$sm-border-dashed: #cdd1c9;
+
+$sm-green: #1f6e52;
+$sm-green-dark: #175943;
+$sm-green-deep: #1f5a45;
+$sm-green-soft: #e6f2ec;
+$sm-green-chip: #f0f3f0;
+$sm-green-chip-text: #6e9184;
+$sm-green-chip-x: #8fa89e;
+
+$sm-blue: #2c5aa8;
+$sm-blue-soft: #eaf0fb;
+$sm-purple: #6b3fa0;
+$sm-purple-soft: #f3ebf9;
+$sm-neutral: #5b625b;
+$sm-neutral-soft: #f0f1ed;
+
+$sm-red: #b0473a;
+$sm-red-deep: #a3352b;
+$sm-red-border: #e4b4ae;
+$sm-red-soft: #fdf4f3;
+$sm-amber: #8a5a00;
+
+$sm-icon: #c0c5be;
+$sm-icon-soft: #c7cfc9;
+$sm-chevron: #b4b9b2;
+
+$sm-shadow-modal: 0 30px 70px -20px rgba(22, 33, 28, 0.45);
+$sm-scrim: rgba(22, 33, 28, 0.35);
+
+@mixin sm-mono-label($size: 9.5px, $tracking: 0.12em) {
+  font-family: $sm-font-mono;
+  font-size: $size;
+  letter-spacing: $tracking;
+  color: $sm-muted-light;
+}
+
+@mixin sm-pill {
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+@mixin sm-icon-button($size: 24px, $radius: 7px) {
+  width: $size;
+  height: $size;
+  flex: 0 0 $size;
+  border-radius: $radius;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+@mixin sm-button-base {
+  font-family: $sm-font-sans;
+  border-radius: 9px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+@mixin sm-button-primary($height: 34px) {
+  @include sm-button-base;
+  height: $height;
+  padding: 0 13px;
+  border: none;
+  background: $sm-green;
+  color: $sm-surface;
+  font-size: 13px;
+  font-weight: 600;
+
+  &:hover {
+    background: $sm-green-dark;
+  }
+}
+
+@mixin sm-button-ghost($height: 34px) {
+  @include sm-button-base;
+  height: $height;
+  padding: 0 12px;
+  border: 1px solid $sm-border-control;
+  background: $sm-surface;
+  color: $sm-text-soft;
+  font-size: 13px;
+  font-weight: 500;
+
+  &:hover {
+    border-color: $sm-border-strong;
+  }
+}
+
+@mixin sm-form-field {
+  .sm-field {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .sm-field-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: $sm-text-body;
+    margin-bottom: 6px;
+  }
+
+  .sm-field-control {
+    height: 38px;
+    width: 100%;
+    border: 1px solid $sm-border-control;
+    border-radius: 9px;
+    background: $sm-surface;
+    padding: 0 12px;
+    font-family: $sm-font-sans;
+    font-size: 13.5px;
+    color: $sm-text;
+
+    &:focus {
+      outline: none;
+      border-color: $sm-green;
+    }
+
+    &::placeholder {
+      color: #a3a8a2;
+    }
+  }
+
+  textarea.sm-field-control {
+    height: auto;
+    padding: 10px 12px;
+    line-height: 1.5;
+    resize: vertical;
+  }
+
+  .sm-field-control--mono {
+    font-family: $sm-font-mono;
+    font-size: 12.5px;
+  }
+
+  .sm-field-hint {
+    font-size: 12px;
+    color: $sm-muted-light;
+    line-height: 1.5;
+  }
+}

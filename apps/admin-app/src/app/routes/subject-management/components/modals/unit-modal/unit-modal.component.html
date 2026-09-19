@@ -1,0 +1,52 @@
+<adm-modal-shell
+  eyebrow="Subject unit"
+  [title]="title"
+  [width]="480"
+  (dismiss)="dismiss.emit()"
+  (confirm)="save.emit(draft)"
+>
+  <div class="sm-form">
+    <label class="sm-field">
+      <span class="sm-field-label">Title</span>
+      <input class="sm-field-control" type="text" placeholder="Unit title" [(ngModel)]="draft.title" />
+    </label>
+
+    <label class="sm-field sm-field-narrow">
+      <span class="sm-field-label">Order</span>
+      <input class="sm-field-control" type="number" min="1" [(ngModel)]="draft.order" />
+    </label>
+
+    <label class="sm-field">
+      <span class="sm-field-label">Description</span>
+      <textarea
+        class="sm-field-control"
+        rows="2"
+        placeholder="What this unit covers…"
+        [(ngModel)]="draft.description"
+      ></textarea>
+    </label>
+
+    <div class="sm-field">
+      <span class="sm-field-label">Sub-units</span>
+      <div class="sm-subs">
+        @for (subTitle of draft.subUnitTitles; track $index) {
+          <div class="sm-sub-row">
+            <input
+              class="sm-field-control"
+              type="text"
+              placeholder="Sub-unit title"
+              [ngModel]="subTitle"
+              (ngModelChange)="updateSubUnit($index, $event)"
+            />
+            <button type="button" class="sm-sub-remove" title="Remove sub-unit" (click)="removeSubUnit($index)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+                <path d="M6 6l12 12M18 6L6 18"></path>
+              </svg>
+            </button>
+          </div>
+        }
+        <button type="button" class="sm-sub-add" (click)="addSubUnit()">+ Add sub-unit</button>
+      </div>
+    </div>
+  </div>
+</adm-modal-shell>

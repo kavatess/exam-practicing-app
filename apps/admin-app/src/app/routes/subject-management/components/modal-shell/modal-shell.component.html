@@ -1,0 +1,29 @@
+<div class="sm-scrim">
+  <button type="button" class="sm-scrim-hit" aria-label="Close dialog" (click)="dismiss.emit()"></button>
+
+  <div class="sm-modal" role="dialog" aria-modal="true" [attr.aria-label]="title" [style.width.px]="width">
+    <header class="sm-modal-head">
+      <div>
+        <div class="sm-modal-eyebrow">{{ eyebrow }}</div>
+        <h2 class="sm-modal-title">{{ title }}</h2>
+      </div>
+      <button type="button" class="sm-modal-close" title="Close" (click)="dismiss.emit()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </header>
+
+    <div class="sm-modal-body">
+      <ng-content></ng-content>
+    </div>
+
+    <footer class="sm-modal-foot">
+      @if (note) {
+        <p class="sm-modal-note">{{ note }}</p>
+      }
+      <button type="button" class="sm-modal-cancel" (click)="dismiss.emit()">Cancel</button>
+      <button type="button" class="sm-modal-confirm" (click)="confirm.emit()">{{ confirmLabel }}</button>
+    </footer>
+  </div>
+</div>

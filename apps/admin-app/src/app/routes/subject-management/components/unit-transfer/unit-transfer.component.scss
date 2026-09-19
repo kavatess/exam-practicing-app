@@ -1,0 +1,174 @@
+@use '../../styles/tokens' as *;
+
+:host {
+  display: block;
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.sm-transfer {
+  display: grid;
+  grid-template-columns: 1fr 44px 1fr;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.sm-list {
+  background: $sm-surface;
+  border: 1px solid $sm-border-control;
+  border-radius: 11px;
+  overflow: hidden;
+}
+
+.sm-list-head {
+  @include sm-mono-label(9px, 0.1em);
+  text-transform: uppercase;
+  padding: 9px 12px;
+  background: $sm-surface-input;
+  border-bottom: 1px solid $sm-border-soft;
+
+  &.included {
+    background: $sm-surface-accent;
+    color: $sm-green;
+  }
+}
+
+.sm-list-body {
+  overflow: auto;
+}
+
+.sm-list-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 9px 12px;
+  border: none;
+  border-bottom: 1px solid $sm-border-hair;
+  background: none;
+  font-family: $sm-font-sans;
+  font-size: 12.5px;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background: $sm-surface-sunken;
+  }
+
+  &.static {
+    cursor: default;
+
+    &:hover {
+      background: none;
+    }
+  }
+}
+
+.sm-check {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+  border: 1.5px solid $sm-icon-soft;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $sm-surface;
+
+  svg {
+    width: 9px;
+    height: 9px;
+  }
+
+  &.marked {
+    border-color: $sm-green;
+  }
+
+  &.on {
+    border-color: $sm-green;
+    background: $sm-green;
+  }
+}
+
+.sm-grip {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 13px;
+  color: $sm-icon;
+  cursor: grab;
+}
+
+.sm-list-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sm-list-count {
+  font-family: $sm-font-mono;
+  font-size: 9.5px;
+  color: $sm-muted-light;
+}
+
+.sm-list-remove {
+  @include sm-icon-button(20px, 6px);
+  color: $sm-red;
+
+  svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  &:hover {
+    background: $sm-red-soft;
+  }
+}
+
+.sm-list-empty {
+  margin: 0;
+  padding: 16px 12px;
+  font-size: 12px;
+  color: $sm-muted;
+  line-height: 1.5;
+}
+
+.sm-transfer-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.sm-arrow {
+  width: 34px;
+  height: 30px;
+  border: 1px solid $sm-border-control;
+  border-radius: 8px;
+  background: $sm-surface;
+  color: $sm-text-muted;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover {
+    border-color: $sm-border-strong;
+  }
+
+  &.primary {
+    color: $sm-green;
+
+    &:hover {
+      border-color: $sm-green;
+    }
+  }
+}

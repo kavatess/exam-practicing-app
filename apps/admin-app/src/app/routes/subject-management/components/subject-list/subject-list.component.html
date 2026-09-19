@@ -1,0 +1,42 @@
+<div class="sm-panel-head">
+  <div class="sm-panel-head-row">
+    <span class="sm-eyebrow">Subjects · {{ subjects.length }}</span>
+    <button type="button" class="sm-add" title="New subject" (click)="create.emit()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+        <path d="M12 5v14M5 12h14"></path>
+      </svg>
+    </button>
+  </div>
+
+  <label class="sm-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14ZM20 20l-4.2-4.2"></path>
+    </svg>
+    <input
+      type="search"
+      placeholder="Search subjects"
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+    />
+  </label>
+</div>
+
+<ul class="sm-rows">
+  @for (subject of visibleSubjects; track subject.id) {
+    <li>
+      <div class="sm-row" [class.selected]="subject.id === selectedId">
+        <button type="button" class="sm-row-main" (click)="select.emit(subject.id)">
+          <span class="sm-row-name">{{ subject.name }}</span>
+          <span class="sm-row-meta">{{ courseLabel(subject) }}</span>
+        </button>
+        <button type="button" class="sm-row-action" title="Edit subject" (click)="edit.emit(subject)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm7.4-3a7.4 7.4 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7.4 7.4 0 0 0-2-1.2l-.3-2.5h-3.9l-.3 2.5a7.4 7.4 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5a7.4 7.4 0 0 0 0 2.4l-2 1.5 2 3.4 2.3-1a7.4 7.4 0 0 0 2 1.2l.3 2.5h3.9l.3-2.5a7.4 7.4 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.07-.4.1-.8.1-1.2Z"></path>
+          </svg>
+        </button>
+      </div>
+    </li>
+  } @empty {
+    <li class="sm-rows-empty">No subjects match “{{ search() }}”.</li>
+  }
+</ul>

@@ -1,0 +1,65 @@
+<div class="sm-section-head">
+  <span class="sm-eyebrow">Unit tree</span>
+  <button type="button" class="sm-btn-ghost" (click)="create.emit()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+      <path d="M12 5v14M5 12h14"></path>
+    </svg>
+    Add unit
+  </button>
+</div>
+
+<div class="sm-scroll">
+  @for (unit of units; track unit.id; let i = $index) {
+    <div class="sm-unit">
+      <div class="sm-unit-head">
+        <button
+          type="button"
+          class="sm-unit-main"
+          [attr.aria-expanded]="openUnitId() === unit.id"
+          (click)="toggle(unit)"
+        >
+          <svg
+            class="sm-chevron"
+            [class.open]="openUnitId() === unit.id"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
+          >
+            <path d="M9 6l6 6-6 6"></path>
+          </svg>
+          <span class="sm-unit-order">{{ order(i) }}</span>
+          <span class="sm-unit-text">
+            <span class="sm-unit-title">{{ unit.title }}</span>
+            <span class="sm-unit-meta">{{ subUnitLabel(unit) }}</span>
+          </span>
+        </button>
+        <button type="button" class="sm-mini" title="Edit unit" (click)="edit.emit(unit)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 20h4L19 9l-4-4L4 16v4ZM14 6l4 4"></path>
+          </svg>
+        </button>
+        <button type="button" class="sm-mini danger" title="Delete unit" (click)="remove.emit(unit)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"></path>
+          </svg>
+        </button>
+      </div>
+
+      @if (openUnitId() === unit.id) {
+        <div class="sm-subs">
+          @for (sub of unit.subUnits; track sub.id) {
+            <div class="sm-sub">
+              <span class="sm-sub-dot"></span>
+              <span class="sm-sub-title">{{ sub.title }}</span>
+              <span class="sm-sub-count">{{ sub.questionCount }} q</span>
+            </div>
+          }
+          <button type="button" class="sm-sub-add" (click)="edit.emit(unit)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+              <path d="M12 5v14M5 12h14"></path>
+            </svg>
+            Add sub-unit
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>
