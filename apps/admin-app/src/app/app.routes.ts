@@ -10,6 +10,8 @@ export enum ADMIN_APP_ROUTES {
     QUEST_MANAGEMENT = 'quest-management',
     SHOP_MANAGEMENT = 'shop-management',
     USER_MANAGEMENT = 'user-management',
+    ORDERS_PAYMENTS = 'orders-payments',
+    CURRENCIES = 'currencies',
 }
 
 export const appRoutes: Route[] = [
@@ -72,6 +74,20 @@ export const appRoutes: Route[] = [
                     import(
                         './routes/user-management/user-management.component'
                     ).then((c) => c.UserManagementComponent),
+            },
+            {
+                path: ADMIN_APP_ROUTES.ORDERS_PAYMENTS,
+                loadComponent: () =>
+                    import(
+                        './routes/orders-payments/orders-payments.component'
+                    ).then((c) => c.OrdersPaymentsComponent),
+            },
+            {
+                path: ADMIN_APP_ROUTES.CURRENCIES,
+                loadComponent: () =>
+                    import(
+                        './routes/currencies/currencies.component'
+                    ).then((c) => c.CurrenciesComponent),
             },
             {
                 path: '',

@@ -1,9 +1,22 @@
 // Variables
-$sidebar-width: 260px;
-$sidebar-bg: #212529; // Bootstrap dark background
-$sidebar-text-color: #adb5bd;
-$sidebar-active-bg: #343a40;
-$sidebar-hover-color: #ffffff;
+$sidebar-width: 252px;
+$sidebar-bg: #16211d;
+$sidebar-active-bg: #22332c;
+$sidebar-hover-bg: #1f2e28;
+$sidebar-text-color: #b6c4bd;
+$sidebar-text-hover-color: #e7ede9;
+$sidebar-text-active-color: #ffffff;
+$sidebar-muted-color: #62736b;
+$sidebar-border-color: rgba(255, 255, 255, 0.09);
+$brand-mark-bg: #22332c;
+$brand-mark-color: #6fd3a5;
+$brand-name-color: #f1f4f2;
+$brand-tag-color: #7d8f87;
+$avatar-bg: #2c4038;
+$avatar-color: #9fe0c1;
+$user-name-color: #e7ede9;
+$user-role-color: #7d8f87;
+$logout-color: #9fb0a8;
 $main-content-bg: #f8f9fa; // Bootstrap light gray
 
 .adm-admin-layout {
@@ -14,62 +27,190 @@ $main-content-bg: #f8f9fa; // Bootstrap light gray
 
 .adm-sidebar {
   width: $sidebar-width;
-  background-color: $sidebar-bg;
-  color: $sidebar-text-color;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  background-color: $sidebar-bg;
+  padding: 20px 14px 16px;
+  overflow-y: auto;
+  font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  .adm-sidebar-header {
-    padding: 1.25rem 1.5rem;
-    font-size: 1.5rem;
-    font-weight: 700;
-    text-align: center;
+  .adm-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 4px 8px 20px;
+    text-decoration: none;
 
-    a {
-      color: #ffffff;
-      text-decoration: none;
+    .adm-brand-mark {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      border-radius: 10px;
+      background-color: $brand-mark-bg;
+      color: $brand-mark-color;
+      font-size: 15px;
+      font-weight: 700;
     }
+
+    .adm-brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+      min-width: 0;
+    }
+
+    .adm-brand-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: $brand-name-color;
+    }
+
+    .adm-brand-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: $brand-tag-color;
+    }
+  }
+
+  .adm-nav-scroll {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .adm-nav-group + .adm-nav-group {
+    margin-top: 12px;
+  }
+
+  .adm-nav-group-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: $sidebar-muted-color;
+    padding: 8px 10px 6px;
   }
 
   .adm-nav-list {
     list-style: none;
-    padding: 0;
     margin: 0;
-    flex-grow: 1;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
   }
 
-  .adm-nav-item {
-    .adm-nav-link {
-      display: flex;
-      align-items: center;
-      padding: 1rem 1.5rem;
-      color: $sidebar-text-color;
-      text-decoration: none;
-      transition: background-color 0.2s, color 0.2s;
+  .adm-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 10px;
+    border-radius: 9px;
+    color: $sidebar-text-color;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
 
-      i {
-        font-size: 1.1rem;
-      }
+    .adm-nav-icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+      opacity: 0.9;
+    }
 
-      &:hover {
-        background-color: $sidebar-active-bg;
-        color: $sidebar-hover-color;
-      }
+    .adm-nav-label {
+      flex: 1;
+      font-size: 13.5px;
+      font-weight: 500;
+    }
 
-      &.active {
-        background-color: $sidebar-active-bg;
-        color: #ffffff;
-        font-weight: 500;
-      }
+    &:hover {
+      background-color: $sidebar-hover-bg;
+      color: $sidebar-text-hover-color;
+    }
+
+    &.active {
+      background-color: $sidebar-active-bg;
+      color: $sidebar-text-active-color;
     }
   }
 
   .adm-sidebar-footer {
-    padding: 1.5rem;
-    border-top: 1px solid #343a40;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid $sidebar-border-color;
+
+    .adm-user-avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      border-radius: 50%;
+      background-color: $avatar-bg;
+      color: $avatar-color;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .adm-user-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+
+    .adm-user-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: $user-name-color;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .adm-user-role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: $user-role-color;
+    }
+
+    .adm-logout-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      flex: 0 0 30px;
+      border-radius: 8px;
+      color: $logout-color;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      &:hover {
+        background-color: $sidebar-hover-bg;
+        color: #ffffff;
+      }
+    }
   }
 }
 
