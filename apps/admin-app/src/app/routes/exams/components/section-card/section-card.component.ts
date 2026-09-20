@@ -13,20 +13,30 @@ export class SectionCardComponent {
     private readonly data = inject(CmsDataService);
 
     @Input({ required: true }) section!: ExamSection;
-    @Input() removable = true;
+    @Input() index = 0;
 
     @Output() editScope = new EventEmitter<void>();
     @Output() remove = new EventEmitter<void>();
 
+    get order(): string {
+        return String(this.index + 1).padStart(2, '0');
+    }
+
     get subjectName(): string {
-        return this.data.subjectById(this.section.subjectId)?.name ?? 'Unknown subject';
+        return (
+            this.data.subjectById(this.section.subjectId)?.name ??
+            'Unknown subject'
+        );
     }
 
     get units(): AdminUnit[] {
         return this.data.unitsForSection(this.section);
     }
 
-    get questionTotal(): number {
-        return this.units.reduce((total, unit) => total + unit.questionCount, 0);
+    get scopeMeta(): string {
+        const count = this.units.length;
+        return `${count} ${
+            count === 1 ? 'unit' : 'units'
+        } in scope · drawn from the ${this.subjectName} taxonomy`;
     }
 }

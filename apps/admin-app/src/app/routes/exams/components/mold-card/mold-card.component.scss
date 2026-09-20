@@ -211,17 +211,38 @@
 .ex-structure-foot {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 10px;
   margin-top: 14px;
   padding-top: 14px;
   border-top: 1px solid #e9eae5;
+}
+
+.ex-balance {
+  flex: 1;
+  min-width: 0;
   font-size: 12px;
   color: $sm-muted;
 }
 
-.ex-planned {
-  font-family: $sm-font-mono;
-  font-size: 11px;
-  color: $sm-muted-light;
+.ex-btn-ghost {
+  @include sm-button-ghost(32px);
+  border-radius: 8px;
+  font-size: 12.5px;
+
+  &[disabled] {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.ex-btn-primary {
+  @include sm-button-primary(32px);
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 12.5px;
+
+  &[disabled] {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
 }

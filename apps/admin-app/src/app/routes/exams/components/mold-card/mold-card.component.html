@@ -83,8 +83,13 @@
       </div>
 
       <div class="ex-structure-foot">
-        <span>{{ balance }}</span>
-        <span class="ex-planned">{{ plannedQuestions }} of {{ mold.numOfQuestions }} planned</span>
+        <span class="ex-balance">{{ balance }}</span>
+        <button type="button" class="ex-btn-ghost" disabled title="Available once exam generation is wired up">
+          Preview generated test
+        </button>
+        <button type="button" class="ex-btn-primary" disabled title="Structure edits apply as you make them">
+          Save structure
+        </button>
       </div>
     </div>
   }

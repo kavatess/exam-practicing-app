@@ -6,7 +6,6 @@ $sidebar-hover-bg: #1f2e28;
 $sidebar-text-color: #b6c4bd;
 $sidebar-text-hover-color: #e7ede9;
 $sidebar-text-active-color: #ffffff;
-$sidebar-muted-color: #62736b;
 $sidebar-border-color: rgba(255, 255, 255, 0.09);
 $brand-mark-bg: #22332c;
 $brand-mark-color: #6fd3a5;
@@ -85,27 +84,13 @@ $main-content-bg: #f8f9fa; // Bootstrap light gray
     flex-direction: column;
   }
 
-  .adm-nav-group + .adm-nav-group {
-    margin-top: 12px;
-  }
-
-  .adm-nav-group-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: $sidebar-muted-color;
-    padding: 8px 10px 6px;
-  }
-
   .adm-nav-list {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 3px;
   }
 
   .adm-nav-link {

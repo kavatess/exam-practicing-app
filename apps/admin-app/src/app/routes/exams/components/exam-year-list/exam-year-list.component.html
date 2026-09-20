@@ -1,72 +1,78 @@
 <div class="ex-head">
-  <span class="ex-eyebrow">By exam year</span>
-  <button type="button" class="ex-btn-primary" (click)="create.emit()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
-      <path d="M12 5v14M5 12h14"></path>
+  <div class="ex-head-row">
+    <span class="ex-eyebrow">By exam year</span>
+    <button type="button" class="ex-btn-primary" (click)="create.emit()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+        <path d="M12 5v14M5 12h14"></path>
+      </svg>
+      New exam
+    </button>
+  </div>
+
+  <label class="ex-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14ZM20 20l-4.2-4.2"></path>
     </svg>
-    New exam
-  </button>
+    <input
+      type="search"
+      placeholder="Search exams"
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+    />
+  </label>
 </div>
 
-@if (exams.length) {
-  <div class="ex-scroll">
-    @for (group of yearGroups; track group.year) {
-      <div>
-        <button
-          type="button"
-          class="ex-year-head"
-          [attr.aria-expanded]="isOpen(group.year)"
-          (click)="toggleYear(group.year)"
+<div class="ex-scroll">
+  @for (group of yearGroups; track group.year) {
+    <div>
+      <button
+        type="button"
+        class="ex-year-head"
+        [attr.aria-expanded]="isOpen(group.year)"
+        (click)="toggleYear(group.year)"
+      >
+        <svg
+          class="ex-chevron"
+          [class.open]="isOpen(group.year)"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"
         >
-          <svg
-            class="ex-chevron"
-            [class.open]="isOpen(group.year)"
-            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"
-          >
-            <path d="M9 6l6 6-6 6"></path>
-          </svg>
-          <span class="ex-year">{{ group.year }}</span>
-          <span class="ex-year-count">{{ examLabel(group) }}</span>
-          @if (group.year === currentYear) {
-            <span class="ex-pill-current">Current</span>
-          }
-        </button>
-
-        @if (isOpen(group.year)) {
-          <div class="ex-list">
-            @for (exam of group.exams; track exam.id) {
-              <button
-                type="button"
-                class="ex-row"
-                [class.selected]="exam.id === selectedExamId"
-                (click)="select.emit(exam.id)"
-              >
-                <span class="ex-row-text">
-                  <span class="ex-row-name">{{ exam.name }}</span>
-                  <span class="ex-row-tags">
-                    <span class="ex-pill" [class]="typeClass(exam)">{{ exam.examType }}</span>
-                    @if (subjectBadge(exam); as badge) {
-                      <span class="ex-pill-subjects">{{ badge }}</span>
-                    }
-                    <span class="ex-row-code">{{ exam.code }}</span>
-                  </span>
-                </span>
-                <svg class="ex-row-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M9 6l6 6-6 6"></path>
-                </svg>
-              </button>
-            }
-          </div>
+          <path d="M9 6l6 6-6 6"></path>
+        </svg>
+        <span class="ex-year">{{ group.year }}</span>
+        <span class="ex-year-count">{{ examLabel(group) }}</span>
+        @if (group.year === currentYear) {
+          <span class="ex-pill-current">Current</span>
         }
-      </div>
-    }
-  </div>
-} @else {
-  <div class="ex-empty">
-    <p class="ex-empty-title">No exams yet</p>
-    <p class="ex-empty-text">
-      Create an exam, then add one section per subject it draws from.
-    </p>
-    <button type="button" class="ex-btn-primary" (click)="create.emit()">New exam</button>
-  </div>
-}
+      </button>
+
+      @if (isOpen(group.year)) {
+        <div class="ex-list">
+          @for (exam of group.exams; track exam.id) {
+            <button
+              type="button"
+              class="ex-row"
+              [class.selected]="exam.id === selectedExamId"
+              (click)="select.emit(exam.id)"
+            >
+              <span class="ex-row-text">
+                <span class="ex-row-name">{{ exam.name }}</span>
+                <span class="ex-row-tags">
+                  <span class="ex-pill" [class]="typeClass(exam)">{{ exam.examType }}</span>
+                  @if (subjectBadge(exam); as badge) {
+                    <span class="ex-pill-subjects">{{ badge }}</span>
+                  }
+                  <span class="ex-row-code">{{ exam.code }}</span>
+                </span>
+              </span>
+              <svg class="ex-row-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 6l6 6-6 6"></path>
+              </svg>
+            </button>
+          }
+        </div>
+      }
+    </div>
+  } @empty {
+    <p class="ex-empty">No exams match “{{ search() }}”.</p>
+  }
+</div>

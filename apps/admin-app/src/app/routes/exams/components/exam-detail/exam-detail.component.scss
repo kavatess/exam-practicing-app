@@ -85,7 +85,8 @@
   gap: 8px;
 }
 
-.ex-btn-ghost {
+.ex-btn-ghost,
+.ex-btn-add {
   @include sm-button-ghost;
 
   svg {
@@ -120,6 +121,44 @@
   svg {
     width: 13px;
     height: 13px;
+  }
+}
+
+.ex-btn-add {
+  padding: 0 13px;
+  color: $sm-green;
+  font-weight: 600;
+
+  &:hover {
+    border-color: $sm-green;
+    background: $sm-surface-accent;
+  }
+}
+
+.ex-add-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px;
+  border: 1.5px dashed $sm-border-dashed;
+  border-radius: 13px;
+  background: none;
+  font-family: $sm-font-sans;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: $sm-muted-dim;
+  cursor: pointer;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover {
+    border-color: $sm-green;
+    color: $sm-green;
   }
 }
 

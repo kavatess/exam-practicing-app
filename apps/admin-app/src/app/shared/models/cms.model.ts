@@ -64,6 +64,7 @@ export interface ExamSection {
     id: string;
     examId: string;
     subjectId: string;
+    label: string;
     unitIds: string[];
 }
 
@@ -124,4 +125,26 @@ export function countSubUnits(subject: AdminSubject): number {
         (total, unit) => total + unit.subUnits.length,
         0
     );
+}
+
+const MONTH_LABELS = [
+    'JAN',
+    'FEB',
+    'MAR',
+    'APR',
+    'MAY',
+    'JUN',
+    'JUL',
+    'AUG',
+    'SEP',
+    'OCT',
+    'NOV',
+    'DEC',
+];
+
+/** Mono meta stamp used across the CMS, e.g. `12 SEP 2026`. */
+export function formatUpdatedStamp(iso?: string): string {
+    const date = iso ? new Date(iso) : new Date();
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    return `${day} ${MONTH_LABELS[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
 }

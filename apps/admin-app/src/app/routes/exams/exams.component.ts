@@ -23,7 +23,7 @@ import { ExamYearListComponent } from './components/exam-year-list/exam-year-lis
 import { ExamDraft, ExamModalComponent } from './components/modals/exam-modal/exam-modal.component';
 import { MoldDraft, MoldModalComponent } from './components/modals/mold-modal/mold-modal.component';
 import { ScopeModalComponent } from './components/modals/scope-modal/scope-modal.component';
-import { SectionModalComponent } from './components/modals/section-modal/section-modal.component';
+import { SectionDraft, SectionModalComponent } from './components/modals/section-modal/section-modal.component';
 
 @Component({
     selector: 'adm-exams',
@@ -117,17 +117,21 @@ export class ExamsComponent implements OnInit {
         this.selectedExamId = this.exams[0]?.id ?? null;
     }
 
-    addSection(subjectId: string): void {
+    addSection(draft: SectionDraft): void {
         const exam = this.selectedExam;
-        if (!exam || exam.sections.some((s) => s.subjectId === subjectId)) {
+        if (
+            !exam ||
+            exam.sections.some((s) => s.subjectId === draft.subjectId)
+        ) {
             this.closeOverlay();
             return;
         }
         exam.sections.push({
             id: this.data.nextId('section'),
             examId: exam.id,
-            subjectId,
-            unitIds: [],
+            subjectId: draft.subjectId,
+            label: draft.label,
+            unitIds: [...draft.unitIds],
         });
         exam.updatedAt = new Date().toISOString();
         this.closeOverlay();

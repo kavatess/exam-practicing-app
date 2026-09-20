@@ -47,6 +47,7 @@ export class CmsDataService {
             id,
             name,
             description,
+            updatedAt: '2026-09-12T00:00:00.000Z',
             units: unitSeeds.map((seed, index) =>
                 this.buildUnit(id, seed, index)
             ),
@@ -84,6 +85,29 @@ export class CmsDataService {
     }
 
     private buildExams(): AdminExam[] {
+        const mathScope = [
+            'toan-u1',
+            'toan-u2',
+            'toan-u3',
+            'toan-u5',
+            'toan-u7',
+        ];
+        const tsaSections: SectionSeed[] = [
+            ['toan', 'Tư duy Toán học', ['toan-u1', 'toan-u3', 'toan-u5', 'toan-u7']],
+            ['van', 'Tư duy Đọc hiểu', ['van-u7', 'van-u6', 'van-u5']],
+            [
+                'khoahoc',
+                'Tư duy Khoa học',
+                ['khoahoc-u1', 'khoahoc-u3', 'khoahoc-u4', 'khoahoc-u5'],
+            ],
+        ];
+        const hsaSections: SectionSeed[] = [
+            ['toan', 'Tư duy định lượng', ['toan-u1', 'toan-u3', 'toan-u7']],
+            ['van', 'Tư duy định tính', ['van-u7', 'van-u6']],
+            ['khoahoc', 'Khoa học', ['khoahoc-u2', 'khoahoc-u4', 'khoahoc-u5']],
+        ];
+        const mathSection: SectionSeed[] = [['toan', '', mathScope]];
+
         return [
             this.exam(
                 'thptqg-2025-math',
@@ -92,19 +116,9 @@ export class CmsDataService {
                 2025,
                 ExamTypes.National,
                 'Bộ Giáo dục và Đào tạo',
-                'Yearly prototype of the national high-school graduation exam. One paper per subject, following the official specification.',
-                [['toan', ['toan-u1', 'toan-u2', 'toan-u3', 'toan-u5', 'toan-u7']]],
-                this.mathMolds()
-            ),
-            this.exam(
-                'thptqg-2025-lit',
-                'Kỳ thi THPT Quốc gia 2025 — Ngữ văn',
-                'THPTQG-2025-LIT',
-                2025,
-                ExamTypes.National,
-                'Bộ Giáo dục và Đào tạo',
-                'Yearly prototype of the national high-school graduation exam for literature.',
-                [['van', ['van-u1', 'van-u2', 'van-u5', 'van-u6']]]
+                NATIONAL_DESC,
+                mathSection,
+                (examId, sections) => this.mathMolds(examId, sections[0].id)
             ),
             this.exam(
                 'hust-2025-tsa',
@@ -112,28 +126,21 @@ export class CmsDataService {
                 'HUST-2025-TSA',
                 2025,
                 ExamTypes.University,
-                'Đại học Bách Khoa Hà Nội',
-                'Single timed assessment covering several subjects in one sitting, scored as one combined result.',
-                [
-                    ['toan', ['toan-u1', 'toan-u3', 'toan-u5', 'toan-u7']],
-                    ['van', ['van-u5', 'van-u6', 'van-u7']],
-                    ['khoahoc', ['khoahoc-u1', 'khoahoc-u2', 'khoahoc-u5']],
-                ],
-                this.tsaMolds()
+                'ĐH Bách Khoa Hà Nội',
+                UNIVERSITY_DESC,
+                tsaSections,
+                (examId, sections) => this.tsaMolds(examId, sections)
             ),
             this.exam(
                 'vnu-2025-hsa',
-                'ĐHQG Hà Nội 2025 — HSA',
+                'ĐHQG Hà Nội 2025 — Đánh giá năng lực (HSA)',
                 'VNU-2025-HSA',
                 2025,
                 ExamTypes.University,
-                'Đại học Quốc gia Hà Nội',
-                'High-school student assessment spanning quantitative, literary and scientific reasoning in one sitting.',
-                [
-                    ['toan', ['toan-u2', 'toan-u4', 'toan-u7']],
-                    ['van', ['van-u1', 'van-u7']],
-                    ['khoahoc', ['khoahoc-u3', 'khoahoc-u4']],
-                ]
+                'ĐH Quốc gia Hà Nội',
+                UNIVERSITY_DESC,
+                hsaSections,
+                (examId, sections) => this.hsaMolds(examId, sections)
             ),
             this.exam(
                 'thptqg-2024-math',
@@ -142,8 +149,10 @@ export class CmsDataService {
                 2024,
                 ExamTypes.National,
                 'Bộ Giáo dục và Đào tạo',
-                'Yearly prototype of the national high-school graduation exam.',
-                [['toan', ['toan-u1', 'toan-u2', 'toan-u3', 'toan-u5', 'toan-u7']]]
+                NATIONAL_DESC,
+                mathSection,
+                (examId, sections) =>
+                    this.mathMolds(examId, sections[0].id).slice(0, 2)
             ),
             this.exam(
                 'hust-2024-tsa',
@@ -151,12 +160,10 @@ export class CmsDataService {
                 'HUST-2024-TSA',
                 2024,
                 ExamTypes.University,
-                'Đại học Bách Khoa Hà Nội',
-                'Single timed assessment covering several subjects in one sitting, scored as one combined result.',
-                [
-                    ['toan', ['toan-u1', 'toan-u3']],
-                    ['khoahoc', ['khoahoc-u1', 'khoahoc-u5']],
-                ]
+                'ĐH Bách Khoa Hà Nội',
+                UNIVERSITY_DESC,
+                tsaSections,
+                (examId, sections) => this.tsaMolds(examId, sections).slice(0, 1)
             ),
             this.exam(
                 'thptqg-2023-math',
@@ -165,18 +172,22 @@ export class CmsDataService {
                 2023,
                 ExamTypes.National,
                 'Bộ Giáo dục và Đào tạo',
-                'Yearly prototype of the national high-school graduation exam.',
-                [['toan', ['toan-u1', 'toan-u2', 'toan-u3']]]
+                NATIONAL_DESC,
+                mathSection,
+                (examId, sections) =>
+                    this.mathMolds(examId, sections[0].id).slice(0, 1)
             ),
             this.exam(
-                'internal-2023',
+                'internal-2023-math',
                 'Đề ôn luyện nội bộ 2023',
-                'INTERNAL-2023',
+                'INTERNAL-2023-MATH',
                 2023,
                 ExamTypes.Custom,
                 'ExamPrep',
-                'Internal revision prototype. Not tied to an official exam specification.',
-                [['toan', ['toan-u1', 'toan-u2']]]
+                'Internal practice prototype built by the content team. Not tied to any official sitting.',
+                mathSection,
+                (examId, sections) =>
+                    this.mathMolds(examId, sections[0].id).slice(1, 2)
             ),
         ];
     }
@@ -189,9 +200,18 @@ export class CmsDataService {
         examType: ExamTypes,
         org: string,
         description: string,
-        sections: [string, string[]][],
-        molds: AdminMold[] = []
+        sectionSeeds: SectionSeed[],
+        moldFactory?: (examId: string, sections: ExamSection[]) => AdminMold[]
     ): AdminExam {
+        const sections: ExamSection[] = sectionSeeds.map(
+            ([subjectId, label, unitIds], index) => ({
+                id: `${id}-sec${index + 1}`,
+                examId: id,
+                subjectId,
+                label,
+                unitIds: [...unitIds],
+            })
+        );
         return {
             id,
             name,
@@ -201,254 +221,247 @@ export class CmsDataService {
             org,
             description,
             iconUrl: '',
-            sections: sections.map(([subjectId, unitIds], index) => ({
-                id: `${id}-sec${index + 1}`,
-                examId: id,
-                subjectId,
-                unitIds,
-            })),
-            molds,
+            updatedAt: '2026-09-12T00:00:00.000Z',
+            sections,
+            molds: moldFactory ? moldFactory(id, sections) : [],
         };
     }
 
-    private mathMolds(): AdminMold[] {
-        const section = 'thptqg-2025-math-sec1';
+    private mathMolds(examId: string, sectionId: string): AdminMold[] {
+        const prefix = `${examId}-m`;
         return [
-            {
-                id: 'mold-a',
-                courseId: 'thptqg-2025-math',
-                name: 'Đề thi thử THPTQG — Mẫu A',
-                description: '',
+            this.mold(`${prefix}1`, examId, 'Đề thi thử THPTQG — Mẫu A', {
                 type: MoldTypes.Test,
                 status: MoldStatuses.Active,
                 numOfQuestions: 50,
                 duration: 90,
                 passingScore: 30,
                 pages: [
-                    {
-                        id: 'mold-a-p1',
-                        moldId: 'mold-a',
-                        name: 'Phần 1 — Nhận biết & Thông hiểu',
-                        description: '',
-                        blocks: [
-                            this.block('mold-a-p1-b1', 'mold-a', 'mold-a-p1', 0, {
-                                sectionId: section,
-                                courseUnitId: 'toan-u1',
-                                subUnitIds: ['toan-u1-s1', 'toan-u1-s2'],
-                                qType: QuestionTypes.MultipleChoice,
-                                difficulty: QuestionDifficulties.Easy,
-                                questionCount: 12,
-                            }),
-                            this.block('mold-a-p1-b2', 'mold-a', 'mold-a-p1', 1, {
-                                sectionId: section,
-                                courseUnitId: 'toan-u3',
-                                subUnitIds: ['toan-u3-s1'],
-                                qType: QuestionTypes.TrueFalse,
-                                difficulty: QuestionDifficulties.Easy,
-                                questionCount: 8,
-                            }),
+                    [
+                        'Phần 1 — Nhận biết & Thông hiểu',
+                        [
+                            [sectionId, 'toan-u1', ['toan-u1-s1', 'toan-u1-s2'], QuestionTypes.MultipleChoice, QuestionDifficulties.Easy, 12],
+                            [sectionId, 'toan-u3', ['toan-u3-s1'], QuestionTypes.TrueFalse, QuestionDifficulties.Easy, 8],
                         ],
-                    },
-                    {
-                        id: 'mold-a-p2',
-                        moldId: 'mold-a',
-                        name: 'Phần 2 — Vận dụng',
-                        description: '',
-                        blocks: [
-                            this.block('mold-a-p2-b1', 'mold-a', 'mold-a-p2', 0, {
-                                sectionId: section,
-                                courseUnitId: 'toan-u2',
-                                subUnitIds: ['toan-u2-s2', 'toan-u2-s3'],
-                                qType: QuestionTypes.MultipleChoice,
-                                difficulty: QuestionDifficulties.Medium,
-                                questionCount: 12,
-                            }),
-                            this.block('mold-a-p2-b2', 'mold-a', 'mold-a-p2', 1, {
-                                sectionId: section,
-                                courseUnitId: 'toan-u5',
-                                subUnitIds: ['toan-u5-s3'],
-                                qType: QuestionTypes.MultipleChoice,
-                                difficulty: QuestionDifficulties.Medium,
-                                questionCount: 8,
-                            }),
+                    ],
+                    [
+                        'Phần 2 — Vận dụng',
+                        [
+                            [sectionId, 'toan-u2', ['toan-u2-s2', 'toan-u2-s3'], QuestionTypes.MultipleChoice, QuestionDifficulties.Medium, 12],
+                            [sectionId, 'toan-u5', ['toan-u5-s3'], QuestionTypes.MultipleChoice, QuestionDifficulties.Medium, 8],
                         ],
-                    },
-                    {
-                        id: 'mold-a-p3',
-                        moldId: 'mold-a',
-                        name: 'Phần 3 — Vận dụng cao',
-                        description: '',
-                        blocks: [
-                            this.block('mold-a-p3-b1', 'mold-a', 'mold-a-p3', 0, {
-                                sectionId: section,
-                                courseUnitId: 'toan-u7',
-                                subUnitIds: ['toan-u7-s2'],
-                                qType: QuestionTypes.Matching,
-                                difficulty: QuestionDifficulties.Hard,
-                                questionCount: 6,
-                            }),
-                            this.block('mold-a-p3-b2', 'mold-a', 'mold-a-p3', 1, {
-                                sectionId: section,
-                                courseUnitId: 'toan-u1',
-                                subUnitIds: ['toan-u1-s3'],
-                                qType: QuestionTypes.EssayAnswer,
-                                difficulty: QuestionDifficulties.Hard,
-                                questionCount: 4,
-                            }),
+                    ],
+                    [
+                        'Phần 3 — Vận dụng cao',
+                        [
+                            [sectionId, 'toan-u7', ['toan-u7-s2'], QuestionTypes.Matching, QuestionDifficulties.Hard, 6],
+                            [sectionId, 'toan-u1', ['toan-u1-s3'], QuestionTypes.EssayAnswer, QuestionDifficulties.Hard, 4],
                         ],
-                    },
+                    ],
                 ],
-            },
-            {
-                id: 'mold-b',
-                courseId: 'thptqg-2025-math',
-                name: 'Luyện tập theo chuyên đề — Đạo hàm',
-                description: '',
+            }),
+            this.mold(`${prefix}2`, examId, 'Luyện tập theo chuyên đề — Đạo hàm', {
                 type: MoldTypes.Practice,
                 status: MoldStatuses.Active,
                 numOfQuestions: 15,
                 duration: 25,
                 passingScore: 9,
                 pages: [
-                    {
-                        id: 'mold-b-p1',
-                        moldId: 'mold-b',
-                        name: 'Luyện tập',
-                        description: '',
-                        blocks: [
-                            this.block('mold-b-p1-b1', 'mold-b', 'mold-b-p1', 0, {
-                                sectionId: section,
-                                courseUnitId: 'toan-u1',
-                                subUnitIds: ['toan-u1-s1'],
-                                qType: QuestionTypes.MultipleChoice,
-                                difficulty: QuestionDifficulties.Easy,
-                                questionCount: 9,
-                            }),
-                            this.block('mold-b-p1-b2', 'mold-b', 'mold-b-p1', 1, {
-                                sectionId: section,
-                                courseUnitId: 'toan-u1',
-                                subUnitIds: ['toan-u1-s3'],
-                                qType: QuestionTypes.MultipleChoice,
-                                difficulty: QuestionDifficulties.Medium,
-                                questionCount: 6,
-                            }),
+                    [
+                        'Luyện tập',
+                        [
+                            [sectionId, 'toan-u1', ['toan-u1-s1'], QuestionTypes.MultipleChoice, QuestionDifficulties.Easy, 9],
+                            [sectionId, 'toan-u1', ['toan-u1-s3'], QuestionTypes.MultipleChoice, QuestionDifficulties.Medium, 6],
                         ],
-                    },
+                    ],
                 ],
-            },
+            }),
+            this.mold(`${prefix}3`, examId, 'Đề thi thử THPTQG — Mẫu B (rút gọn)', {
+                type: MoldTypes.Test,
+                status: MoldStatuses.Inactive,
+                numOfQuestions: 30,
+                duration: 60,
+                passingScore: 18,
+                pages: [
+                    [
+                        'Phần 1',
+                        [
+                            [sectionId, 'toan-u3', ['toan-u3-s1', 'toan-u3-s2'], QuestionTypes.MultipleChoice, QuestionDifficulties.Easy, 12],
+                            [sectionId, 'toan-u6', ['toan-u6-s1'], QuestionTypes.MultipleChoice, QuestionDifficulties.Medium, 8],
+                        ],
+                    ],
+                    [
+                        'Phần 2',
+                        [
+                            [sectionId, 'toan-u7', ['toan-u7-s1'], QuestionTypes.Matching, QuestionDifficulties.Hard, 10],
+                        ],
+                    ],
+                ],
+            }),
         ];
     }
 
-    private tsaMolds(): AdminMold[] {
-        const math = 'hust-2025-tsa-sec1';
-        const reading = 'hust-2025-tsa-sec2';
-        const science = 'hust-2025-tsa-sec3';
+    private tsaMolds(examId: string, sections: ExamSection[]): AdminMold[] {
+        const [math, reading, science] = sections.map((section) => section.id);
         return [
-            {
-                id: 'mold-tsa',
-                courseId: 'hust-2025-tsa',
-                name: 'Đề đánh giá tư duy — Mẫu chuẩn',
-                description: '',
+            this.mold(`${examId}-m1`, examId, 'Đề đánh giá tư duy — Mẫu chuẩn', {
                 type: MoldTypes.Test,
                 status: MoldStatuses.Active,
-                numOfQuestions: 60,
+                numOfQuestions: 100,
                 duration: 150,
-                passingScore: 36,
+                passingScore: 60,
                 pages: [
-                    {
-                        id: 'mold-tsa-p1',
-                        moldId: 'mold-tsa',
-                        name: 'Phần 1 — Tư duy Toán học',
-                        description: '',
-                        blocks: [
-                            this.block('mold-tsa-p1-b1', 'mold-tsa', 'mold-tsa-p1', 0, {
-                                sectionId: math,
-                                courseUnitId: 'toan-u1',
-                                subUnitIds: ['toan-u1-s1', 'toan-u1-s3'],
-                                qType: QuestionTypes.MultipleChoice,
-                                difficulty: QuestionDifficulties.Medium,
-                                questionCount: 14,
-                            }),
-                            this.block('mold-tsa-p1-b2', 'mold-tsa', 'mold-tsa-p1', 1, {
-                                sectionId: math,
-                                courseUnitId: 'toan-u7',
-                                subUnitIds: ['toan-u7-s2'],
-                                qType: QuestionTypes.MultipleChoice,
-                                difficulty: QuestionDifficulties.Hard,
-                                questionCount: 6,
-                            }),
+                    [
+                        'Phần 1 — Tư duy Toán học',
+                        [
+                            [math, 'toan-u1', ['toan-u1-s1', 'toan-u1-s3'], QuestionTypes.MultipleChoice, QuestionDifficulties.Medium, 24],
+                            [math, 'toan-u7', ['toan-u7-s2'], QuestionTypes.Matching, QuestionDifficulties.Hard, 16],
                         ],
-                    },
-                    {
-                        id: 'mold-tsa-p2',
-                        moldId: 'mold-tsa',
-                        name: 'Phần 2 — Tư duy Đọc hiểu',
-                        description: '',
-                        blocks: [
-                            this.block('mold-tsa-p2-b1', 'mold-tsa', 'mold-tsa-p2', 0, {
-                                sectionId: reading,
-                                courseUnitId: 'van-u5',
-                                subUnitIds: ['van-u5-s1'],
-                                qType: QuestionTypes.MultipleChoice,
-                                difficulty: QuestionDifficulties.Medium,
-                                questionCount: 12,
-                            }),
-                            this.block('mold-tsa-p2-b2', 'mold-tsa', 'mold-tsa-p2', 1, {
-                                sectionId: reading,
-                                courseUnitId: 'van-u6',
-                                subUnitIds: ['van-u6-s1'],
-                                qType: QuestionTypes.TrueFalse,
-                                difficulty: QuestionDifficulties.Easy,
-                                questionCount: 8,
-                            }),
+                    ],
+                    [
+                        'Phần 2 — Tư duy Đọc hiểu',
+                        [
+                            [reading, 'van-u7', ['van-u7-s1', 'van-u7-s2'], QuestionTypes.EssayAnswer, QuestionDifficulties.Medium, 12],
+                            [reading, 'van-u6', ['van-u6-s1'], QuestionTypes.MultipleChoice, QuestionDifficulties.Easy, 8],
                         ],
-                    },
-                    {
-                        id: 'mold-tsa-p3',
-                        moldId: 'mold-tsa',
-                        name: 'Phần 3 — Tư duy Khoa học',
-                        description: '',
-                        blocks: [
-                            this.block('mold-tsa-p3-b1', 'mold-tsa', 'mold-tsa-p3', 0, {
-                                sectionId: science,
-                                courseUnitId: 'khoahoc-u1',
-                                subUnitIds: ['khoahoc-u1-s1'],
-                                qType: QuestionTypes.MultipleChoice,
-                                difficulty: QuestionDifficulties.Medium,
-                                questionCount: 12,
-                            }),
-                            this.block('mold-tsa-p3-b2', 'mold-tsa', 'mold-tsa-p3', 1, {
-                                sectionId: science,
-                                courseUnitId: 'khoahoc-u5',
-                                subUnitIds: ['khoahoc-u5-s1', 'khoahoc-u5-s2'],
-                                qType: QuestionTypes.Matching,
-                                difficulty: QuestionDifficulties.Hard,
-                                questionCount: 8,
-                            }),
+                    ],
+                    [
+                        'Phần 3 — Tư duy Khoa học',
+                        [
+                            [science, 'khoahoc-u5', ['khoahoc-u5-s1', 'khoahoc-u5-s2'], QuestionTypes.Matching, QuestionDifficulties.Medium, 22],
+                            [science, 'khoahoc-u3', ['khoahoc-u3-s1'], QuestionTypes.MultipleChoice, QuestionDifficulties.Hard, 18],
                         ],
-                    },
+                    ],
                 ],
-            },
+            }),
+            this.mold(`${examId}-m2`, examId, 'Luyện tập — Tư duy Khoa học', {
+                type: MoldTypes.Practice,
+                status: MoldStatuses.Active,
+                numOfQuestions: 20,
+                duration: 30,
+                passingScore: 12,
+                pages: [
+                    [
+                        'Luyện tập',
+                        [
+                            [science, 'khoahoc-u1', ['khoahoc-u1-s1'], QuestionTypes.MultipleChoice, QuestionDifficulties.Medium, 10],
+                            [science, 'khoahoc-u4', ['khoahoc-u4-s1'], QuestionTypes.MultipleChoice, QuestionDifficulties.Hard, 10],
+                        ],
+                    ],
+                ],
+            }),
         ];
     }
 
-    private block(
+    private hsaMolds(examId: string, sections: ExamSection[]): AdminMold[] {
+        const [quant, qual, science] = sections.map((section) => section.id);
+        return [
+            this.mold(`${examId}-m1`, examId, 'Đề HSA — Mẫu chuẩn', {
+                type: MoldTypes.Test,
+                status: MoldStatuses.Active,
+                numOfQuestions: 150,
+                duration: 195,
+                passingScore: 90,
+                pages: [
+                    [
+                        'Phần 1 — Tư duy định lượng',
+                        [
+                            [quant, 'toan-u3', ['toan-u3-s1', 'toan-u3-s3'], QuestionTypes.MultipleChoice, QuestionDifficulties.Medium, 50],
+                        ],
+                    ],
+                    [
+                        'Phần 2 — Tư duy định tính',
+                        [
+                            [qual, 'van-u7', ['van-u7-s1'], QuestionTypes.MultipleChoice, QuestionDifficulties.Medium, 50],
+                        ],
+                    ],
+                    [
+                        'Phần 3 — Khoa học',
+                        [
+                            [science, 'khoahoc-u5', ['khoahoc-u5-s1'], QuestionTypes.MultipleChoice, QuestionDifficulties.Advanced, 50],
+                        ],
+                    ],
+                ],
+            }),
+        ];
+    }
+
+    private mold(
         id: string,
-        moldId: string,
-        pageId: string,
-        qIndex: number,
-        rest: {
-            sectionId: string;
-            courseUnitId: string;
-            subUnitIds: string[];
-            qType: QuestionTypes;
-            difficulty: QuestionDifficulties;
-            questionCount: number;
+        examId: string,
+        name: string,
+        spec: {
+            type: MoldTypes;
+            status: MoldStatuses;
+            numOfQuestions: number;
+            duration: number;
+            passingScore: number;
+            pages: [string, BlockSeed[]][];
         }
-    ) {
-        return { id, moldId, pageId, qIndex, ...rest };
+    ): AdminMold {
+        return {
+            id,
+            courseId: examId,
+            name,
+            description: '',
+            type: spec.type,
+            status: spec.status,
+            numOfQuestions: spec.numOfQuestions,
+            duration: spec.duration,
+            passingScore: spec.passingScore,
+            pages: spec.pages.map(([pageName, blocks], pageIndex) => {
+                const pageId = `${id}-p${pageIndex + 1}`;
+                return {
+                    id: pageId,
+                    moldId: id,
+                    name: pageName,
+                    description: '',
+                    blocks: blocks.map(
+                        (
+                            [
+                                sectionId,
+                                courseUnitId,
+                                subUnitIds,
+                                qType,
+                                difficulty,
+                                questionCount,
+                            ],
+                            blockIndex
+                        ) => ({
+                            id: `${pageId}-b${blockIndex + 1}`,
+                            moldId: id,
+                            pageId,
+                            qIndex: blockIndex,
+                            sectionId,
+                            courseUnitId,
+                            subUnitIds: [...subUnitIds],
+                            qType,
+                            difficulty,
+                            questionCount,
+                        })
+                    ),
+                };
+            }),
+        };
     }
 }
+
+type SectionSeed = [string, string, string[]];
+
+type BlockSeed = [
+    string,
+    string,
+    string[],
+    QuestionTypes,
+    QuestionDifficulties,
+    number
+];
+
+const NATIONAL_DESC =
+    'Yearly prototype of the national high-school graduation exam. Each subject is sat as its own paper, so this exam has exactly one section.';
+
+const UNIVERSITY_DESC =
+    'Independent university entrance assessment: a single timed sitting spanning several subjects, marked as one combined score.';
 
 const SUBJECT_SEEDS: [string, string, string, UnitSeed[]][] = [
     [

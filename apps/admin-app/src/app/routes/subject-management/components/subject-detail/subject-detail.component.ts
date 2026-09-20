@@ -3,6 +3,7 @@ import {
     AdminSubject,
     AdminUnit,
     countSubUnits,
+    formatUpdatedStamp,
 } from '../../../../shared/models/cms.model';
 import { UnitTreeComponent } from '../unit-tree/unit-tree.component';
 
@@ -28,8 +29,11 @@ export class SubjectDetailComponent {
     get meta(): string {
         const units = this.subject.units.length;
         const subUnits = countSubUnits(this.subject);
-        return `${units} ${units === 1 ? 'UNIT' : 'UNITS'} · ${subUnits} ${
-            subUnits === 1 ? 'SUB-UNIT' : 'SUB-UNITS'
-        }`;
+        const updated = formatUpdatedStamp(this.subject.updatedAt);
+        return [
+            `${units} ${units === 1 ? 'UNIT' : 'UNITS'}`,
+            `${subUnits} ${subUnits === 1 ? 'SUB-UNIT' : 'SUB-UNITS'}`,
+            `UPDATED ${updated}`,
+        ].join(' · ');
     }
 }

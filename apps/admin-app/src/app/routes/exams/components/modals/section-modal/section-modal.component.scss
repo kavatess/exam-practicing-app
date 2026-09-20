@@ -1,72 +1,67 @@
 @use '../../../../../shared/styles/tokens' as *;
 
-.ex-list {
+@include sm-form-field;
+
+.ex-form {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  max-height: 320px;
-  overflow: auto;
+  gap: 16px;
 }
 
-.ex-row {
+.ex-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.ex-chips {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 10px 12px;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ex-chip {
+  padding: 7px 12px;
   border: 1px solid $sm-border-control;
-  border-radius: 10px;
+  border-radius: 999px;
   background: $sm-surface;
   font-family: $sm-font-sans;
-  color: inherit;
-  text-align: left;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: $sm-text-body;
   cursor: pointer;
 
   &:hover {
     border-color: $sm-border-strong;
   }
 
-  &.selected {
-    border-color: $sm-green;
-    background: $sm-surface-accent;
-  }
-}
-
-.ex-radio {
-  width: 15px;
-  height: 15px;
-  flex: 0 0 15px;
-  border: 1.5px solid $sm-icon-soft;
-  border-radius: 50%;
-
   &.on {
     border-color: $sm-green;
-    border-width: 4px;
+    background: $sm-surface-accent;
+    color: $sm-green-deep;
   }
 }
 
-.ex-row-text {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
+.ex-optional {
+  color: $sm-muted-light;
+  font-weight: 400;
 }
 
-.ex-row-name {
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.ex-row-meta {
-  font-size: 11px;
-  color: $sm-muted;
-  margin-top: 2px;
-}
-
-.ex-empty {
+.ex-note {
   margin: 0;
-  padding: 14px;
-  font-size: 12.5px;
+  font-size: 12px;
   color: $sm-muted;
-  text-align: center;
+}
+
+.ex-scope-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+
+  .sm-field-label {
+    margin-bottom: 0;
+  }
 }

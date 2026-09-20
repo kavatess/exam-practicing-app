@@ -18,6 +18,7 @@ export class ScopeModalComponent implements OnInit {
     private readonly data = inject(CmsDataService);
 
     @Input({ required: true }) section!: ExamSection;
+    @Input({ required: true }) examCode!: string;
 
     @Output() dismiss = new EventEmitter<void>();
     @Output() save = new EventEmitter<string[]>();
@@ -39,6 +40,6 @@ export class ScopeModalComponent implements OnInit {
     }
 
     get eyebrow(): string {
-        return `Unit scope · ${this.subjectName}`;
+        return `Unit scope · ${this.examCode} · ${this.subjectName}`;
     }
 }

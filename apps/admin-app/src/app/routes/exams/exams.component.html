@@ -51,6 +51,7 @@
 @if (overlay === 'scope' && editingSection) {
   <adm-scope-modal
     [section]="editingSection!"
+    [examCode]="selectedExam?.code ?? ''"
     (dismiss)="closeOverlay()"
     (save)="saveScope($event)"
   ></adm-scope-modal>

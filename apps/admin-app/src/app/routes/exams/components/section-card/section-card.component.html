@@ -1,30 +1,35 @@
 <section class="ex-card">
-  <div class="ex-card-head">
+  <header class="ex-card-head">
+    <svg class="ex-grip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M5 9h14M5 15h14"></path>
+    </svg>
+    <span class="ex-order">{{ order }}</span>
+
     <div class="ex-card-text">
-      <h4 class="ex-subject">{{ subjectName }}</h4>
-      <p class="ex-card-sub">
-        Units in scope · {{ units.length }} selected · {{ questionTotal }} questions available
-      </p>
+      <div class="ex-title-row">
+        <h4 class="ex-subject">{{ subjectName }}</h4>
+        @if (section.label) {
+          <span class="ex-label">{{ section.label }}</span>
+        }
+      </div>
+      <p class="ex-scope-meta">{{ scopeMeta }}</p>
     </div>
-    <div class="ex-card-actions">
-      <button type="button" class="ex-link" (click)="editScope.emit()">Edit scope</button>
-      @if (removable) {
-        <button type="button" class="ex-remove" title="Remove section" (click)="remove.emit()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"></path>
-          </svg>
-        </button>
-      }
-    </div>
-  </div>
+
+    <button type="button" class="ex-link" (click)="editScope.emit()">Edit scope</button>
+    <button type="button" class="ex-remove" title="Remove section" (click)="remove.emit()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"></path>
+      </svg>
+    </button>
+  </header>
+
+  <p class="ex-eyebrow">Units in scope</p>
 
   <div class="ex-chips">
     @for (unit of units; track unit.id) {
       <span class="ex-chip">
         {{ unit.title }}<span class="ex-chip-count">{{ unit.questionCount }} q</span>
       </span>
-    } @empty {
-      <p class="ex-chips-empty">No units picked yet for this subject.</p>
     }
     <button type="button" class="ex-chip-add" (click)="editScope.emit()">+ Add unit</button>
   </div>

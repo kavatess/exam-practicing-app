@@ -10,27 +10,24 @@
     </a>
 
     <nav class="adm-nav-scroll">
-      <div class="adm-nav-group" *ngFor="let group of navGroups">
-        <div class="adm-nav-group-label">{{ group.label }}</div>
-        <ul class="adm-nav-list">
-          <li class="adm-nav-item" *ngFor="let item of group.items">
-            <a [routerLink]="['/', item.route]" routerLinkActive="active" class="adm-nav-link">
-              <svg
-                class="adm-nav-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.7"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path [attr.d]="item.icon"></path>
-              </svg>
-              <span class="adm-nav-label">{{ item.label }}</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+      <ul class="adm-nav-list">
+        <li class="adm-nav-item" *ngFor="let item of navItems">
+          <a [routerLink]="['/', item.route]" routerLinkActive="active" class="adm-nav-link">
+            <svg
+              class="adm-nav-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path [attr.d]="item.icon"></path>
+            </svg>
+            <span class="adm-nav-label">{{ item.label }}</span>
+          </a>
+        </li>
+      </ul>
     </nav>
 
     <div class="adm-sidebar-footer">

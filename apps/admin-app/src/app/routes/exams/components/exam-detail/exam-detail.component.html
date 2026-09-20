@@ -8,9 +8,7 @@
           <span class="ex-pill" [class]="typeClass">{{ current.examType }}</span>
         </div>
         <p class="ex-desc">{{ current.description }}</p>
-        <p class="ex-code">
-          {{ current.code }}@if (current.org) { · {{ current.org }} } · UPDATED {{ updatedLabel }}
-        </p>
+        <p class="ex-code">{{ meta }}</p>
       </div>
 
       <div class="ex-actions">
@@ -34,11 +32,9 @@
         <div class="ex-section-head">
           <div>
             <h3 class="ex-section-title">Sections</h3>
-            <p class="ex-section-sub">
-              One section per subject this exam draws from. Each keeps its own unit scope.
-            </p>
+            <p class="ex-section-sub">{{ sectionHint }}</p>
           </div>
-          <button type="button" class="ex-btn-ghost" (click)="addSection.emit()">
+          <button type="button" class="ex-btn-add" (click)="addSection.emit()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
               <path d="M12 5v14M5 12h14"></path>
             </svg>
@@ -47,18 +43,21 @@
         </div>
 
         <div class="ex-sections">
-          @for (section of current.sections; track section.id) {
+          @for (section of current.sections; track section.id; let i = $index) {
             <adm-section-card
               [section]="section"
-              [removable]="current.sections.length > 1"
+              [index]="i"
               (editScope)="editScope.emit(section)"
               (remove)="removeSection.emit(section)"
             ></adm-section-card>
-          } @empty {
-            <p class="ex-empty-card">
-              No sections yet. Add the first subject this exam draws from.
-            </p>
           }
+
+          <button type="button" class="ex-add-section" (click)="addSection.emit()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+              <path d="M12 5v14M5 12h14"></path>
+            </svg>
+            Add subject section
+          </button>
         </div>
       </section>
 

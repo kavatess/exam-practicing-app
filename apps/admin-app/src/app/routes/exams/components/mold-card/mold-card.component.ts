@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MoldStatuses, MoldTypes, QuestionDifficulties } from '@libs/models';
 import {
     AdminMold,
@@ -8,6 +8,7 @@ import {
     DIFFICULTY_LABELS,
     ExamSection,
 } from '../../../../shared/models/cms.model';
+import { CmsDataService } from '../../../../shared/services/cms-data.service';
 import {
     MoldPageComponent,
     PageBlockPatch,
@@ -32,6 +33,8 @@ export interface BlockRef {
     styleUrl: './mold-card.component.scss',
 })
 export class MoldCardComponent {
+    private readonly data = inject(CmsDataService);
+
     @Input({ required: true }) mold!: AdminMold;
     @Input() sections: ExamSection[] = [];
     @Input() expanded = false;
@@ -73,9 +76,27 @@ export class MoldCardComponent {
     get structureMeta(): string {
         const pages = this.mold.pages.length;
         const blocks = countMoldBlocks(this.mold);
-        return `${pages} ${pages === 1 ? 'PAGE' : 'PAGES'} · ${blocks} ${
-            blocks === 1 ? 'BLOCK' : 'BLOCKS'
-        } · ${this.plannedQuestions} QUESTIONS`;
+        const parts = [
+            `${pages} ${pages === 1 ? 'PAGE' : 'PAGES'}`,
+            `${blocks} ${blocks === 1 ? 'BLOCK' : 'BLOCKS'}`,
+            `${this.plannedQuestions} QUESTIONS`,
+        ];
+        // Multi-subject exams call out how many of their sections the mold draws on.
+        if (this.sections.length > 1) {
+            const used = this.usedSections.length;
+            parts.push(used === 1 ? '1 SECTION USED' : `${used} SECTIONS`);
+        }
+        return parts.join(' · ');
+    }
+
+    /** Sections this mold actually pulls blocks from, in exam order. */
+    private get usedSections(): ExamSection[] {
+        const used = new Set(
+            this.mold.pages.flatMap((page) =>
+                page.blocks.map((block) => block.sectionId)
+            )
+        );
+        return this.sections.filter((section) => used.has(section.id));
     }
 
     get balance(): string {
@@ -83,6 +104,38 @@ export class MoldCardComponent {
         if (!total) {
             return 'No questions planned yet';
         }
+        const used = this.usedSections;
+        return used.length > 1
+            ? `One timer, one combined score · ${this.sectionSplit(used)}`
+            : `Difficulty mix: ${this.difficultyMix(total)}`;
+    }
+
+    private sectionSplit(sections: ExamSection[]): string {
+        return sections
+            .map((section) => {
+                const count = this.mold.pages.reduce(
+                    (sum, page) =>
+                        sum +
+                        page.blocks
+                            .filter((block) => block.sectionId === section.id)
+                            .reduce((n, block) => n + block.questionCount, 0),
+                    0
+                );
+                return `${this.sectionLabel(section)} ${count}`;
+            })
+            .join(' · ');
+    }
+
+    private sectionLabel(section: ExamSection): string {
+        const label = section.label?.replace(/^Tư duy /, '').trim();
+        return label || this.sectionSubject(section);
+    }
+
+    private sectionSubject(section: ExamSection): string {
+        return this.data.subjectById(section.subjectId)?.name ?? 'Section';
+    }
+
+    private difficultyMix(total: number): string {
         const buckets = new Map<QuestionDifficulties, number>();
         for (const page of this.mold.pages) {
             for (const block of page.blocks) {
@@ -92,15 +145,15 @@ export class MoldCardComponent {
                 );
             }
         }
-        const parts = [...buckets.entries()]
+        return [...buckets.entries()]
             .sort((a, b) => a[0] - b[0])
             .map(
                 ([difficulty, count]) =>
                     `${Math.round(
                         (count / total) * 100
                     )}% ${DIFFICULTY_LABELS[difficulty].toLowerCase()}`
-            );
-        return `Difficulty mix: ${parts.join(' · ')}`;
+            )
+            .join(' · ');
     }
 
     onPatchBlock(pageId: string, patch: PageBlockPatch): void {

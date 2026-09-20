@@ -1,28 +1,55 @@
 <adm-modal-shell
-  eyebrow="Exam section"
+  [eyebrow]="eyebrow"
   title="Add subject section"
-  [width]="480"
+  [width]="760"
   confirmLabel="Add section"
-  note="You pick this section's units right after adding it."
   (dismiss)="dismiss.emit()"
   (confirm)="confirm()"
 >
-  <div class="ex-list">
-    @for (subject of subjects; track subject.id) {
-      <button
-        type="button"
-        class="ex-row"
-        [class.selected]="subject.id === selectedSubjectId"
-        (click)="selectedSubjectId = subject.id"
-      >
-        <span class="ex-radio" [class.on]="subject.id === selectedSubjectId"></span>
-        <span class="ex-row-text">
-          <span class="ex-row-name">{{ subject.name }}</span>
-          <span class="ex-row-meta">{{ unitLabel(subject) }}</span>
+  <div class="ex-form">
+    <div class="ex-grid">
+      <div class="sm-field">
+        <span class="sm-field-label">Subject</span>
+        <div class="ex-chips">
+          @for (subject of subjects; track subject.id) {
+            <button
+              type="button"
+              class="ex-chip"
+              [class.on]="subject.id === subjectId"
+              (click)="pickSubject(subject)"
+            >
+              {{ subject.name }}
+            </button>
+          } @empty {
+            <p class="ex-note">Every subject already has a section in this exam.</p>
+          }
+        </div>
+      </div>
+
+      <label class="sm-field">
+        <span class="sm-field-label">
+          Section label <span class="ex-optional">optional</span>
         </span>
-      </button>
-    } @empty {
-      <p class="ex-empty">Every subject already has a section in this exam.</p>
-    }
+        <input
+          class="sm-field-control"
+          type="text"
+          placeholder="e.g. Tư duy Đọc hiểu"
+          [(ngModel)]="label"
+        />
+      </label>
+    </div>
+
+    <div class="sm-field">
+      <div class="ex-scope-head">
+        <span class="sm-field-label">Unit scope</span>
+        <span class="sm-field-hint">{{ scopeHint }}</span>
+      </div>
+      <adm-unit-transfer
+        [units]="units"
+        [selectedIds]="unitIds"
+        [listHeight]="220"
+        (selectedIdsChange)="unitIds = $event"
+      ></adm-unit-transfer>
+    </div>
   </div>
 </adm-modal-shell>

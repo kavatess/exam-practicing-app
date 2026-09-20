@@ -3,6 +3,7 @@ import {
     AdminExam,
     AdminMold,
     ExamSection,
+    formatUpdatedStamp,
 } from '../../../../shared/models/cms.model';
 import {
     BlockPatch,
@@ -59,16 +60,28 @@ export class ExamDetailComponent {
         return this.exam ? `type-${this.exam.examType.toLowerCase()}` : '';
     }
 
-    get updatedLabel(): string {
-        const updated = this.exam?.updatedAt;
-        const date = updated ? new Date(updated) : new Date();
-        return date
-            .toLocaleDateString('en-GB', {
-                day: '2-digit',
-                month: 'short',
-                year: 'numeric',
-            })
-            .toUpperCase();
+    get meta(): string {
+        if (!this.exam) {
+            return '';
+        }
+        const sections = this.exam.sections.length;
+        const molds = this.exam.molds.length;
+        return [
+            this.exam.code,
+            `${sections} ${sections === 1 ? 'SECTION' : 'SECTIONS'}`,
+            `${molds} ${molds === 1 ? 'TEST MOLD' : 'TEST MOLDS'}`,
+            `UPDATED ${this.updatedLabel}`,
+        ].join(' · ');
+    }
+
+    get sectionHint(): string {
+        return (this.exam?.sections.length ?? 0) > 1
+            ? 'One section per subject this exam covers — each keeps its own unit scope'
+            : 'A single-subject paper: one section, one unit scope';
+    }
+
+    private get updatedLabel(): string {
+        return formatUpdatedStamp(this.exam?.updatedAt);
     }
 
     toggleMold(mold: AdminMold): void {

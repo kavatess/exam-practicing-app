@@ -15,14 +15,44 @@
 
 .ex-card-head {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 11px;
   margin-bottom: 11px;
 }
 
+.ex-grip {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  margin-top: 5px;
+  color: $sm-icon;
+  cursor: grab;
+}
+
+.ex-order {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  border-radius: 8px;
+  background: $sm-green-chip;
+  color: $sm-green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $sm-font-mono;
+  font-size: 10px;
+}
+
 .ex-card-text {
+  flex: 1;
   min-width: 0;
+}
+
+.ex-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .ex-subject {
@@ -31,20 +61,21 @@
   margin: 0;
 }
 
-.ex-card-sub {
-  font-size: 12px;
-  color: $sm-muted;
-  margin: 2px 0 0;
+.ex-label {
+  @include sm-pill;
+  padding: 2px 8px;
+  color: $sm-neutral;
+  background: $sm-neutral-soft;
 }
 
-.ex-card-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 0 0 auto;
+.ex-scope-meta {
+  font-size: 12px;
+  color: $sm-muted;
+  margin: 3px 0 0;
 }
 
 .ex-link {
+  flex: 0 0 auto;
   border: none;
   background: none;
   padding: 0;
@@ -67,6 +98,12 @@
   &:hover {
     background: $sm-red-soft;
   }
+}
+
+.ex-eyebrow {
+  @include sm-mono-label(9px, 0.1em);
+  text-transform: uppercase;
+  margin: 0 0 8px;
 }
 
 .ex-chips {
@@ -92,12 +129,6 @@
   font-family: $sm-font-mono;
   font-size: 9.5px;
   color: $sm-green-chip-text;
-}
-
-.ex-chips-empty {
-  margin: 0;
-  font-size: 12px;
-  color: $sm-muted;
 }
 
 .ex-chip-add {

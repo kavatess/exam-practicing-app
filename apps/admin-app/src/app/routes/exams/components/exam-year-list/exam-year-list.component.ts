@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { AdminExam, ExamYearGroup } from '../../../../shared/models/cms.model';
 
 @Component({
     selector: 'adm-exam-year-list',
     standalone: true,
-    imports: [],
+    imports: [FormsModule],
     templateUrl: './exam-year-list.component.html',
     styleUrl: './exam-year-list.component.scss',
 })
@@ -15,11 +16,21 @@ export class ExamYearListComponent {
     @Output() create = new EventEmitter<void>();
     @Output() select = new EventEmitter<string>();
 
+    readonly search = signal('');
     readonly collapsedYears = signal<ReadonlySet<number>>(new Set());
 
     get yearGroups(): ExamYearGroup[] {
+        const term = this.search().trim().toLowerCase();
+        const matches = term
+            ? this.exams.filter(
+                  (exam) =>
+                      exam.name.toLowerCase().includes(term) ||
+                      exam.code.toLowerCase().includes(term)
+              )
+            : this.exams;
+
         const groups = new Map<number, AdminExam[]>();
-        for (const exam of this.exams) {
+        for (const exam of matches) {
             const bucket = groups.get(exam.year) ?? [];
             bucket.push(exam);
             groups.set(exam.year, bucket);
@@ -30,7 +41,9 @@ export class ExamYearListComponent {
     }
 
     get currentYear(): number {
-        return this.yearGroups.length ? this.yearGroups[0].year : 0;
+        return this.exams.length
+            ? Math.max(...this.exams.map((exam) => exam.year))
+            : 0;
     }
 
     isOpen(year: number): boolean {

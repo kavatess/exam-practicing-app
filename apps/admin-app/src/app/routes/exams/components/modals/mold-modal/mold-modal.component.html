@@ -3,7 +3,6 @@
   [title]="title"
   [width]="560"
   confirmLabel="Save mold"
-  note="Pages and blocks are edited inline on the course panel after saving."
   (dismiss)="dismiss.emit()"
   (confirm)="save.emit(draft)"
 >
@@ -63,5 +62,10 @@
         <div class="sm-toggle-text">Inactive molds stay editable but generate no tests</div>
       </div>
     </div>
+
+    <p class="sm-form-note">
+      One duration and one passing score cover the whole exam, across every
+      section. Pages and blocks are edited inline after saving.
+    </p>
   </div>
 </adm-modal-shell>

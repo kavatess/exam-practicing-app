@@ -3,7 +3,6 @@
   [title]="title"
   [width]="620"
   confirmLabel="Save exam"
-  note="Subjects are added per section after saving."
   (dismiss)="dismiss.emit()"
   (confirm)="save.emit(draft)"
 >
@@ -52,5 +51,10 @@
         [(ngModel)]="draft.description"
       ></textarea>
     </label>
+
+    <p class="ex-info">
+      Subjects are not set here. After saving, add one <strong>section</strong> per subject the
+      exam covers — a national paper has exactly one, a university assessment usually has several.
+    </p>
   </div>
 </adm-modal-shell>
