@@ -1,0 +1,227 @@
+@use '../../../../shared/styles/tokens' as *;
+
+:host {
+  display: block;
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.ex-mold {
+  background: $sm-surface;
+  border: 1px solid $sm-border-card;
+  border-radius: 13px;
+  overflow: hidden;
+
+  &.expanded {
+    border-color: #c6d3cb;
+  }
+}
+
+.ex-mold-head {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 15px 16px;
+
+  &:hover {
+    background: $sm-surface-sunken;
+  }
+}
+
+.ex-mold-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: $sm-font-sans;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ex-chevron {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  color: $sm-muted;
+  transition: transform 0.15s ease;
+
+  &.open {
+    transform: rotate(90deg);
+  }
+}
+
+.ex-mold-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ex-mold-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ex-mold-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ex-pill {
+  @include sm-pill;
+  padding: 2px 8px;
+
+  &.kind-test {
+    color: $sm-blue;
+    background: $sm-blue-soft;
+  }
+
+  &.kind-practice {
+    color: $sm-green;
+    background: $sm-green-chip;
+  }
+}
+
+.ex-stats {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.ex-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.ex-stat-key {
+  @include sm-mono-label(9px, 0.1em);
+  text-transform: uppercase;
+}
+
+.ex-stat-val {
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.ex-status {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  color: $sm-neutral;
+  background: $sm-neutral-soft;
+
+  &.active {
+    color: $sm-green;
+    background: $sm-green-soft;
+  }
+}
+
+.ex-action {
+  @include sm-icon-button(28px, 8px);
+  border: 1px solid $sm-border;
+  background: $sm-surface;
+  color: $sm-text-body;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover {
+    border-color: $sm-border-strong;
+  }
+
+  &.danger {
+    color: $sm-red;
+
+    &:hover {
+      border-color: $sm-red-border;
+      background: $sm-red-soft;
+    }
+  }
+}
+
+.ex-structure {
+  border-top: 1px solid $sm-border-soft;
+  background: $sm-surface-sunken;
+  padding: 16px;
+}
+
+.ex-structure-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ex-eyebrow {
+  @include sm-mono-label;
+  text-transform: uppercase;
+}
+
+.ex-hint {
+  font-size: 12px;
+  color: $sm-muted;
+}
+
+.ex-pages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ex-add-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  border: 1.5px dashed $sm-border-dashed;
+  border-radius: 11px;
+  background: none;
+  font-family: $sm-font-sans;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: $sm-muted-dim;
+  cursor: pointer;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover {
+    border-color: $sm-green;
+    color: $sm-green;
+  }
+}
+
+.ex-structure-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #e9eae5;
+  font-size: 12px;
+  color: $sm-muted;
+}
+
+.ex-planned {
+  font-family: $sm-font-mono;
+  font-size: 11px;
+  color: $sm-muted-light;
+}

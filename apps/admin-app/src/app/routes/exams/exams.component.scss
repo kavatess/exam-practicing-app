@@ -8,7 +8,7 @@
   color: $sm-text;
 }
 
-.sm-page {
+.ex-page {
   height: 100%;
   min-height: 560px;
   display: flex;
@@ -19,48 +19,49 @@
   overflow: hidden;
 }
 
-.sm-page-head {
+.ex-page-head {
   flex: 0 0 auto;
   padding: 14px 22px;
   border-bottom: 1px solid $sm-border;
   background: $sm-surface;
 }
 
-.sm-breadcrumb {
+.ex-breadcrumb {
   @include sm-mono-label(9.5px, 0.1em);
   text-transform: uppercase;
   margin: 0;
 }
 
-.sm-page-title {
+.ex-page-title {
   font-size: 21px;
   font-weight: 600;
   letter-spacing: -0.02em;
   margin: 3px 0 0;
 }
 
-.sm-panels {
+.ex-panels {
   flex: 1;
   min-height: 0;
   display: flex;
 }
 
-.sm-panel-list {
-  width: 220px;
-  flex: 0 0 220px;
+.ex-panel-list {
+  width: 340px;
+  flex: 0 0 340px;
   min-height: 0;
   border-right: 1px solid $sm-border;
 }
 
-.sm-panel-detail {
+.ex-panel-detail {
   flex: 1;
   min-width: 0;
   min-height: 0;
+  background: $sm-surface-hover;
 }
 
 @media (max-width: 1180px) {
-  .sm-panel-list {
-    width: 190px;
-    flex-basis: 190px;
+  .ex-panel-list {
+    width: 290px;
+    flex-basis: 290px;
   }
 }

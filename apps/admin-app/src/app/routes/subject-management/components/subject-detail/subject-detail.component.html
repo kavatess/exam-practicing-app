@@ -1,54 +1,42 @@
-<div class="sm-head">
-  <div class="sm-head-row">
+<header class="sm-head">
+  <div class="sm-head-inner">
     <div class="sm-head-text">
       <h2 class="sm-title">{{ subject.name }}</h2>
+      <p class="sm-desc">{{ subject.description }}</p>
       <p class="sm-meta">{{ meta }}</p>
     </div>
-    <button type="button" class="sm-head-edit" title="Edit subject" (click)="editSubject.emit()">
+    <button type="button" class="sm-btn-ghost" (click)="editSubject.emit()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 20h4L19 9l-4-4L4 16v4ZM14 6l4 4"></path>
       </svg>
+      Edit subject
     </button>
   </div>
+</header>
 
-  <div class="sm-tabs" role="tablist">
-    <button
-      type="button"
-      role="tab"
-      class="sm-tab"
-      [class.active]="tab() === 'units'"
-      [attr.aria-selected]="tab() === 'units'"
-      (click)="tab.set('units')"
-    >
-      Units <span class="sm-tab-count">{{ subject.units.length }}</span>
-    </button>
-    <button
-      type="button"
-      role="tab"
-      class="sm-tab"
-      [class.active]="tab() === 'courses'"
-      [attr.aria-selected]="tab() === 'courses'"
-      (click)="tab.set('courses')"
-    >
-      Courses <span class="sm-tab-count">{{ subject.courses.length }}</span>
-    </button>
+<div class="sm-body">
+  <div class="sm-body-inner">
+    <div class="sm-section-head">
+      <div>
+        <h3 class="sm-section-title">Unit tree</h3>
+        <p class="sm-section-sub">
+          Content taxonomy for this subject. Exams pick from these units per section.
+        </p>
+      </div>
+      <button type="button" class="sm-btn-primary" (click)="createUnit.emit()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+          <path d="M12 5v14M5 12h14"></path>
+        </svg>
+        Add unit
+      </button>
+    </div>
+
+    <adm-unit-tree
+      [units]="subject.units"
+      (create)="createUnit.emit()"
+      (edit)="editUnit.emit($event)"
+      (remove)="removeUnit.emit($event)"
+      (removeSubUnit)="removeSubUnit.emit($event)"
+    ></adm-unit-tree>
   </div>
 </div>
-
-@if (tab() === 'units') {
-  <adm-unit-tree
-    class="sm-tab-panel"
-    [units]="subject.units"
-    (create)="createUnit.emit()"
-    (edit)="editUnit.emit($event)"
-    (remove)="removeUnit.emit($event)"
-  ></adm-unit-tree>
-} @else {
-  <adm-course-year-list
-    class="sm-tab-panel"
-    [courses]="subject.courses"
-    [selectedCourseId]="selectedCourseId"
-    (create)="createCourse.emit()"
-    (select)="selectCourse.emit($event)"
-  ></adm-course-year-list>
-}

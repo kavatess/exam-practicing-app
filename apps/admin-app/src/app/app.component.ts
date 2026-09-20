@@ -37,6 +37,11 @@ export class AppComponent {
           icon: 'M5 5a2 2 0 0 1 2-2h11v16H7a2 2 0 0 0-2 2V5Zm2 12h11',
         },
         {
+          route: ADMIN_APP_ROUTES.EXAMS,
+          label: 'Exams',
+          icon: 'M8 3h8a1 1 0 0 1 1 1v16l-5-2.5L7 20V4a1 1 0 0 1 1-1Zm1.5 5h5',
+        },
+        {
           route: ADMIN_APP_ROUTES.QUESTION_BANK,
           label: 'Question Bank',
           icon: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm0 13.5v.01M9.6 9.3a2.5 2.5 0 1 1 3.6 2.4c-.7.4-1.2 1-1.2 1.8',

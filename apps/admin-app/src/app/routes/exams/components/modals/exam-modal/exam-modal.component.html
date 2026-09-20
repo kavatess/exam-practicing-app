@@ -1,0 +1,56 @@
+<adm-modal-shell
+  eyebrow="Exam"
+  [title]="title"
+  [width]="620"
+  confirmLabel="Save exam"
+  note="Subjects are added per section after saving."
+  (dismiss)="dismiss.emit()"
+  (confirm)="save.emit(draft)"
+>
+  <div class="ex-form">
+    <div class="ex-grid ex-grid-name">
+      <label class="sm-field">
+        <span class="sm-field-label">Name</span>
+        <input class="sm-field-control" type="text" placeholder="Exam name" [(ngModel)]="draft.name" />
+      </label>
+      <label class="sm-field">
+        <span class="sm-field-label">Code</span>
+        <input
+          class="sm-field-control sm-field-control--mono"
+          type="text"
+          placeholder="HUST-2025-TSA"
+          [(ngModel)]="draft.code"
+        />
+      </label>
+    </div>
+
+    <div class="ex-grid ex-grid-meta">
+      <label class="sm-field">
+        <span class="sm-field-label">Year</span>
+        <input class="sm-field-control" type="number" min="2000" [(ngModel)]="draft.year" />
+      </label>
+      <label class="sm-field">
+        <span class="sm-field-label">Type</span>
+        <select class="sm-field-control" [(ngModel)]="draft.examType">
+          @for (type of examTypes; track type) {
+            <option [ngValue]="type">{{ type }}</option>
+          }
+        </select>
+      </label>
+      <label class="sm-field">
+        <span class="sm-field-label">Organisation</span>
+        <input class="sm-field-control" type="text" placeholder="Issuing body" [(ngModel)]="draft.org" />
+      </label>
+    </div>
+
+    <label class="sm-field">
+      <span class="sm-field-label">Description</span>
+      <textarea
+        class="sm-field-control"
+        rows="3"
+        placeholder="What this exam covers and who it is for…"
+        [(ngModel)]="draft.description"
+      ></textarea>
+    </label>
+  </div>
+</adm-modal-shell>

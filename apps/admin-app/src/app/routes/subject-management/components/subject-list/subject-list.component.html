@@ -27,7 +27,7 @@
       <div class="sm-row" [class.selected]="subject.id === selectedId">
         <button type="button" class="sm-row-main" (click)="select.emit(subject.id)">
           <span class="sm-row-name">{{ subject.name }}</span>
-          <span class="sm-row-meta">{{ courseLabel(subject) }}</span>
+          <span class="sm-row-meta">{{ unitLabel(subject) }}</span>
         </button>
         <button type="button" class="sm-row-action" title="Edit subject" (click)="edit.emit(subject)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">

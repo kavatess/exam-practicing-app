@@ -1,52 +1,48 @@
-@use '../../styles/tokens' as *;
+@use '../../../../shared/styles/tokens' as *;
 
 :host {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+  display: block;
   font-family: $sm-font-sans;
   color: $sm-text;
 }
 
-.sm-section-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 18px;
-}
-
-.sm-eyebrow {
-  @include sm-mono-label;
-  text-transform: uppercase;
-}
-
-.sm-btn-ghost {
-  @include sm-button-ghost(30px);
-  padding: 0 11px;
-  gap: 6px;
-  border-radius: 8px;
-  color: $sm-green;
-  font-size: 12.5px;
-  font-weight: 600;
-
-  svg {
-    width: 13px;
-    height: 13px;
-  }
-
-  &:hover {
-    border-color: $sm-green;
-  }
-}
-
-.sm-scroll {
-  flex: 1;
-  min-height: 0;
-  overflow: auto;
-  padding: 0 18px 18px;
+.sm-tree {
   display: flex;
   flex-direction: column;
   gap: 7px;
+}
+
+.sm-unit {
+  background: $sm-surface;
+  border: 1px solid $sm-border-card;
+  border-radius: 11px;
+  overflow: hidden;
+}
+
+.sm-unit-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 13px;
+
+  &:hover {
+    background: $sm-surface-sunken;
+  }
+}
+
+.sm-unit-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: $sm-font-sans;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
 .sm-chevron {
@@ -61,38 +57,12 @@
   }
 }
 
-.sm-unit {
-  flex: 0 0 auto;
-  background: $sm-surface;
-  border: 1px solid $sm-border-card;
-  border-radius: 11px;
-  overflow: hidden;
-}
-
-.sm-unit-head {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 11px 12px;
-
-  &:hover {
-    background: $sm-surface-sunken;
-  }
-}
-
-.sm-unit-main {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  border: none;
-  background: none;
-  padding: 0;
-  font-family: $sm-font-sans;
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
+.sm-grip {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  color: $sm-icon;
+  cursor: grab;
 }
 
 .sm-unit-order {
@@ -128,8 +98,15 @@
   margin-top: 1px;
 }
 
+.sm-unit-count {
+  font-family: $sm-font-mono;
+  font-size: 10px;
+  color: $sm-muted-light;
+  flex: 0 0 auto;
+}
+
 .sm-mini {
-  @include sm-icon-button;
+  @include sm-icon-button(26px, 7px);
   color: $sm-text-muted;
 
   svg {
@@ -139,6 +116,18 @@
 
   &:hover {
     background: $sm-surface-alt;
+  }
+
+  &.small {
+    width: 22px;
+    height: 22px;
+    flex-basis: 22px;
+    border-radius: 6px;
+
+    svg {
+      width: 12px;
+      height: 12px;
+    }
   }
 
   &.danger {
@@ -153,7 +142,7 @@
 .sm-subs {
   border-top: 1px solid $sm-border-faint;
   background: $sm-surface-sunken;
-  padding: 8px 12px 10px 34px;
+  padding: 9px 13px 11px 40px;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -163,7 +152,7 @@
   display: flex;
   align-items: center;
   gap: 9px;
-  padding: 8px 10px;
+  padding: 8px 11px;
   background: $sm-surface;
   border: 1px solid #ebece7;
   border-radius: 9px;
@@ -190,6 +179,7 @@
 }
 
 .sm-sub-add {
+  align-self: flex-start;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -205,5 +195,32 @@
   svg {
     width: 12px;
     height: 12px;
+  }
+}
+
+.sm-add-unit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  border: 1.5px dashed $sm-border-dashed;
+  border-radius: 11px;
+  background: none;
+  font-family: $sm-font-sans;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: $sm-muted-dim;
+  cursor: pointer;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover {
+    border-color: $sm-green;
+    color: $sm-green;
   }
 }

@@ -6,7 +6,7 @@
 
   <div class="sm-panels">
     <adm-subject-list
-      class="sm-panel sm-panel-list"
+      class="sm-panel-list"
       [subjects]="subjects"
       [selectedId]="selectedSubjectId"
       (select)="selectSubject($event)"
@@ -16,32 +16,14 @@
 
     @if (selectedSubject; as subject) {
       <adm-subject-detail
-        class="sm-panel sm-panel-detail"
+        class="sm-panel-detail"
         [subject]="subject"
-        [selectedCourseId]="selectedCourseId"
         (editSubject)="openSubjectModal(subject)"
         (createUnit)="openUnitModal(null)"
         (editUnit)="openUnitModal($event)"
         (removeUnit)="removeUnit($event)"
-        (createCourse)="openCourseModal(null)"
-        (selectCourse)="selectCourse($event)"
+        (removeSubUnit)="removeSubUnit($event.unit, $event.subUnitId)"
       ></adm-subject-detail>
-
-      <adm-course-detail
-        class="sm-panel sm-panel-course"
-        [subject]="subject"
-        [course]="selectedCourse"
-        (editCourse)="openCourseModal(selectedCourse)"
-        (removeCourse)="removeCourse()"
-        (editScope)="openScopeModal()"
-        (createMold)="openMoldModal(null)"
-        (editMold)="openMoldModal($event)"
-        (removeMold)="removeMold($event)"
-        (addPage)="addPage($event)"
-        (addBlock)="addBlock($event)"
-        (removeBlock)="removeBlock($event)"
-        (patchBlock)="patchBlock($event)"
-      ></adm-course-detail>
     }
   </div>
 </div>
@@ -57,36 +39,8 @@
 @if (overlay === 'unit' && selectedSubject) {
   <adm-unit-modal
     [unit]="editingUnit"
-    [defaultOrder]="selectedSubject.units.length + 1"
+    [defaultOrder]="selectedSubject!.units.length + 1"
     (dismiss)="closeOverlay()"
     (save)="saveUnit($event)"
   ></adm-unit-modal>
-}
-
-@if (overlay === 'course' && selectedSubject; as subject) {
-  <adm-course-modal
-    [course]="editingCourse"
-    [subjectName]="selectedSubject!.name"
-    [units]="selectedSubject!.units"
-    (dismiss)="closeOverlay()"
-    (save)="saveCourse($event)"
-  ></adm-course-modal>
-}
-
-@if (overlay === 'scope' && selectedCourse && selectedSubject) {
-  <adm-scope-modal
-    [course]="selectedCourse!"
-    [units]="selectedSubject!.units"
-    (dismiss)="closeOverlay()"
-    (save)="saveScope($event)"
-  ></adm-scope-modal>
-}
-
-@if (overlay === 'mold' && selectedCourse) {
-  <adm-mold-modal
-    [mold]="editingMold"
-    [course]="selectedCourse!"
-    (dismiss)="closeOverlay()"
-    (save)="saveMold($event)"
-  ></adm-mold-modal>
 }

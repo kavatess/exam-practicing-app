@@ -1,0 +1,91 @@
+<div class="ex-mold" [class.expanded]="expanded">
+  <div class="ex-mold-head">
+    <button
+      type="button"
+      class="ex-mold-main"
+      [attr.aria-expanded]="expanded"
+      (click)="toggleExpand.emit()"
+    >
+      <svg
+        class="ex-chevron"
+        [class.open]="expanded"
+        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
+      >
+        <path d="M9 6l6 6-6 6"></path>
+      </svg>
+
+      <span class="ex-mold-text">
+        <span class="ex-mold-title-row">
+          <span class="ex-mold-name">{{ mold.name }}</span>
+          <span class="ex-pill" [class.kind-test]="isTest" [class.kind-practice]="!isTest">{{ kindLabel }}</span>
+        </span>
+        <span class="ex-stats">
+          <span class="ex-stat">
+            <span class="ex-stat-key">Duration</span>
+            <span class="ex-stat-val">{{ durationLabel }}</span>
+          </span>
+          <span class="ex-stat">
+            <span class="ex-stat-key">Questions</span>
+            <span class="ex-stat-val">{{ mold.numOfQuestions }}</span>
+          </span>
+          <span class="ex-stat">
+            <span class="ex-stat-key">Passing</span>
+            <span class="ex-stat-val">{{ passingLabel }}</span>
+          </span>
+          <span class="ex-stat">
+            <span class="ex-stat-key">Pages</span>
+            <span class="ex-stat-val">{{ mold.pages.length }}</span>
+          </span>
+        </span>
+      </span>
+
+      <span class="ex-status" [class.active]="isActive">{{ mold.status }}</span>
+    </button>
+
+    <button type="button" class="ex-action" title="Edit mold" (click)="edit.emit()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 20h4L19 9l-4-4L4 16v4ZM14 6l4 4"></path>
+      </svg>
+    </button>
+    <button type="button" class="ex-action danger" title="Delete mold" (click)="remove.emit()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"></path>
+      </svg>
+    </button>
+  </div>
+
+  @if (expanded) {
+    <div class="ex-structure">
+      <div class="ex-structure-head">
+        <span class="ex-eyebrow">Structure · {{ structureMeta }}</span>
+        <span class="ex-hint">Drag a page by its handle to reorder</span>
+      </div>
+
+      <div class="ex-pages">
+        @for (page of mold.pages; track page.id; let i = $index) {
+          <adm-mold-page
+            [page]="page"
+            [sections]="sections"
+            [index]="i"
+            [moldQuestionCount]="mold.numOfQuestions"
+            (addBlock)="addBlock.emit(page.id)"
+            (removeBlock)="removeBlock.emit({ pageId: page.id, blockId: $event })"
+            (patchBlock)="onPatchBlock(page.id, $event)"
+          ></adm-mold-page>
+        }
+
+        <button type="button" class="ex-add-page" (click)="addPage.emit()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+            <path d="M12 5v14M5 12h14"></path>
+          </svg>
+          Add page
+        </button>
+      </div>
+
+      <div class="ex-structure-foot">
+        <span>{{ balance }}</span>
+        <span class="ex-planned">{{ plannedQuestions }} of {{ mold.numOfQuestions }} planned</span>
+      </div>
+    </div>
+  }
+</div>

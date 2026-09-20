@@ -1,0 +1,117 @@
+@if (exam; as current) {
+  <div class="ex-scroll">
+    <header class="ex-head">
+      <div class="ex-head-text">
+        <div class="ex-title-row">
+          <h2 class="ex-title">{{ current.name }}</h2>
+          <span class="ex-pill ex-pill-year">{{ current.year }}</span>
+          <span class="ex-pill" [class]="typeClass">{{ current.examType }}</span>
+        </div>
+        <p class="ex-desc">{{ current.description }}</p>
+        <p class="ex-code">
+          {{ current.code }}@if (current.org) { · {{ current.org }} } · UPDATED {{ updatedLabel }}
+        </p>
+      </div>
+
+      <div class="ex-actions">
+        <button type="button" class="ex-btn-ghost" (click)="editExam.emit()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 20h4L19 9l-4-4L4 16v4ZM14 6l4 4"></path>
+          </svg>
+          Edit
+        </button>
+        <button type="button" class="ex-btn-danger" (click)="removeExam.emit()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"></path>
+          </svg>
+          Delete
+        </button>
+      </div>
+    </header>
+
+    <div class="ex-body">
+      <section>
+        <div class="ex-section-head">
+          <div>
+            <h3 class="ex-section-title">Sections</h3>
+            <p class="ex-section-sub">
+              One section per subject this exam draws from. Each keeps its own unit scope.
+            </p>
+          </div>
+          <button type="button" class="ex-btn-ghost" (click)="addSection.emit()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+              <path d="M12 5v14M5 12h14"></path>
+            </svg>
+            Add subject section
+          </button>
+        </div>
+
+        <div class="ex-sections">
+          @for (section of current.sections; track section.id) {
+            <adm-section-card
+              [section]="section"
+              [removable]="current.sections.length > 1"
+              (editScope)="editScope.emit(section)"
+              (remove)="removeSection.emit(section)"
+            ></adm-section-card>
+          } @empty {
+            <p class="ex-empty-card">
+              No sections yet. Add the first subject this exam draws from.
+            </p>
+          }
+        </div>
+      </section>
+
+      <section>
+        <div class="ex-section-head">
+          <div>
+            <h3 class="ex-section-title">Test molds</h3>
+            <p class="ex-section-sub">
+              One timer and one combined score across every section of this exam.
+            </p>
+          </div>
+          <button type="button" class="ex-btn-primary" (click)="createMold.emit()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+              <path d="M12 5v14M5 12h14"></path>
+            </svg>
+            New test mold
+          </button>
+        </div>
+
+        <div class="ex-molds">
+          @for (mold of current.molds; track mold.id) {
+            <adm-mold-card
+              [mold]="mold"
+              [sections]="current.sections"
+              [expanded]="expandedMoldId() === mold.id"
+              (toggleExpand)="toggleMold(mold)"
+              (edit)="editMold.emit(mold)"
+              (remove)="removeMold.emit(mold)"
+              (addPage)="addPage.emit(mold.id)"
+              (addBlock)="addBlock.emit({ moldId: mold.id, pageId: $event })"
+              (removeBlock)="removeBlock.emit({ moldId: mold.id, pageId: $event.pageId, blockId: $event.blockId })"
+              (patchBlock)="patchBlock.emit({ moldId: mold.id, pageId: $event.pageId, blockId: $event.blockId, changes: $event.changes })"
+            ></adm-mold-card>
+          } @empty {
+            <p class="ex-empty-card">
+              No test molds yet. Create one to describe how tests for this exam are generated.
+            </p>
+          }
+        </div>
+      </section>
+    </div>
+  </div>
+} @else {
+  <div class="ex-placeholder">
+    <div class="ex-placeholder-art">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 6h16M4 12h10M4 18h7"></path>
+      </svg>
+    </div>
+    <p class="ex-placeholder-title">Select an exam to view its structure.</p>
+    <p class="ex-placeholder-text">
+      Exams are top-level papers. Pick one to edit the subjects it covers and the test molds it
+      generates.
+    </p>
+  </div>
+}

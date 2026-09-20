@@ -1,41 +1,35 @@
-import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
     AdminSubject,
     AdminUnit,
-    SubjectDetailTab,
-} from '../../models/subject-management.model';
-import { CourseYearListComponent } from '../course-year-list/course-year-list.component';
+    countSubUnits,
+} from '../../../../shared/models/cms.model';
 import { UnitTreeComponent } from '../unit-tree/unit-tree.component';
 
 @Component({
     selector: 'adm-subject-detail',
     standalone: true,
-    imports: [UnitTreeComponent, CourseYearListComponent],
+    imports: [UnitTreeComponent],
     templateUrl: './subject-detail.component.html',
     styleUrl: './subject-detail.component.scss',
 })
 export class SubjectDetailComponent {
     @Input({ required: true }) subject!: AdminSubject;
-    @Input() selectedCourseId: string | null = null;
 
     @Output() editSubject = new EventEmitter<void>();
     @Output() createUnit = new EventEmitter<void>();
     @Output() editUnit = new EventEmitter<AdminUnit>();
     @Output() removeUnit = new EventEmitter<AdminUnit>();
-    @Output() createCourse = new EventEmitter<void>();
-    @Output() selectCourse = new EventEmitter<string>();
-
-    readonly tab = signal<SubjectDetailTab>('courses');
+    @Output() removeSubUnit = new EventEmitter<{
+        unit: AdminUnit;
+        subUnitId: string;
+    }>();
 
     get meta(): string {
         const units = this.subject.units.length;
-        const courses = this.subject.courses.length;
-        return [
-            this.subject.description,
-            `${units} ${units === 1 ? 'unit' : 'units'}`,
-            `${courses} ${courses === 1 ? 'course' : 'courses'}`,
-        ]
-            .filter(Boolean)
-            .join(' · ');
+        const subUnits = countSubUnits(this.subject);
+        return `${units} ${units === 1 ? 'UNIT' : 'UNITS'} · ${subUnits} ${
+            subUnits === 1 ? 'SUB-UNIT' : 'SUB-UNITS'
+        }`;
     }
 }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
-import { AdminUnit } from '../../models/subject-management.model';
+import { AdminUnit } from '../../../../shared/models/cms.model';
 
 @Component({
     selector: 'adm-unit-tree',
@@ -14,6 +14,10 @@ export class UnitTreeComponent {
     @Output() create = new EventEmitter<void>();
     @Output() edit = new EventEmitter<AdminUnit>();
     @Output() remove = new EventEmitter<AdminUnit>();
+    @Output() removeSubUnit = new EventEmitter<{
+        unit: AdminUnit;
+        subUnitId: string;
+    }>();
 
     readonly openUnitId = signal<string | null>(null);
 

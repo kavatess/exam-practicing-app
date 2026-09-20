@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AdminSubject } from '../../models/subject-management.model';
+import { AdminSubject } from '../../../../shared/models/cms.model';
 
 @Component({
     selector: 'adm-subject-list',
@@ -29,8 +29,8 @@ export class SubjectListComponent {
         );
     }
 
-    courseLabel(subject: AdminSubject): string {
-        const count = subject.courses.length;
-        return `${count} ${count === 1 ? 'course' : 'courses'}`;
+    unitLabel(subject: AdminSubject): string {
+        const count = subject.units.length;
+        return `${count} ${count === 1 ? 'unit' : 'units'}`;
     }
 }

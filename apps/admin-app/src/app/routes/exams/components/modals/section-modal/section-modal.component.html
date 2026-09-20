@@ -1,0 +1,28 @@
+<adm-modal-shell
+  eyebrow="Exam section"
+  title="Add subject section"
+  [width]="480"
+  confirmLabel="Add section"
+  note="You pick this section's units right after adding it."
+  (dismiss)="dismiss.emit()"
+  (confirm)="confirm()"
+>
+  <div class="ex-list">
+    @for (subject of subjects; track subject.id) {
+      <button
+        type="button"
+        class="ex-row"
+        [class.selected]="subject.id === selectedSubjectId"
+        (click)="selectedSubjectId = subject.id"
+      >
+        <span class="ex-radio" [class.on]="subject.id === selectedSubjectId"></span>
+        <span class="ex-row-text">
+          <span class="ex-row-name">{{ subject.name }}</span>
+          <span class="ex-row-meta">{{ unitLabel(subject) }}</span>
+        </span>
+      </button>
+    } @empty {
+      <p class="ex-empty">Every subject already has a section in this exam.</p>
+    }
+  </div>
+</adm-modal-shell>

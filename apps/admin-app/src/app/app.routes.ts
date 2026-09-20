@@ -5,6 +5,7 @@ export enum ADMIN_APP_ROUTES {
     LOGIN = 'login',
     DASHBOARD = 'dashboard',
     SUBJECT_MANAGEMENT = 'subject-management',
+    EXAMS = 'exams',
     QUESTION_BANK = 'question-bank',
     ACHIEVEMENT_MANAGEMENT = 'achievement-management',
     QUEST_MANAGEMENT = 'quest-management',
@@ -39,6 +40,13 @@ export const appRoutes: Route[] = [
                     import(
                         './routes/subject-management/subject-management.component'
                     ).then((c) => c.SubjectManagementComponent),
+            },
+            {
+                path: ADMIN_APP_ROUTES.EXAMS,
+                loadComponent: () =>
+                    import('./routes/exams/exams.component').then(
+                        (c) => c.ExamsComponent
+                    ),
             },
             {
                 path: ADMIN_APP_ROUTES.QUESTION_BANK,
