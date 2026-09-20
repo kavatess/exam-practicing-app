@@ -1,6 +1,11 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { AdminUnit, ExamSection } from '../../../../shared/models/cms.model';
-import { CmsDataService } from '../../../../shared/services/cms-data.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+    AdminSubject,
+    AdminUnit,
+    ExamSection,
+    findSubject,
+    unitsInScope,
+} from '../../../../shared/models/cms.model';
 
 @Component({
     selector: 'adm-section-card',
@@ -10,9 +15,8 @@ import { CmsDataService } from '../../../../shared/services/cms-data.service';
     styleUrl: './section-card.component.scss',
 })
 export class SectionCardComponent {
-    private readonly data = inject(CmsDataService);
-
     @Input({ required: true }) section!: ExamSection;
+    @Input() subjects: AdminSubject[] = [];
     @Input() index = 0;
 
     @Output() editScope = new EventEmitter<void>();
@@ -24,13 +28,13 @@ export class SectionCardComponent {
 
     get subjectName(): string {
         return (
-            this.data.subjectById(this.section.subjectId)?.name ??
+            findSubject(this.subjects, this.section.subjectId)?.name ??
             'Unknown subject'
         );
     }
 
     get units(): AdminUnit[] {
-        return this.data.unitsForSection(this.section);
+        return unitsInScope(this.subjects, this.section);
     }
 
     get scopeMeta(): string {

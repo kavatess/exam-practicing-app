@@ -1,10 +1,16 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { SubjectModalComponent, SubjectDraft } from './components/modals/subject-modal/subject-modal.component';
-import { UnitModalComponent, UnitDraft } from './components/modals/unit-modal/unit-modal.component';
+import { Store } from '@ngrx/store';
+import { AdminSubject, AdminUnit } from '../../shared/models/cms.model';
+import { SubjectModalComponent } from './components/modals/subject-modal/subject-modal.component';
+import { UnitModalComponent } from './components/modals/unit-modal/unit-modal.component';
 import { SubjectDetailComponent } from './components/subject-detail/subject-detail.component';
 import { SubjectListComponent } from './components/subject-list/subject-list.component';
-import { AdminSubject, AdminUnit } from '../../shared/models/cms.model';
-import { CmsDataService } from '../../shared/services/cms-data.service';
+import { SubjectManagementActions } from './store/subject-management.actions';
+import {
+    SubjectDraft,
+    UnitDraft,
+} from './store/subject-management.service';
+import { SubjectManagementSelectors } from './store/subject-management.selectors';
 
 @Component({
     selector: 'adm-subject-management',
@@ -19,29 +25,29 @@ import { CmsDataService } from '../../shared/services/cms-data.service';
     styleUrl: './subject-management.component.scss',
 })
 export class SubjectManagementComponent implements OnInit {
-    private readonly data = inject(CmsDataService);
+    private readonly store = inject(Store);
 
-    readonly subjects = this.data.subjects;
+    readonly subjects = this.store.selectSignal(
+        SubjectManagementSelectors.Subjects
+    );
+    readonly selectedSubject = this.store.selectSignal(
+        SubjectManagementSelectors.SelectedSubject
+    );
+    readonly selectedSubjectId = this.store.selectSignal(
+        SubjectManagementSelectors.SelectedSubjectId
+    );
 
-    selectedSubjectId: string | null = null;
+    // Overlay bookkeeping is view state, so it stays with the component.
     overlay: 'subject' | 'unit' | null = null;
     editingSubject: AdminSubject | null = null;
     editingUnit: AdminUnit | null = null;
 
     ngOnInit(): void {
-        this.selectedSubjectId = this.subjects[0]?.id ?? null;
-    }
-
-    get selectedSubject(): AdminSubject | null {
-        return (
-            this.subjects.find(
-                (subject) => subject.id === this.selectedSubjectId
-            ) ?? null
-        );
+        this.store.dispatch(SubjectManagementActions.loadSubjects());
     }
 
     selectSubject(subjectId: string): void {
-        this.selectedSubjectId = subjectId;
+        this.store.dispatch(SubjectManagementActions.selectSubject({ subjectId }));
         this.closeOverlay();
     }
 
@@ -62,87 +68,54 @@ export class SubjectManagementComponent implements OnInit {
     }
 
     saveSubject(draft: SubjectDraft): void {
-        if (this.editingSubject) {
-            this.editingSubject.name = draft.name;
-            this.editingSubject.description = draft.description;
-        } else {
-            const subject: AdminSubject = {
-                id: this.data.nextId('subject'),
-                name: draft.name || 'Untitled subject',
-                description: draft.description,
-                units: [],
-            };
-            this.subjects.push(subject);
-            this.selectedSubjectId = subject.id;
-        }
+        const editing = this.editingSubject;
+        this.store.dispatch(
+            editing
+                ? SubjectManagementActions.updateSubject({
+                      subjectId: editing.id,
+                      draft,
+                  })
+                : SubjectManagementActions.createSubject({ draft })
+        );
         this.closeOverlay();
     }
 
     saveUnit(draft: UnitDraft): void {
-        const subject = this.selectedSubject;
-        if (!subject) {
+        const subjectId = this.selectedSubjectId();
+        if (!subjectId) {
             return;
         }
-        const unit = this.editingUnit ?? this.createUnit(subject.id);
-        unit.title = draft.title || 'Untitled unit';
-        unit.description = draft.description;
-        unit.subUnits = draft.subUnitTitles
-            .filter((title) => title.trim())
-            .map((title, index) => ({
-                id: unit.subUnits[index]?.id ?? this.data.nextId('sub'),
-                unitId: unit.id,
-                title,
-                description: '',
-                iconUrl: '',
-                questionCount: unit.subUnits[index]?.questionCount ?? 20,
-            }));
-        unit.questionCount = unit.subUnits.reduce(
-            (total, sub) => total + sub.questionCount,
-            0
+        this.store.dispatch(
+            SubjectManagementActions.saveUnit({
+                subjectId,
+                unitId: this.editingUnit?.id ?? null,
+                draft,
+            })
         );
-
-        if (!this.editingUnit) {
-            const position = Math.min(
-                Math.max(draft.order - 1, 0),
-                subject.units.length
-            );
-            subject.units.splice(position, 0, unit);
-        }
         this.closeOverlay();
     }
 
     removeUnit(unit: AdminUnit): void {
-        const subject = this.selectedSubject;
-        if (!subject) {
+        const subjectId = this.selectedSubjectId();
+        if (!subjectId) {
             return;
         }
-        subject.units = subject.units.filter((item) => item.id !== unit.id);
-        this.data.exams.forEach((exam) =>
-            exam.sections.forEach((section) => {
-                section.unitIds = section.unitIds.filter(
-                    (id) => id !== unit.id
-                );
-            })
+        this.store.dispatch(
+            SubjectManagementActions.removeUnit({ subjectId, unitId: unit.id })
         );
     }
 
     removeSubUnit(unit: AdminUnit, subUnitId: string): void {
-        unit.subUnits = unit.subUnits.filter((sub) => sub.id !== subUnitId);
-        unit.questionCount = unit.subUnits.reduce(
-            (total, sub) => total + sub.questionCount,
-            0
+        const subjectId = this.selectedSubjectId();
+        if (!subjectId) {
+            return;
+        }
+        this.store.dispatch(
+            SubjectManagementActions.removeSubUnit({
+                subjectId,
+                unitId: unit.id,
+                subUnitId,
+            })
         );
-    }
-
-    private createUnit(subjectId: string): AdminUnit {
-        return {
-            id: this.data.nextId('unit'),
-            subjectId,
-            title: '',
-            description: '',
-            iconUrl: '',
-            subUnits: [],
-            questionCount: 0,
-        };
     }
 }

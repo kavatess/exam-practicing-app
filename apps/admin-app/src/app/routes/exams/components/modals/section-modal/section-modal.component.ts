@@ -1,19 +1,14 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
     AdminExam,
     AdminSubject,
     AdminUnit,
+    findSubject,
 } from '../../../../../shared/models/cms.model';
-import { CmsDataService } from '../../../../../shared/services/cms-data.service';
 import { ModalShellComponent } from '../../../../../shared/components/modal-shell/modal-shell.component';
 import { UnitTransferComponent } from '../../../../../shared/components/unit-transfer/unit-transfer.component';
-
-export interface SectionDraft {
-    subjectId: string;
-    label: string;
-    unitIds: string[];
-}
+import { SectionDraft } from '../../../store/exams.service';
 
 @Component({
     selector: 'adm-section-modal',
@@ -23,9 +18,9 @@ export interface SectionDraft {
     styleUrl: './section-modal.component.scss',
 })
 export class SectionModalComponent {
-    private readonly data = inject(CmsDataService);
-
     @Input({ required: true }) exam!: AdminExam;
+    /** The whole taxonomy; the picker offers the subjects not yet sectioned. */
+    @Input() subjects: AdminSubject[] = [];
 
     @Output() dismiss = new EventEmitter<void>();
     @Output() save = new EventEmitter<SectionDraft>();
@@ -34,16 +29,14 @@ export class SectionModalComponent {
     label = '';
     unitIds: string[] = [];
 
-    get subjects(): AdminSubject[] {
+    get availableSubjects(): AdminSubject[] {
         const used = this.exam.sections.map((section) => section.subjectId);
-        return this.data.subjects.filter(
-            (subject) => !used.includes(subject.id)
-        );
+        return this.subjects.filter((subject) => !used.includes(subject.id));
     }
 
     get pickedSubject(): AdminSubject | null {
         return this.subjectId
-            ? this.data.subjectById(this.subjectId) ?? null
+            ? findSubject(this.subjects, this.subjectId) ?? null
             : null;
     }
 

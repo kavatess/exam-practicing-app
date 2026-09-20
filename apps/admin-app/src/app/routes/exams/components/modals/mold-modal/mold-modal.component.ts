@@ -3,15 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { MoldStatuses, MoldTypes } from '@libs/models';
 import { AdminExam, AdminMold } from '../../../../../shared/models/cms.model';
 import { ModalShellComponent } from '../../../../../shared/components/modal-shell/modal-shell.component';
-
-export interface MoldDraft {
-    name: string;
-    type: MoldTypes;
-    duration: number;
-    numOfQuestions: number;
-    passingScore: number;
-    status: MoldStatuses;
-}
+import { MoldDraft } from '../../../store/exams.service';
 
 @Component({
     selector: 'adm-mold-modal',

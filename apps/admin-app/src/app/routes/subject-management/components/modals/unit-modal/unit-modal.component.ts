@@ -2,13 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdminUnit } from '../../../../../shared/models/cms.model';
 import { ModalShellComponent } from '../../../../../shared/components/modal-shell/modal-shell.component';
-
-export interface UnitDraft {
-    title: string;
-    description: string;
-    order: number;
-    subUnitTitles: string[];
-}
+import { UnitDraft } from '../../../store/subject-management.service';
 
 @Component({
     selector: 'adm-unit-modal',

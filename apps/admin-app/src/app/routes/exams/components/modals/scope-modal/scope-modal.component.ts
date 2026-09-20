@@ -1,9 +1,10 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
+    AdminSubject,
     AdminUnit,
     ExamSection,
+    findSubject,
 } from '../../../../../shared/models/cms.model';
-import { CmsDataService } from '../../../../../shared/services/cms-data.service';
 import { ModalShellComponent } from '../../../../../shared/components/modal-shell/modal-shell.component';
 import { UnitTransferComponent } from '../../../../../shared/components/unit-transfer/unit-transfer.component';
 
@@ -15,9 +16,8 @@ import { UnitTransferComponent } from '../../../../../shared/components/unit-tra
     styleUrl: './scope-modal.component.scss',
 })
 export class ScopeModalComponent implements OnInit {
-    private readonly data = inject(CmsDataService);
-
     @Input({ required: true }) section!: ExamSection;
+    @Input() subjects: AdminSubject[] = [];
     @Input({ required: true }) examCode!: string;
 
     @Output() dismiss = new EventEmitter<void>();
@@ -31,12 +31,13 @@ export class ScopeModalComponent implements OnInit {
 
     get subjectName(): string {
         return (
-            this.data.subjectById(this.section.subjectId)?.name ?? 'Subject'
+            findSubject(this.subjects, this.section.subjectId)?.name ??
+            'Subject'
         );
     }
 
     get units(): AdminUnit[] {
-        return this.data.subjectById(this.section.subjectId)?.units ?? [];
+        return findSubject(this.subjects, this.section.subjectId)?.units ?? [];
     }
 
     get eyebrow(): string {

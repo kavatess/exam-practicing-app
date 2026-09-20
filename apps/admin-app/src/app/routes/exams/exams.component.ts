@@ -1,29 +1,26 @@
 import { Component, inject, OnInit } from '@angular/core';
-import {
-    MoldStatuses,
-    MoldTypes,
-    QuestionDifficulties,
-    QuestionTypes,
-} from '@libs/models';
+import { Action, Store } from '@ngrx/store';
 import {
     AdminExam,
     AdminMold,
-    AdminMoldPage,
     CmsOverlay,
     ExamSection,
-    ExamTypes,
 } from '../../shared/models/cms.model';
-import { CmsDataService } from '../../shared/services/cms-data.service';
+import { SubjectManagementActions } from '../subject-management/store/subject-management.actions';
+import { SubjectManagementSelectors } from '../subject-management/store/subject-management.selectors';
 import {
     ExamDetailComponent,
     MoldBlockPatch,
     MoldBlockRef,
 } from './components/exam-detail/exam-detail.component';
 import { ExamYearListComponent } from './components/exam-year-list/exam-year-list.component';
-import { ExamDraft, ExamModalComponent } from './components/modals/exam-modal/exam-modal.component';
-import { MoldDraft, MoldModalComponent } from './components/modals/mold-modal/mold-modal.component';
+import { ExamModalComponent } from './components/modals/exam-modal/exam-modal.component';
+import { MoldModalComponent } from './components/modals/mold-modal/mold-modal.component';
 import { ScopeModalComponent } from './components/modals/scope-modal/scope-modal.component';
-import { SectionDraft, SectionModalComponent } from './components/modals/section-modal/section-modal.component';
+import { SectionModalComponent } from './components/modals/section-modal/section-modal.component';
+import { ExamsActions } from './store/exams.actions';
+import { ExamsSelectors } from './store/exams.selectors';
+import { ExamDraft, MoldDraft, SectionDraft } from './store/exams.service';
 
 @Component({
     selector: 'adm-exams',
@@ -40,27 +37,36 @@ import { SectionDraft, SectionModalComponent } from './components/modals/section
     styleUrl: './exams.component.scss',
 })
 export class ExamsComponent implements OnInit {
-    private readonly data = inject(CmsDataService);
+    private readonly store = inject(Store);
 
-    readonly exams = this.data.exams;
-    readonly subjects = this.data.subjects;
+    readonly exams = this.store.selectSignal(ExamsSelectors.Exams);
+    readonly selectedExam = this.store.selectSignal(
+        ExamsSelectors.SelectedExam
+    );
+    readonly selectedExamId = this.store.selectSignal(
+        ExamsSelectors.SelectedExamId
+    );
+    // Sections are scoped to subject units, so this page reads the taxonomy
+    // the subject feature owns and hands it down to the presentational parts.
+    readonly subjects = this.store.selectSignal(
+        SubjectManagementSelectors.Subjects
+    );
 
-    selectedExamId: string | null = null;
+    // Overlay bookkeeping is view state, so it stays with the component.
     overlay: CmsOverlay = null;
     editingExam: AdminExam | null = null;
     editingMold: AdminMold | null = null;
     editingSection: ExamSection | null = null;
 
     ngOnInit(): void {
-        this.selectedExamId = this.exams[0]?.id ?? null;
-    }
-
-    get selectedExam(): AdminExam | null {
-        return this.exams.find((exam) => exam.id === this.selectedExamId) ?? null;
+        this.store.dispatch(ExamsActions.loadExams());
+        if (!this.subjects().length) {
+            this.store.dispatch(SubjectManagementActions.loadSubjects());
+        }
     }
 
     selectExam(examId: string): void {
-        this.selectedExamId = examId;
+        this.store.dispatch(ExamsActions.selectExam({ examId }));
         this.closeOverlay();
     }
 
@@ -91,228 +97,101 @@ export class ExamsComponent implements OnInit {
     }
 
     saveExam(draft: ExamDraft): void {
-        const exam = this.editingExam ?? this.createExam();
-        exam.name = draft.name || 'Untitled exam';
-        exam.code = draft.code;
-        exam.year = Number(draft.year) || new Date().getFullYear();
-        exam.examType = draft.examType;
-        exam.org = draft.org;
-        exam.description = draft.description;
-        exam.updatedAt = new Date().toISOString();
-
-        if (!this.editingExam) {
-            this.exams.push(exam);
-            this.selectedExamId = exam.id;
-        }
+        this.store.dispatch(
+            ExamsActions.saveExam({
+                examId: this.editingExam?.id ?? null,
+                draft,
+            })
+        );
         this.closeOverlay();
     }
 
     removeExam(): void {
-        const exam = this.selectedExam;
-        if (!exam) {
-            return;
+        const examId = this.selectedExamId();
+        if (examId) {
+            this.store.dispatch(ExamsActions.removeExam({ examId }));
         }
-        const index = this.exams.indexOf(exam);
-        this.exams.splice(index, 1);
-        this.selectedExamId = this.exams[0]?.id ?? null;
     }
 
     addSection(draft: SectionDraft): void {
-        const exam = this.selectedExam;
-        if (
-            !exam ||
-            exam.sections.some((s) => s.subjectId === draft.subjectId)
-        ) {
-            this.closeOverlay();
-            return;
-        }
-        exam.sections.push({
-            id: this.data.nextId('section'),
-            examId: exam.id,
-            subjectId: draft.subjectId,
-            label: draft.label,
-            unitIds: [...draft.unitIds],
-        });
-        exam.updatedAt = new Date().toISOString();
+        this.dispatchForExam((examId) =>
+            ExamsActions.addSection({ examId, draft })
+        );
         this.closeOverlay();
     }
 
     removeSection(section: ExamSection): void {
-        const exam = this.selectedExam;
-        if (!exam) {
-            return;
-        }
-        exam.sections = exam.sections.filter((item) => item.id !== section.id);
-        for (const mold of exam.molds) {
-            for (const page of mold.pages) {
-                page.blocks = page.blocks.filter(
-                    (block) => block.sectionId !== section.id
-                );
-            }
-        }
-        exam.updatedAt = new Date().toISOString();
+        this.dispatchForExam((examId) =>
+            ExamsActions.removeSection({ examId, sectionId: section.id })
+        );
     }
 
     saveScope(unitIds: string[]): void {
-        const exam = this.selectedExam;
         const section = this.editingSection;
-        if (!exam || !section) {
-            return;
+        if (section) {
+            this.dispatchForExam((examId) =>
+                ExamsActions.saveSectionScope({
+                    examId,
+                    sectionId: section.id,
+                    unitIds,
+                })
+            );
         }
-        section.unitIds = [...unitIds];
-        exam.updatedAt = new Date().toISOString();
-        this.dropBlocksOutsideScope(exam);
         this.closeOverlay();
     }
 
     saveMold(draft: MoldDraft): void {
-        const exam = this.selectedExam;
-        if (!exam) {
-            return;
-        }
-        const mold = this.editingMold ?? this.createMold(exam.id);
-        mold.name = draft.name || 'Untitled mold';
-        mold.type = draft.type;
-        mold.duration = Number(draft.duration) || 0;
-        mold.numOfQuestions = Number(draft.numOfQuestions) || 0;
-        mold.passingScore = Number(draft.passingScore) || 0;
-        mold.status = draft.status;
-
-        if (!this.editingMold) {
-            exam.molds.push(mold);
-        }
+        this.dispatchForExam((examId) =>
+            ExamsActions.saveMold({
+                examId,
+                moldId: this.editingMold?.id ?? null,
+                draft,
+            })
+        );
         this.closeOverlay();
     }
 
     removeMold(mold: AdminMold): void {
-        const exam = this.selectedExam;
-        if (!exam) {
-            return;
-        }
-        exam.molds = exam.molds.filter((item) => item.id !== mold.id);
+        this.dispatchForExam((examId) =>
+            ExamsActions.removeMold({ examId, moldId: mold.id })
+        );
     }
 
     addPage(moldId: string): void {
-        const mold = this.findMold(moldId);
-        if (!mold) {
-            return;
-        }
-        const page: AdminMoldPage = {
-            id: this.data.nextId('page'),
-            moldId: mold.id,
-            name: `Phần ${mold.pages.length + 1}`,
-            description: '',
-            blocks: [],
-        };
-        mold.pages.push(page);
+        this.dispatchForExam((examId) =>
+            ExamsActions.addPage({ examId, moldId })
+        );
     }
 
     addBlock({ moldId, pageId }: { moldId: string; pageId: string }): void {
-        const page = this.findPage(moldId, pageId);
-        const exam = this.selectedExam;
-        const section = exam?.sections[0];
-        if (!page || !section) {
-            return;
-        }
-        page.blocks.push({
-            id: this.data.nextId('block'),
-            moldId,
-            pageId,
-            qIndex: page.blocks.length,
-            sectionId: section.id,
-            courseUnitId: section.unitIds[0] ?? '',
-            subUnitIds: [],
-            qType: QuestionTypes.MultipleChoice,
-            difficulty: QuestionDifficulties.Easy,
-            questionCount: 5,
-        });
+        this.dispatchForExam((examId) =>
+            ExamsActions.addBlock({ examId, moldId, pageId })
+        );
     }
 
     removeBlock({ moldId, pageId, blockId }: MoldBlockRef): void {
-        const page = this.findPage(moldId, pageId);
-        if (!page) {
-            return;
-        }
-        page.blocks = page.blocks.filter((block) => block.id !== blockId);
+        this.dispatchForExam((examId) =>
+            ExamsActions.removeBlock({ examId, moldId, pageId, blockId })
+        );
     }
 
     patchBlock({ moldId, pageId, blockId, changes }: MoldBlockPatch): void {
-        const page = this.findPage(moldId, pageId);
-        const block = page?.blocks.find((item) => item.id === blockId);
-        if (!block) {
-            return;
-        }
-        Object.assign(block, changes);
-    }
-
-    private createExam(): AdminExam {
-        return {
-            id: this.data.nextId('exam'),
-            name: '',
-            code: '',
-            year: new Date().getFullYear(),
-            examType: ExamTypes.National,
-            org: '',
-            description: '',
-            iconUrl: '',
-            sections: [],
-            molds: [],
-        };
-    }
-
-    private createMold(examId: string): AdminMold {
-        return {
-            id: this.data.nextId('mold'),
-            courseId: examId,
-            name: '',
-            description: '',
-            type: MoldTypes.Test,
-            status: MoldStatuses.Active,
-            numOfQuestions: 0,
-            duration: 0,
-            passingScore: 0,
-            pages: [],
-        };
-    }
-
-    private dropBlocksOutsideScope(exam: AdminExam): void {
-        const scopedUnitIds = new Map(
-            exam.sections.map((section) => [section.id, section.unitIds])
+        this.dispatchForExam((examId) =>
+            ExamsActions.patchBlock({
+                examId,
+                moldId,
+                pageId,
+                blockId,
+                changes,
+            })
         );
-        const scopedSubUnitIds = new Set(
-            exam.sections.flatMap((section) =>
-                this.data
-                    .unitsForSection(section)
-                    .flatMap((unit) => unit.subUnits.map((sub) => sub.id))
-            )
-        );
+    }
 
-        for (const mold of exam.molds) {
-            for (const page of mold.pages) {
-                page.blocks = page.blocks
-                    .filter((block) =>
-                        scopedUnitIds
-                            .get(block.sectionId)
-                            ?.includes(block.courseUnitId)
-                    )
-                    .map((block) => ({
-                        ...block,
-                        subUnitIds: block.subUnitIds.filter((id) =>
-                            scopedSubUnitIds.has(id)
-                        ),
-                    }));
-            }
+    /** Every write below targets the exam on screen. */
+    private dispatchForExam(build: (examId: string) => Action): void {
+        const examId = this.selectedExamId();
+        if (examId) {
+            this.store.dispatch(build(examId));
         }
-    }
-
-    private findMold(moldId: string): AdminMold | undefined {
-        return this.selectedExam?.molds.find((mold) => mold.id === moldId);
-    }
-
-    private findPage(
-        moldId: string,
-        pageId: string
-    ): AdminMoldPage | undefined {
-        return this.findMold(moldId)?.pages.find((page) => page.id === pageId);
     }
 }

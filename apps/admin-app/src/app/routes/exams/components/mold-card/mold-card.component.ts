@@ -1,14 +1,15 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MoldStatuses, MoldTypes, QuestionDifficulties } from '@libs/models';
 import {
     AdminMold,
     AdminMoldBlock,
+    AdminSubject,
     countMoldBlocks,
     countMoldQuestions,
     DIFFICULTY_LABELS,
     ExamSection,
+    findSubject,
 } from '../../../../shared/models/cms.model';
-import { CmsDataService } from '../../../../shared/services/cms-data.service';
 import {
     MoldPageComponent,
     PageBlockPatch,
@@ -33,10 +34,9 @@ export interface BlockRef {
     styleUrl: './mold-card.component.scss',
 })
 export class MoldCardComponent {
-    private readonly data = inject(CmsDataService);
-
     @Input({ required: true }) mold!: AdminMold;
     @Input() sections: ExamSection[] = [];
+    @Input() subjects: AdminSubject[] = [];
     @Input() expanded = false;
 
     @Output() toggleExpand = new EventEmitter<void>();
@@ -132,7 +132,7 @@ export class MoldCardComponent {
     }
 
     private sectionSubject(section: ExamSection): string {
-        return this.data.subjectById(section.subjectId)?.name ?? 'Section';
+        return findSubject(this.subjects, section.subjectId)?.name ?? 'Section';
     }
 
     private difficultyMix(total: number): string {

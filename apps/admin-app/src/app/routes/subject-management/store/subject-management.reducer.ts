@@ -1,79 +1,78 @@
 import { createReducer, on } from '@ngrx/store';
-import { Course, Pagination, Quest, Test } from '@libs/models';
-import {
-    CourseActions,
+import { AdminSubject } from '../../../shared/models/cms.model';
+import { SubjectManagementActions } from './subject-management.actions';
 
-} from './subject-management.actions';
-
-export interface DashboardStoreState {
-    courses: {
-        list: Course[];
-        selectedCourseId: string;
-        data: Course;
-        loading: boolean;
-    };
-
+export interface SubjectManagementState {
+    subjects: AdminSubject[];
+    selectedSubjectId: string | null;
+    loading: boolean;
+    error: unknown;
 }
 
-export const initialState: DashboardStoreState = {
-    courses: {
-        list: [],
-        selectedCourseId: 'abc',
-        data: null,
-        loading: false,
-    },
-
+export const initialState: SubjectManagementState = {
+    subjects: [],
+    selectedSubjectId: null,
+    loading: false,
+    error: null,
 };
 
 export const subjectManagementReducer = createReducer(
     initialState,
-    // Course Events
-    on(CourseActions.getCoursesSuccess, (state, { list }) => ({
+
+    on(SubjectManagementActions.loadSubjects, (state) => ({
         ...state,
-        courses: {
-            ...state.courses,
-            list,
-            data: {
-                ...state.courses?.data,
-                ...list[0],
-            },
-        },
+        loading: true,
+        error: null,
     })),
-    on(CourseActions.selectCourseSuccess, (state, { data }) => ({
+    on(SubjectManagementActions.loadSubjectsSuccess, (state, { subjects }) => ({
         ...state,
-        courses: {
-            ...state.courses,
-            data,
-        },
+        subjects,
+        selectedSubjectId: keepOrPickFirst(subjects, state.selectedSubjectId),
+        loading: false,
     })),
 
-    on(CourseActions.getCurrCourseSuccess, (state, { data }) => ({
+    on(SubjectManagementActions.selectSubject, (state, { subjectId }) => ({
         ...state,
-        courses: {
-            ...state.courses,
-            data: {
-                ...state.courses?.data,
-                ...data,
-            },
-        },
+        selectedSubjectId: subjectId,
     })),
 
-    // Test History events
-    on(CourseActions.getTestHistorySuccess, (state, { list }) => ({
+    on(SubjectManagementActions.createSubjectSuccess, (state, { subject }) => ({
         ...state,
-        testHistory: {
-            ...state.testHistory,
-            list,
-        },
+        subjects: [...state.subjects, subject],
+        selectedSubjectId: subject.id,
     })),
-    on(CourseActions.changeHistoryPage, (state, { page }) => ({
-        ...state,
-        testHistory: {
-            ...state.testHistory,
-            pagination: {
-                ...state.testHistory.pagination,
-                page,
-            },
-        },
-    }))
+
+    // Every other write answers with the whole updated subject, so one handler
+    // covers renames, unit edits and deletions alike.
+    on(
+        SubjectManagementActions.updateSubjectSuccess,
+        SubjectManagementActions.saveUnitSuccess,
+        SubjectManagementActions.removeUnitSuccess,
+        SubjectManagementActions.removeSubUnitSuccess,
+        (state, { subject }) => ({
+            ...state,
+            subjects: state.subjects.map((item) =>
+                item.id === subject.id ? subject : item
+            ),
+        })
+    ),
+
+    on(
+        SubjectManagementActions.loadSubjectsFailure,
+        SubjectManagementActions.createSubjectFailure,
+        SubjectManagementActions.updateSubjectFailure,
+        SubjectManagementActions.saveUnitFailure,
+        SubjectManagementActions.removeUnitFailure,
+        SubjectManagementActions.removeSubUnitFailure,
+        (state, { error }) => ({ ...state, loading: false, error })
+    )
 );
+
+/** Holds the current selection across a reload, falling back to the first row. */
+function keepOrPickFirst(
+    subjects: AdminSubject[],
+    selectedId: string | null
+): string | null {
+    const stillThere = subjects.some((subject) => subject.id === selectedId);
+    return stillThere ? selectedId : subjects[0]?.id ?? null;
+}

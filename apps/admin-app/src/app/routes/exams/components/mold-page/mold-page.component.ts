@@ -1,17 +1,19 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { QuestionDifficulties, QuestionTypes } from '@libs/models';
 import {
     AdminMoldBlock,
     AdminMoldPage,
+    AdminSubject,
     AdminUnit,
     DIFFICULTY_LABELS,
     DIFFICULTY_OPTIONS,
     ExamSection,
+    findSubject,
     QUESTION_TYPE_LABELS,
     QUESTION_TYPE_OPTIONS,
+    unitsInScope,
 } from '../../../../shared/models/cms.model';
-import { CmsDataService } from '../../../../shared/services/cms-data.service';
 
 export interface PageBlockPatch {
     blockId: string;
@@ -26,10 +28,9 @@ export interface PageBlockPatch {
     styleUrl: './mold-page.component.scss',
 })
 export class MoldPageComponent {
-    private readonly data = inject(CmsDataService);
-
     @Input({ required: true }) page!: AdminMoldPage;
     @Input() sections: ExamSection[] = [];
+    @Input() subjects: AdminSubject[] = [];
     @Input() index = 0;
     @Input() moldQuestionCount = 0;
 
@@ -65,7 +66,7 @@ export class MoldPageComponent {
     sectionName(sectionId: string): string {
         const section = this.sections.find((item) => item.id === sectionId);
         return section
-            ? this.data.subjectById(section.subjectId)?.name ?? '—'
+            ? findSubject(this.subjects, section.subjectId)?.name ?? '—'
             : '—';
     }
 
@@ -73,7 +74,7 @@ export class MoldPageComponent {
         const section = this.sections.find(
             (item) => item.id === block.sectionId
         );
-        return section ? this.data.unitsForSection(section) : [];
+        return section ? unitsInScope(this.subjects, section) : [];
     }
 
     availableSubUnits(block: AdminMoldBlock) {

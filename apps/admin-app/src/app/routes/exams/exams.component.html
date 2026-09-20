@@ -7,16 +7,17 @@
   <div class="ex-panels">
     <adm-exam-year-list
       class="ex-panel-list"
-      [exams]="exams"
-      [selectedExamId]="selectedExamId"
+      [exams]="exams()"
+      [selectedExamId]="selectedExamId()"
       (create)="openExamModal(null)"
       (select)="selectExam($event)"
     ></adm-exam-year-list>
 
     <adm-exam-detail
       class="ex-panel-detail"
-      [exam]="selectedExam"
-      (editExam)="openExamModal(selectedExam)"
+      [exam]="selectedExam()"
+      [subjects]="subjects()"
+      (editExam)="openExamModal(selectedExam())"
       (removeExam)="removeExam()"
       (addSection)="openSectionModal()"
       (editScope)="openScopeModal($event)"
@@ -40,27 +41,29 @@
   ></adm-exam-modal>
 }
 
-@if (overlay === 'section' && selectedExam) {
+@if (overlay === 'section' && selectedExam(); as exam) {
   <adm-section-modal
-    [exam]="selectedExam!"
+    [exam]="exam"
+    [subjects]="subjects()"
     (dismiss)="closeOverlay()"
     (save)="addSection($event)"
   ></adm-section-modal>
 }
 
-@if (overlay === 'scope' && editingSection) {
+@if (overlay === 'scope' && editingSection; as section) {
   <adm-scope-modal
-    [section]="editingSection!"
-    [examCode]="selectedExam?.code ?? ''"
+    [section]="section"
+    [subjects]="subjects()"
+    [examCode]="selectedExam()?.code ?? ''"
     (dismiss)="closeOverlay()"
     (save)="saveScope($event)"
   ></adm-scope-modal>
 }
 
-@if (overlay === 'mold' && selectedExam) {
+@if (overlay === 'mold' && selectedExam(); as exam) {
   <adm-mold-modal
     [mold]="editingMold"
-    [exam]="selectedExam!"
+    [exam]="exam"
     (dismiss)="closeOverlay()"
     (save)="saveMold($event)"
   ></adm-mold-modal>

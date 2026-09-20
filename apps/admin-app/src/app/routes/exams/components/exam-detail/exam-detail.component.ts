@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import {
     AdminExam,
     AdminMold,
+    AdminSubject,
     ExamSection,
     formatUpdatedStamp,
 } from '../../../../shared/models/cms.model';
@@ -38,6 +39,8 @@ export class ExamDetailComponent {
     get exam(): AdminExam | null {
         return this.selectedExam;
     }
+
+    @Input() subjects: AdminSubject[] = [];
 
     private selectedExam: AdminExam | null = null;
 

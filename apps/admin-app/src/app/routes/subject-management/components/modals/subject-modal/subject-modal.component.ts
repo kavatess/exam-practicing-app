@@ -2,11 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdminSubject } from '../../../../../shared/models/cms.model';
 import { ModalShellComponent } from '../../../../../shared/components/modal-shell/modal-shell.component';
-
-export interface SubjectDraft {
-    name: string;
-    description: string;
-}
+import { SubjectDraft } from '../../../store/subject-management.service';
 
 @Component({
     selector: 'adm-subject-modal',

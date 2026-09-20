@@ -6,15 +6,7 @@ import {
     ExamTypes,
 } from '../../../../../shared/models/cms.model';
 import { ModalShellComponent } from '../../../../../shared/components/modal-shell/modal-shell.component';
-
-export interface ExamDraft {
-    name: string;
-    code: string;
-    year: number;
-    examType: ExamTypes;
-    org: string;
-    description: string;
-}
+import { ExamDraft } from '../../../store/exams.service';
 
 @Component({
     selector: 'adm-exam-modal',

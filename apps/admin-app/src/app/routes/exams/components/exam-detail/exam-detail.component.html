@@ -46,6 +46,7 @@
           @for (section of current.sections; track section.id; let i = $index) {
             <adm-section-card
               [section]="section"
+              [subjects]="subjects"
               [index]="i"
               (editScope)="editScope.emit(section)"
               (remove)="removeSection.emit(section)"
@@ -82,6 +83,7 @@
             <adm-mold-card
               [mold]="mold"
               [sections]="current.sections"
+              [subjects]="subjects"
               [expanded]="expandedMoldId() === mold.id"
               (toggleExpand)="toggleMold(mold)"
               (edit)="editMold.emit(mold)"

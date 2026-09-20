@@ -120,6 +120,24 @@ export function countMoldBlocks(mold: AdminMold): number {
     return mold.pages.reduce((total, page) => total + page.blocks.length, 0);
 }
 
+export function findSubject(
+    subjects: AdminSubject[],
+    subjectId: string
+): AdminSubject | undefined {
+    return subjects.find((subject) => subject.id === subjectId);
+}
+
+/** The units a section draws from, in the subject's own order. */
+export function unitsInScope(
+    subjects: AdminSubject[],
+    section: ExamSection
+): AdminUnit[] {
+    const subject = findSubject(subjects, section.subjectId);
+    return (
+        subject?.units.filter((unit) => section.unitIds.includes(unit.id)) ?? []
+    );
+}
+
 export function countSubUnits(subject: AdminSubject): number {
     return subject.units.reduce(
         (total, unit) => total + unit.subUnits.length,

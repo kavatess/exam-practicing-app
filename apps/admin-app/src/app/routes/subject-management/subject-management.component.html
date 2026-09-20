@@ -7,14 +7,14 @@
   <div class="sm-panels">
     <adm-subject-list
       class="sm-panel-list"
-      [subjects]="subjects"
-      [selectedId]="selectedSubjectId"
+      [subjects]="subjects()"
+      [selectedId]="selectedSubjectId()"
       (select)="selectSubject($event)"
       (create)="openSubjectModal(null)"
       (edit)="openSubjectModal($event)"
     ></adm-subject-list>
 
-    @if (selectedSubject; as subject) {
+    @if (selectedSubject(); as subject) {
       <adm-subject-detail
         class="sm-panel-detail"
         [subject]="subject"
@@ -36,10 +36,10 @@
   ></adm-subject-modal>
 }
 
-@if (overlay === 'unit' && selectedSubject) {
+@if (overlay === 'unit' && selectedSubject(); as subject) {
   <adm-unit-modal
     [unit]="editingUnit"
-    [defaultOrder]="selectedSubject!.units.length + 1"
+    [defaultOrder]="subject.units.length + 1"
     (dismiss)="closeOverlay()"
     (save)="saveUnit($event)"
   ></adm-unit-modal>
