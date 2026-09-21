@@ -32,7 +32,7 @@
   </div>
 
   <div class="sm-list">
-    <div class="sm-list-head included">Included units · {{ includedUnits.length }}</div>
+    <div class="sm-list-head included">{{ includedLabel }} · {{ includedUnits.length }}</div>
     <div class="sm-list-body" [style.max-height.px]="listHeight">
       @for (unit of includedUnits; track unit.id) {
         <div class="sm-list-row static">
@@ -48,7 +48,7 @@
           </button>
         </div>
       } @empty {
-        <p class="sm-list-empty">Pick units on the left, then use the arrow to add them.</p>
+        <p class="sm-list-empty">{{ emptyNote }}</p>
       }
     </div>
   </div>

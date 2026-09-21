@@ -1,0 +1,223 @@
+<div class="qb-rail">
+  <header class="qb-rail-head">
+    <h2 class="qb-rail-title">Filters</h2>
+    <button type="button" class="qb-reset" (click)="resetFilters.emit()">Reset</button>
+  </header>
+
+  <div class="qb-fields">
+    <!-- Subject -->
+    <div class="qb-field">
+      <span class="qb-label">Subject</span>
+      <div class="qb-select-wrap">
+        <button
+          type="button"
+          class="qb-select"
+          [class.open]="menu() === 'subject'"
+          [attr.aria-expanded]="menu() === 'subject'"
+          (click)="openMenu('subject')"
+        >
+          <span>{{ subjectLabel }}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <path d="M6 9l6 6 6-6"></path>
+          </svg>
+        </button>
+
+        @if (menu() === 'subject') {
+          <div class="qb-menu">
+            <button type="button" class="qb-option" [class.on]="allSubjects" (click)="pickSubject(null)">
+              <span>All subjects</span>
+              <span class="qb-option-count">{{ bankQuestionCount }} q</span>
+            </button>
+            @for (option of subjects; track option.id) {
+              <button
+                type="button"
+                class="qb-option"
+                [class.on]="option.id === filter.subjectId"
+                (click)="pickSubject(option.id)"
+              >
+                <span>{{ option.name }}</span>
+                <span class="qb-option-count">{{ subjectQuestionCount(option) }} q</span>
+              </button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Unit -->
+    <div class="qb-field">
+      <div class="qb-label-row">
+        <span class="qb-label">Unit</span>
+        <span class="qb-meta">{{ unitSelectedLabel }}</span>
+      </div>
+      @if (allSubjects) {
+        <p class="qb-hint-box">Select a subject to filter by unit.</p>
+      } @else {
+        <div class="qb-unit-list">
+          @for (unit of units; track unit.id) {
+            <button type="button" class="qb-unit" (click)="toggleUnit.emit(unit.id)">
+              <span class="qb-check" [class.on]="isUnitOn(unit.id)">
+                @if (isUnitOn(unit.id)) {
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round">
+                    <path d="M5 13l4 4L19 7"></path>
+                  </svg>
+                }
+              </span>
+              <span class="qb-unit-title" [class.on]="isUnitOn(unit.id)">{{ unit.title }}</span>
+              <span class="qb-unit-count">{{ unit.questionCount }} q</span>
+            </button>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Sub-unit -->
+    <div class="qb-field">
+      <div class="qb-label-row">
+        <span class="qb-label">Sub-unit</span>
+        <span class="qb-meta">{{ subUnitSelectedLabel }}</span>
+      </div>
+      @if (subUnitPool.length) {
+        <div class="qb-chips">
+          @for (sub of subUnitPool; track sub.id) {
+            <button
+              type="button"
+              class="qb-chip"
+              [class.on]="isSubUnitOn(sub.id)"
+              (click)="toggleSubUnit.emit(sub.id)"
+            >
+              {{ sub.title }}
+            </button>
+          }
+        </div>
+      } @else {
+        <p class="qb-hint-box">Pick a unit above to narrow by sub-unit.</p>
+      }
+    </div>
+
+    <!-- Question type -->
+    <div class="qb-field">
+      <span class="qb-label">Question type</span>
+      <div class="qb-select-wrap">
+        <button
+          type="button"
+          class="qb-select"
+          [class.open]="menu() === 'type'"
+          [attr.aria-expanded]="menu() === 'type'"
+          (click)="openMenu('type')"
+        >
+          <span>{{ typeLabel }}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <path d="M6 9l6 6 6-6"></path>
+          </svg>
+        </button>
+
+        @if (menu() === 'type') {
+          <div class="qb-menu">
+            <button type="button" class="qb-option" [class.on]="filter.qType === null" (click)="pickType(null)">
+              <span>All types</span>
+            </button>
+            @for (option of typeOptions; track option) {
+              <button
+                type="button"
+                class="qb-option"
+                [class.on]="option === filter.qType"
+                (click)="pickType(option)"
+              >
+                <span>{{ typeLabels[option] }}</span>
+              </button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Difficulty -->
+    <div class="qb-field">
+      <span class="qb-label">Difficulty</span>
+      <div class="qb-select-wrap">
+        <button
+          type="button"
+          class="qb-select"
+          [class.open]="menu() === 'difficulty'"
+          [attr.aria-expanded]="menu() === 'difficulty'"
+          (click)="openMenu('difficulty')"
+        >
+          <span>{{ difficultyLabel }}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <path d="M6 9l6 6 6-6"></path>
+          </svg>
+        </button>
+
+        @if (menu() === 'difficulty') {
+          <div class="qb-menu">
+            <button
+              type="button"
+              class="qb-option"
+              [class.on]="filter.difficulty === null"
+              (click)="pickDifficulty(null)"
+            >
+              <span>All difficulties</span>
+            </button>
+            @for (option of difficultyOptions; track option) {
+              <button
+                type="button"
+                class="qb-option"
+                [class.on]="option === filter.difficulty"
+                (click)="pickDifficulty(option)"
+              >
+                <span>{{ difficultyLabels[option] }}</span>
+              </button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Question level -->
+    <div class="qb-field">
+      <div class="qb-label-row">
+        <span class="qb-label">Question level</span>
+        <span class="qb-meta">{{ levelScopeLabel }}</span>
+      </div>
+      @if (levels.length) {
+        <div class="qb-chips">
+          @for (level of levels; track level) {
+            <button
+              type="button"
+              class="qb-chip"
+              [class.on]="filter.level === level"
+              (click)="toggleLevel.emit(level)"
+            >
+              {{ level }}
+            </button>
+          }
+        </div>
+      } @else {
+        <p class="qb-hint-box">
+          Select a subject to filter by level. Level tags are defined per subject, so they
+          aren't comparable across subjects.
+        </p>
+      }
+    </div>
+  </div>
+
+  <div class="qb-match">
+    <p class="qb-match-count" [class.low]="pool.tier === 'low'" [class.none]="matchCount === 0">
+      <strong>{{ matchCountLabel }}</strong>
+      <span>questions match these filters</span>
+    </p>
+    <p class="qb-pool" [class]="pool.tier">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        @if (pool.tier === 'ok') {
+          <path d="M20 6L9 17l-5-5"></path>
+        } @else if (pool.tier === 'thin') {
+          <path d="M12 8v5m0 3.5v.01M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z"></path>
+        } @else {
+          <path d="M12 8v5m0 3.5v.01M10.3 3.9 2.6 17a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"></path>
+        }
+      </svg>
+      <span>{{ pool.note }}</span>
+    </p>
+  </div>
+</div>

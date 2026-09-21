@@ -12,6 +12,9 @@ export class UnitTransferComponent {
     @Input({ required: true }) units: AdminUnit[] = [];
     @Input({ required: true }) selectedIds: string[] = [];
     @Input() listHeight = 200;
+    /** Heading over the right-hand list: units in scope, or tagged on a question. */
+    @Input() includedLabel = 'Included units';
+    @Input() emptyNote = 'Pick units on the left, then use the arrow to add them.';
 
     @Output() selectedIdsChange = new EventEmitter<string[]>();
 

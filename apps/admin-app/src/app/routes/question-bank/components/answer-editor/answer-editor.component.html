@@ -1,0 +1,120 @@
+@if (isMultipleChoice) {
+  <div class="ae-field">
+    <div class="ae-label-row">
+      <span class="ae-label">Answer choices</span>
+      <span class="ae-meta">Select the correct answer</span>
+    </div>
+    <div class="ae-stack">
+      @for (choice of choices; track choice.id) {
+        <div class="ae-choice" [class.correct]="choice.correct">
+          <button
+            type="button"
+            class="ae-radio"
+            [class.on]="choice.correct"
+            [title]="'Mark ' + choice.key + ' correct'"
+            (click)="markCorrect(choice)"
+          ></button>
+          <span class="ae-key">{{ choice.key }}</span>
+          <input
+            class="ae-choice-text"
+            type="text"
+            placeholder="Choice text"
+            [ngModel]="choice.text"
+            (ngModelChange)="updateChoiceText(choice, $event)"
+          />
+          @if (choice.correct) {
+            <span class="ae-correct">Correct</span>
+          }
+          <button type="button" class="ae-remove" title="Remove choice" (click)="removeChoice(choice)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M6 6l12 12M18 6L6 18"></path>
+            </svg>
+          </button>
+        </div>
+      }
+      <button type="button" class="ae-add" (click)="addChoice()">+ Add choice</button>
+    </div>
+  </div>
+}
+
+@if (isTrueFalse) {
+  <div class="ae-field">
+    <span class="ae-label">Correct answer</span>
+    <div class="ae-tf">
+      <button
+        type="button"
+        class="ae-tf-option"
+        [class.on]="trueFalseAnswer"
+        (click)="trueFalseAnswerChange.emit(true)"
+      >
+        <span class="ae-radio" [class.on]="trueFalseAnswer"></span> True
+      </button>
+      <button
+        type="button"
+        class="ae-tf-option"
+        [class.on]="!trueFalseAnswer"
+        (click)="trueFalseAnswerChange.emit(false)"
+      >
+        <span class="ae-radio" [class.on]="!trueFalseAnswer"></span> False
+      </button>
+    </div>
+  </div>
+}
+
+@if (isEssay) {
+  <div class="ae-field">
+    <span class="ae-label">Model answer &amp; rubric</span>
+    <textarea
+      class="ae-textarea"
+      rows="3"
+      placeholder="Type the expected answer and grading notes…"
+      [ngModel]="modelAnswer"
+      (ngModelChange)="modelAnswerChange.emit($event)"
+    ></textarea>
+    <div class="ae-points">
+      <label class="ae-points-field">
+        <span class="ae-meta">Max points</span>
+        <input
+          type="number"
+          min="1"
+          [ngModel]="maxPoints"
+          (ngModelChange)="maxPointsChange.emit($event)"
+        />
+      </label>
+      <span class="ae-meta">Manual grading required — not auto-scored.</span>
+    </div>
+  </div>
+}
+
+@if (isMatching) {
+  <div class="ae-field">
+    <span class="ae-label">Match pairs</span>
+    <div class="ae-stack">
+      @for (pair of pairs; track pair.id) {
+        <div class="ae-pair">
+          <input
+            type="text"
+            placeholder="Left"
+            [ngModel]="pair.left"
+            (ngModelChange)="updatePair(pair, 'left', $event)"
+          />
+          <svg class="ae-pair-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M7 8h10l-2-2m2 2l-2 2M17 16H7l2-2m-2 2l2 2"></path>
+          </svg>
+          <input
+            type="text"
+            placeholder="Right"
+            [ngModel]="pair.right"
+            (ngModelChange)="updatePair(pair, 'right', $event)"
+          />
+          <button type="button" class="ae-remove" title="Remove pair" (click)="removePair(pair)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M6 6l12 12M18 6L6 18"></path>
+            </svg>
+          </button>
+        </div>
+      }
+      <button type="button" class="ae-add" (click)="addPair()">+ Add pair</button>
+    </div>
+  </div>
+}

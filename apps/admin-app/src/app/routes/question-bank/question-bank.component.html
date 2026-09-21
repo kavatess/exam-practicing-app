@@ -1,1 +1,63 @@
-<p>question-bank works!</p>
+<div class="qb-page">
+  <header class="qb-page-head">
+    <p class="qb-breadcrumb">Admin / Question Bank</p>
+    <h1 class="qb-page-title">Question Bank</h1>
+  </header>
+
+  <div class="qb-body">
+    <adm-filter-rail
+      class="qb-rail-slot"
+      [filter]="filter()"
+      [subjects]="subjects()"
+      [matchCount]="matchCount()"
+      [blockNeeds]="blockNeeds"
+      (selectSubject)="selectSubject($event)"
+      (toggleUnit)="toggleUnit($event)"
+      (toggleSubUnit)="toggleSubUnit($event)"
+      (selectType)="selectType($event)"
+      (selectDifficulty)="selectDifficulty($event)"
+      (toggleLevel)="toggleLevel($event)"
+      (resetFilters)="resetFilters()"
+    ></adm-filter-rail>
+
+    <div class="qb-main">
+      @if (scope(); as activeScope) {
+        <adm-scope-banner
+          [scope]="activeScope"
+          [subjects]="subjects()"
+          [matchCount]="matchCount()"
+          (clear)="clearScope()"
+        ></adm-scope-banner>
+      }
+
+      <adm-question-table
+        [questions]="questions()"
+        [subjects]="subjects()"
+        [matchCount]="matchCount()"
+        [bankTotal]="bankTotal()"
+        [matchCounts]="matchCounts"
+        [matches]="matches()"
+        [showSubjectDot]="showSubjectDot"
+        [search]="filter().search"
+        (searchChange)="search($event)"
+        (create)="openModal(null)"
+        (importCsv)="importCsv()"
+        (openMatches)="loadMatches($event)"
+        (edit)="openModal($event)"
+        (remove)="removeQuestion($event)"
+      ></adm-question-table>
+    </div>
+  </div>
+</div>
+
+@if (modalOpen) {
+  <adm-question-modal
+    [question]="editingQuestion"
+    [subjects]="subjects()"
+    [matches]="editingMatches"
+    (dismiss)="closeModal()"
+    (save)="saveQuestion($event)"
+    (remove)="removeEditingQuestion()"
+    (manageLevels)="manageLevels($event)"
+  ></adm-question-modal>
+}

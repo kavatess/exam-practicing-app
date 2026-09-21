@@ -1,0 +1,123 @@
+@use '../../../../shared/styles/tokens' as *;
+
+:host {
+  display: block;
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.qmt {
+  border: 1px solid $sm-border-card;
+  border-radius: 12px;
+  background: $sm-surface;
+  overflow: hidden;
+}
+
+.qmt-head {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 13px 15px;
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.qmt-chevron {
+  flex: 0 0 13px;
+  width: 13px;
+  height: 13px;
+  color: $sm-muted;
+  transition: transform 0.15s ease;
+
+  &.open {
+    transform: rotate(90deg);
+  }
+}
+
+.qmt-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.qmt-title {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.qmt-sub {
+  font-size: 11.5px;
+  color: $sm-muted;
+}
+
+.qmt-pill {
+  @include sm-pill;
+  flex: 0 0 auto;
+  background: $sm-purple-soft;
+  color: $sm-purple;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.qmt-body {
+  padding: 0 15px 13px;
+  border-top: 1px solid $sm-border-soft;
+}
+
+.qmt-note {
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: $sm-muted;
+  margin: 11px 0 0;
+}
+
+.qmt-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid $sm-border-hair;
+}
+
+.qmt-row-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.qmt-exam {
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.qmt-mold {
+  font-size: 11.5px;
+  color: $sm-text-muted;
+}
+
+.qmt-block {
+  @include sm-mono-label(9px, 0.1em);
+  flex: 0 0 auto;
+}
+
+.qmt-open {
+  flex: 0 0 auto;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: $sm-green;
+}
+
+.qmt-foot {
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: $sm-muted-light;
+  margin: 11px 0 0;
+}

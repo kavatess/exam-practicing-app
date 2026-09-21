@@ -1,0 +1,238 @@
+@use '../../../../shared/styles/tokens' as *;
+
+:host {
+  display: block;
+  min-width: 0;
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.qb-rail {
+  padding: 18px 16px;
+  background: $sm-surface;
+  border: 1px solid $sm-border-card;
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(22, 33, 28, 0.04);
+}
+
+.qb-rail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.qb-rail-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.qb-reset {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: $sm-green;
+  cursor: pointer;
+}
+
+.qb-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.qb-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.qb-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.qb-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: $sm-text-body;
+}
+
+.qb-meta {
+  @include sm-mono-label(9px, 0.1em);
+  text-transform: uppercase;
+}
+
+.qb-select-wrap {
+  position: relative;
+}
+
+.qb-select {
+  @include sm-select-trigger;
+}
+
+.qb-menu {
+  @include sm-select-menu;
+}
+
+.qb-option {
+  @include sm-select-option;
+}
+
+.qb-option-count,
+.qb-hint-box {
+  padding: 10px 12px;
+  border: 1px dashed $sm-border-dashed;
+  border-radius: 9px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: $sm-muted-light;
+  margin: 0;
+}
+
+.qb-unit-list {
+  max-height: 168px;
+  overflow: auto;
+  border: 1px solid $sm-border-control;
+  border-radius: 9px;
+  background: $sm-surface;
+}
+
+.qb-unit {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-bottom: 1px solid $sm-border-hair;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: $sm-surface-sunken;
+  }
+}
+
+.qb-check {
+  flex: 0 0 15px;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid $sm-icon-soft;
+  border-radius: 4px;
+  background: $sm-surface;
+
+  &.on {
+    border-color: $sm-green;
+    background: $sm-green;
+  }
+
+  svg {
+    width: 9px;
+    height: 9px;
+  }
+}
+
+.qb-unit-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12.5px;
+  color: $sm-text-body;
+
+  &.on {
+    color: $sm-text;
+  }
+}
+
+.qb-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.qb-chip {
+  @include sm-tag-chip;
+}
+
+.qb-match {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid $sm-border-faint;
+}
+
+.qb-match-count {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  margin: 0 0 10px;
+
+  strong {
+    font-size: 23px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  span {
+    font-size: 12px;
+    color: $sm-muted;
+  }
+
+  &.low strong {
+    color: $sm-amber;
+  }
+
+  &.none strong {
+    color: $sm-red-deep;
+  }
+}
+
+.qb-pool {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 9px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  margin: 0;
+
+  svg {
+    flex: 0 0 13px;
+    width: 13px;
+    height: 13px;
+    margin-top: 1px;
+  }
+
+  &.ok {
+    background: $sm-surface-accent;
+    color: $sm-green-deep;
+  }
+
+  &.thin {
+    background: $sm-surface-input;
+    color: $sm-neutral;
+  }
+
+  &.low {
+    background: $sm-amber-soft;
+    color: $sm-amber;
+  }
+}

@@ -1,0 +1,37 @@
+<div class="qmt">
+  <button type="button" class="qmt-head" [attr.aria-expanded]="open()" (click)="toggle()">
+    <svg class="qmt-chevron" [class.open]="open()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 6l6 6-6 6"></path>
+    </svg>
+    <span class="qmt-text">
+      <span class="qmt-title">Matches</span>
+      <span class="qmt-sub">Test-mold blocks whose criteria this question currently satisfies</span>
+    </span>
+    <span class="qmt-pill">{{ label }}</span>
+  </button>
+
+  @if (open()) {
+    <div class="qmt-body">
+      <p class="qmt-note">
+        This question is eligible for these blocks based on its tags — it isn't assigned to
+        them. Each test generation randomly draws from all eligible questions.
+      </p>
+      @for (match of matches; track match.examId + match.blockLabel) {
+        <div class="qmt-row">
+          <span class="qmt-row-text">
+            <span class="qmt-exam">{{ match.examName }}</span>
+            <span class="qmt-mold">{{ match.moldName }}</span>
+          </span>
+          <span class="qmt-block">{{ match.blockLabel }}</span>
+          <span class="qmt-open">Open block</span>
+        </div>
+      } @empty {
+        <p class="qmt-note">No block's criteria match this question's tags yet.</p>
+      }
+      <p class="qmt-foot">
+        Retagging or deleting this question changes what those blocks generate. Blocks with too
+        few matching questions fail at generation time.
+      </p>
+    </div>
+  }
+</div>

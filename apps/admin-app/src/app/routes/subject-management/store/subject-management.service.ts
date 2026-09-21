@@ -44,6 +44,10 @@ export class SubjectManagementService {
             name: draft.name.trim() || 'Untitled subject',
             description: draft.description,
             updatedAt: new Date().toISOString(),
+            // A new subject starts with no level tags of its own; they are
+            // authored per subject rather than inherited from another.
+            levels: [],
+            color: NEW_SUBJECT_COLOR,
             units: [],
         };
         this.subjects.push(subject);
@@ -165,6 +169,8 @@ export class SubjectManagementService {
         return `${prefix}-${this.sequence}`;
     }
 }
+
+const NEW_SUBJECT_COLOR = '#5b625b';
 
 function countQuestions(unit: AdminUnit): number {
     return unit.subUnits.reduce((total, sub) => total + sub.questionCount, 0);

@@ -1,0 +1,21 @@
+<div class="qb-scope">
+  <svg class="qb-scope-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"></path>
+  </svg>
+
+  <div class="qb-scope-text">
+    <p class="qb-scope-line">
+      Showing questions matching <strong>{{ scope.blockLabel }}</strong> of
+      "{{ scope.pageName }}" in <strong>{{ scope.moldName }}</strong> —
+      <strong>{{ matchCountLabel }}</strong> questions match this criteria
+    </p>
+    <p class="qb-scope-criteria">{{ criteria }}</p>
+  </div>
+
+  <button type="button" class="qb-scope-clear" (click)="clear.emit()">Clear scope</button>
+  <button type="button" class="qb-scope-x" title="Clear scope" (click)="clear.emit()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <path d="M6 6l12 12M18 6L6 18"></path>
+    </svg>
+  </button>
+</div>

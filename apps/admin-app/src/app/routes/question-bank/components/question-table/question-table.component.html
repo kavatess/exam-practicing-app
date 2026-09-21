@@ -1,0 +1,76 @@
+<div class="qb-toolbar">
+  <label class="qb-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14ZM20 20l-4.2-4.2"></path>
+    </svg>
+    <input
+      type="search"
+      placeholder="Search question content, id or tag"
+      [ngModel]="search"
+      (ngModelChange)="onSearch($event)"
+    />
+  </label>
+
+  <button type="button" class="qb-btn-ghost" (click)="importCsv.emit()">Import CSV</button>
+  <button type="button" class="qb-btn-primary" (click)="create.emit()">New question</button>
+</div>
+
+<div class="qb-table">
+  <div class="qb-head">
+    <span>ID</span>
+    <span>Content</span>
+    <span>Type</span>
+    <span>Difficulty</span>
+    <span>Level</span>
+    <span>Matches</span>
+    <span class="qb-head-right">Actions</span>
+  </div>
+
+  @for (question of questions; track question.id) {
+    <adm-question-row
+      [question]="question"
+      [subjects]="subjects"
+      [matchCount]="matchCountFor(question)"
+      [matches]="matchesFor(question)"
+      [showSubjectDot]="showSubjectDot"
+      [popoverOpen]="openPopoverId() === question.id"
+      (toggleMatches)="togglePopover(question)"
+      (edit)="edit.emit(question)"
+      (remove)="remove.emit(question)"
+    ></adm-question-row>
+  } @empty {
+    <div class="qb-empty">
+      <p class="qb-empty-title">No question in the bank matches these criteria</p>
+      <p class="qb-empty-text">
+        A test mold block with this criteria would fail to generate. Loosen a filter or
+        author new questions.
+      </p>
+    </div>
+  }
+
+  <div class="qb-foot">
+    <span class="qb-foot-label">{{ pagerLabel }}</span>
+
+    @if (questions.length) {
+      <div class="qb-pager">
+        <button type="button" class="qb-page-step" disabled title="Previous page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+            <path d="M15 6l-6 6 6 6"></path>
+          </svg>
+        </button>
+        @for (page of pages; track $index) {
+          @if (page === null) {
+            <span class="qb-page-gap">…</span>
+          } @else {
+            <button type="button" class="qb-page" [class.on]="page === 1">{{ page }}</button>
+          }
+        }
+        <button type="button" class="qb-page-step" title="Next page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+            <path d="M9 6l6 6-6 6"></path>
+          </svg>
+        </button>
+      </div>
+    }
+  </div>
+</div>

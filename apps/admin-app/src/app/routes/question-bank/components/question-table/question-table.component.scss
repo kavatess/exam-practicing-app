@@ -1,0 +1,178 @@
+@use '../../../../shared/styles/tokens' as *;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.qb-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qb-search {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 40px;
+  padding: 0 13px;
+  border: 1px solid $sm-border-card;
+  border-radius: 10px;
+  background: $sm-surface;
+
+  &:focus-within {
+    border-color: $sm-green;
+  }
+
+  svg {
+    flex: 0 0 15px;
+    width: 15px;
+    height: 15px;
+    color: $sm-muted-light;
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    font-size: 13.5px;
+    color: $sm-text;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $sm-muted-light;
+    }
+  }
+}
+
+.qb-btn-ghost {
+  @include sm-button-ghost(40px);
+  flex: 0 0 auto;
+}
+
+.qb-btn-primary {
+  @include sm-button-primary(40px);
+  flex: 0 0 auto;
+}
+
+.qb-table {
+  background: $sm-surface;
+  border: 1px solid $sm-border-card;
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(22, 33, 28, 0.04);
+  overflow: hidden;
+}
+
+.qb-head {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 0.55fr) minmax(0, 2.5fr) minmax(0, 0.65fr)
+    minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 0.75fr) minmax(0, 0.6fr);
+  gap: 12px;
+  padding: 11px 20px;
+  background: $sm-surface-input;
+  border-bottom: 1px solid $sm-border-faint;
+
+  span {
+    @include sm-mono-label(9px, 0.1em);
+    text-transform: uppercase;
+  }
+}
+
+.qb-head-right {
+  text-align: right;
+}
+
+.qb-empty {
+  padding: 44px 24px;
+  text-align: center;
+}
+
+.qb-empty-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.qb-empty-text {
+  max-width: 380px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: $sm-muted;
+  margin: 7px auto 0;
+}
+
+.qb-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 20px;
+  border-top: 1px solid $sm-border-faint;
+}
+
+.qb-foot-label {
+  font-size: 12px;
+  color: $sm-text-muted;
+}
+
+.qb-pager {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.qb-page,
+.qb-page-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid $sm-border-control;
+  border-radius: 8px;
+  background: $sm-surface;
+  font: inherit;
+  font-size: 12px;
+  color: $sm-text-body;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    border-color: $sm-border-strong;
+  }
+
+  &:disabled {
+    color: $sm-icon;
+    cursor: default;
+  }
+}
+
+.qb-page.on {
+  border-color: $sm-ink;
+  background: $sm-ink;
+  color: $sm-surface;
+  font-weight: 600;
+}
+
+.qb-page-step svg {
+  width: 12px;
+  height: 12px;
+}
+
+.qb-page-gap {
+  padding: 0 2px;
+  font-size: 12px;
+  color: $sm-muted-light;
+}

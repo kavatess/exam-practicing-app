@@ -1,0 +1,72 @@
+@use '../../../../shared/styles/tokens' as *;
+
+:host {
+  display: block;
+  font-family: $sm-font-sans;
+}
+
+.qb-scope {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 14px 16px;
+  border: 1px solid #cfe0d6;
+  border-radius: 12px;
+  background: $sm-surface-accent;
+}
+
+.qb-scope-icon {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  color: $sm-green;
+}
+
+.qb-scope-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.qb-scope-line {
+  font-size: 13px;
+  line-height: 1.5;
+  color: $sm-text-soft;
+  margin: 0;
+
+  strong {
+    font-weight: 600;
+    color: $sm-text;
+  }
+}
+
+.qb-scope-criteria {
+  @include sm-mono-label(9.5px, 0.1em);
+  color: $sm-green-deep;
+  margin: 5px 0 0;
+}
+
+.qb-scope-clear {
+  flex: 0 0 auto;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: $sm-green;
+  cursor: pointer;
+}
+
+.qb-scope-x {
+  @include sm-icon-button(24px, 7px);
+  flex: 0 0 auto;
+  border: none;
+  background: none;
+  color: #4e7a69;
+
+  svg {
+    width: 13px;
+    height: 13px;
+  }
+}

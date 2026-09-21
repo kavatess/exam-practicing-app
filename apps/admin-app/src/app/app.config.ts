@@ -6,6 +6,9 @@ import { appRoutes } from './app.routes';
 import { ExamsEffects } from './routes/exams/store/exams.effects';
 import { examsReducer } from './routes/exams/store/exams.reducer';
 import { examsStoreKey } from './routes/exams/store/exams.selectors';
+import { QuestionBankEffects } from './routes/question-bank/store/question-bank.effects';
+import { questionBankReducer } from './routes/question-bank/store/question-bank.reducer';
+import { questionBankStoreKey } from './routes/question-bank/store/question-bank.selectors';
 import { SubjectManagementEffects } from './routes/subject-management/store/subject-management.effects';
 import { subjectManagementReducer } from './routes/subject-management/store/subject-management.reducer';
 import { subjectManagementStoreKey } from './routes/subject-management/store/subject-management.selectors';
@@ -21,6 +24,11 @@ export const appConfig: ApplicationConfig = {
     // exams page has never been opened.
     provideState(subjectManagementStoreKey, subjectManagementReducer),
     provideState(examsStoreKey, examsReducer),
-    provideEffects(SubjectManagementEffects, ExamsEffects),
+    provideState(questionBankStoreKey, questionBankReducer),
+    provideEffects(
+      SubjectManagementEffects,
+      ExamsEffects,
+      QuestionBankEffects
+    ),
   ],
 };

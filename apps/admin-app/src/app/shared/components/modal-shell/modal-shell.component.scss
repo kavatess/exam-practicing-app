@@ -96,6 +96,21 @@
   line-height: 1.5;
 }
 
+.sm-modal-danger {
+  @include sm-button-base;
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid $sm-red-border;
+  background: $sm-surface;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: $sm-red;
+
+  &:hover {
+    background: $sm-red-soft;
+  }
+}
+
 .sm-modal-cancel {
   @include sm-button-ghost(38px);
   margin-left: auto;

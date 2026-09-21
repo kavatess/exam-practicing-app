@@ -1,0 +1,235 @@
+<adm-modal-shell
+  [eyebrow]="eyebrow"
+  [title]="title"
+  [width]="880"
+  confirmLabel="Save question"
+  [dangerLabel]="question ? 'Delete question' : ''"
+  (dismiss)="dismiss.emit()"
+  (danger)="remove.emit()"
+  (confirm)="confirm()"
+>
+  <div class="qm-form">
+    <!-- Subject / difficulty / level -->
+    <div class="qm-grid-3">
+      <div class="qm-field">
+        <span class="qm-label">Subject</span>
+        <div class="qm-select-wrap">
+          <button
+            type="button"
+            class="qm-select"
+            [class.open]="menu() === 'subject'"
+            (click)="openMenu('subject')"
+          >
+            <span>{{ subjectLabel }}</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+              <path d="M6 9l6 6 6-6"></path>
+            </svg>
+          </button>
+          @if (menu() === 'subject') {
+            <div class="qm-menu">
+              @for (option of subjects; track option.id) {
+                <button
+                  type="button"
+                  class="qm-option"
+                  [class.on]="option.id === draft.subjectId"
+                  (click)="pickSubject(option)"
+                >
+                  {{ option.name }}
+                </button>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="qm-field">
+        <span class="qm-label">Difficulty</span>
+        <div class="qm-select-wrap">
+          <button
+            type="button"
+            class="qm-select"
+            [class.open]="menu() === 'difficulty'"
+            (click)="openMenu('difficulty')"
+          >
+            <span>{{ difficultyLabel }}</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+              <path d="M6 9l6 6 6-6"></path>
+            </svg>
+          </button>
+          @if (menu() === 'difficulty') {
+            <div class="qm-menu">
+              @for (option of difficultyOptions; track option) {
+                <button
+                  type="button"
+                  class="qm-option"
+                  [class.on]="option === draft.difficulty"
+                  (click)="pickDifficulty(option)"
+                >
+                  {{ difficultyLabels[option] }}
+                </button>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="qm-field">
+        <span class="qm-label">Question level</span>
+        <div class="qm-select-wrap">
+          <button
+            type="button"
+            class="qm-select"
+            [class.open]="menu() === 'level'"
+            [class.reset]="levelReset()"
+            [class.placeholder]="!draft.level"
+            (click)="openMenu('level')"
+          >
+            <span>{{ levelLabel }}</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+              <path d="M6 9l6 6 6-6"></path>
+            </svg>
+          </button>
+          @if (menu() === 'level') {
+            <div class="qm-menu">
+              @for (option of levels; track option) {
+                <button
+                  type="button"
+                  class="qm-option"
+                  [class.on]="option === draft.level"
+                  (click)="pickLevel(option)"
+                >
+                  {{ option }}
+                </button>
+              } @empty {
+                <p class="qm-menu-empty">{{ subjectLabel }} has no level tags yet.</p>
+              }
+            </div>
+          }
+        </div>
+
+        @if (levelReset()) {
+          <p class="qm-level-reset">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M12 8v5m0 3.5v.01M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z"></path>
+            </svg>
+            <span>{{ levelResetNote }}</span>
+          </p>
+        }
+
+        <button type="button" class="qm-manage" (click)="manageLevels.emit(draft.subjectId)">
+          + {{ manageLevelsLabel }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Units -->
+    <div class="qm-field">
+      <div class="qm-label-row">
+        <span class="qm-label">Unit(s)</span>
+        <span class="qm-hint">
+          Same picker as a section's unit scope — tagging must line up with what blocks filter on
+        </span>
+      </div>
+
+      <adm-unit-transfer
+        [units]="availableUnits"
+        [selectedIds]="draft.unitIds"
+        [listHeight]="190"
+        includedLabel="Tagged units"
+        emptyNote="Tick units on the left — a question with no unit tag can't match any block."
+        (selectedIdsChange)="setUnits($event)"
+      ></adm-unit-transfer>
+    </div>
+
+    <!-- Sub-units -->
+    <div class="qm-field">
+      <div class="qm-label-row">
+        <span class="qm-label">Sub-unit(s)</span>
+        <span class="qm-meta">{{ subUnitLabel }}</span>
+      </div>
+      <div class="qm-sub-box">
+        @for (sub of subUnitPool; track sub.id) {
+          <button
+            type="button"
+            class="qm-chip"
+            [class.on]="isSubUnitTagged(sub.id)"
+            (click)="toggleSubUnit(sub.id)"
+          >
+            {{ sub.title }}
+          </button>
+        } @empty {
+          <p class="qm-list-empty">Tag a unit above to pick its sub-units.</p>
+        }
+      </div>
+    </div>
+
+    <!-- Question type -->
+    <div class="qm-field">
+      <span class="qm-label">Question type</span>
+      <div class="qm-tabs">
+        @for (tab of typeTabs; track tab) {
+          <button
+            type="button"
+            class="qm-tab"
+            [class.on]="tab === draft.qType"
+            (click)="pickType(tab)"
+          >
+            {{ typeLabel(tab) }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="qm-field">
+      <div class="qm-label-row">
+        <span class="qm-label">Content</span>
+        <span class="qm-meta">LATEX &amp; IMAGE SUPPORTED</span>
+      </div>
+      <div class="qm-editor">
+        <div class="qm-editor-tools">
+          @for (tool of editorTools; track tool) {
+            <button type="button" class="qm-tool" [title]="tool">{{ tool }}</button>
+          }
+        </div>
+        <textarea
+          class="qm-editor-area"
+          rows="4"
+          placeholder="Write the question…"
+          [(ngModel)]="draft.content"
+        ></textarea>
+      </div>
+      <div class="qm-attach">
+        <button type="button" class="qm-attach-btn">+ Attach media</button>
+        <span class="qm-attach-hint">PNG, JPG or SVG up to 2 MB</span>
+      </div>
+    </div>
+
+    <adm-answer-editor
+      [qType]="draft.qType"
+      [choices]="draft.choices"
+      [pairs]="draft.pairs"
+      [trueFalseAnswer]="draft.trueFalseAnswer"
+      [modelAnswer]="draft.modelAnswer"
+      [maxPoints]="draft.maxPoints"
+      (choicesChange)="draft.choices = $event"
+      (pairsChange)="draft.pairs = $event"
+      (trueFalseAnswerChange)="draft.trueFalseAnswer = $event"
+      (modelAnswerChange)="draft.modelAnswer = $event"
+      (maxPointsChange)="draft.maxPoints = $event"
+    ></adm-answer-editor>
+
+    <!-- Solution -->
+    <div class="qm-field">
+      <span class="qm-label">Solution / explanation</span>
+      <textarea
+        class="qm-textarea"
+        rows="2"
+        placeholder="Shown to the learner after they answer…"
+        [(ngModel)]="draft.solution"
+      ></textarea>
+    </div>
+
+    <adm-question-matches [matches]="matches"></adm-question-matches>
+  </div>
+</adm-modal-shell>

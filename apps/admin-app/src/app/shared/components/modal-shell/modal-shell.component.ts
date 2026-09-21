@@ -19,9 +19,12 @@ export class ModalShellComponent {
     @Input() width = 480;
     @Input() confirmLabel = 'Save';
     @Input() note = '';
+    /** Leading destructive action, e.g. "Delete question". Hidden when empty. */
+    @Input() dangerLabel = '';
 
     @Output() dismiss = new EventEmitter<void>();
     @Output() confirm = new EventEmitter<void>();
+    @Output() danger = new EventEmitter<void>();
 
     @HostListener('document:keydown.escape')
     onEscape(): void {

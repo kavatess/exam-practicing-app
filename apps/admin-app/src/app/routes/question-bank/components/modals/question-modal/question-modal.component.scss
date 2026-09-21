@@ -1,0 +1,259 @@
+@use '../../../../../shared/styles/tokens' as *;
+
+:host {
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.qm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.qm-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  align-items: start;
+}
+
+.qm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.qm-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.qm-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: $sm-text-body;
+}
+
+.qm-hint {
+  font-size: 11.5px;
+  color: $sm-muted-light;
+}
+
+.qm-meta {
+  @include sm-mono-label(9px, 0.1em);
+  text-transform: uppercase;
+}
+
+.qm-select-wrap {
+  position: relative;
+}
+
+.qm-select {
+  @include sm-select-trigger;
+
+  &.reset {
+    border-color: $sm-amber-border;
+  }
+
+  &.placeholder > span:first-child {
+    color: $sm-muted-light;
+  }
+}
+
+.qm-menu {
+  @include sm-select-menu;
+}
+
+.qm-option {
+  @include sm-select-option;
+}
+
+.qm-menu-empty,
+.qm-list-empty {
+  padding: 10px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: $sm-muted-light;
+  margin: 0;
+}
+
+.qm-level-reset {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: $sm-amber-soft;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: $sm-amber;
+  margin: 0;
+
+  svg {
+    flex: 0 0 12px;
+    width: 12px;
+    height: 12px;
+    margin-top: 1px;
+  }
+}
+
+.qm-manage,
+.qm-attach-btn {
+  align-self: flex-start;
+  font: inherit;
+  font-weight: 500;
+  color: $sm-green;
+  cursor: pointer;
+}
+
+.qm-manage {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 11.5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.qm-sub-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid $sm-border-control;
+  border-radius: 11px;
+  background: $sm-surface;
+}
+
+.qm-chip {
+  @include sm-tag-chip;
+}
+
+.qm-tabs {
+  display: flex;
+  gap: 4px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 4px;
+  border: 1px solid $sm-border-card;
+  border-radius: 10px;
+  background: $sm-surface;
+}
+
+.qm-tab {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 7px;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: $sm-text-body;
+  cursor: pointer;
+
+  &.on {
+    background: $sm-ink;
+    color: $sm-surface;
+    font-weight: 600;
+  }
+}
+
+.qm-editor {
+  border: 1px solid $sm-border-control;
+  border-radius: 11px;
+  background: $sm-surface;
+  overflow: hidden;
+}
+
+.qm-editor-tools {
+  display: flex;
+  gap: 2px;
+  padding: 7px 9px;
+  border-bottom: 1px solid $sm-border-soft;
+}
+
+.qm-tool {
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  color: $sm-text-body;
+  cursor: pointer;
+
+  &:hover {
+    background: $sm-surface-hover;
+  }
+}
+
+.qm-editor-area,
+.qm-textarea {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: $sm-text;
+  resize: vertical;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: $sm-muted-light;
+  }
+}
+
+.qm-textarea {
+  border: 1px solid $sm-border-control;
+  border-radius: 11px;
+  background: $sm-surface;
+
+  &:focus {
+    border-color: $sm-green;
+  }
+}
+
+.qm-attach {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qm-attach-btn {
+  padding: 8px 13px;
+  border: 1px dashed $sm-border-dashed;
+  border-radius: 9px;
+  background: none;
+  font-size: 12.5px;
+
+  &:hover {
+    border-color: $sm-green;
+  }
+}
+
+.qm-attach-hint {
+  font-size: 11.5px;
+  color: $sm-muted-light;
+}

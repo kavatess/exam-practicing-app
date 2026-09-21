@@ -179,3 +179,98 @@ $sm-scrim: rgba(22, 33, 28, 0.35);
     line-height: 1.5;
   }
 }
+
+$sm-amber-soft: #fbf2e3;
+$sm-amber-border: #e8cfa0;
+$sm-red-chip: #fbe9e7;
+
+/// A dropdown trigger: the artifact's select boxes are buttons that open a
+/// popup list, not native <select> elements.
+@mixin sm-select-trigger($height: 38px) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  height: $height;
+  padding: 0 12px;
+  border: 1px solid $sm-border-control;
+  border-radius: 9px;
+  background: $sm-surface;
+  font-family: $sm-font-sans;
+  font-size: 13.5px;
+  color: $sm-text;
+  text-align: left;
+  cursor: pointer;
+
+  &.open {
+    border-color: $sm-green;
+  }
+
+  svg {
+    flex: 0 0 auto;
+    width: 13px;
+    height: 13px;
+    color: $sm-chevron;
+  }
+}
+
+/// The popup list a select trigger opens.
+@mixin sm-select-menu {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 260px;
+  overflow: auto;
+  padding: 4px;
+  border: 1px solid $sm-border-card;
+  border-radius: 10px;
+  background: $sm-surface;
+  box-shadow: 0 12px 28px -12px rgba(22, 33, 28, 0.3);
+}
+
+@mixin sm-select-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 7px;
+  background: none;
+  font-family: $sm-font-sans;
+  font-size: 13px;
+  color: $sm-text-soft;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background: $sm-surface-hover;
+  }
+
+  &.on {
+    background: $sm-surface-accent;
+    color: $sm-green-deep;
+  }
+}
+
+/// A toggleable tag chip (sub-units, question levels).
+@mixin sm-tag-chip {
+  padding: 6px 11px;
+  border: 1px solid $sm-border-control;
+  border-radius: 999px;
+  background: $sm-surface;
+  font-family: $sm-font-sans;
+  font-size: 12px;
+  color: $sm-text-body;
+  cursor: pointer;
+
+  &.on {
+    border-color: $sm-ink;
+    background: $sm-ink;
+    color: $sm-surface;
+  }
+}

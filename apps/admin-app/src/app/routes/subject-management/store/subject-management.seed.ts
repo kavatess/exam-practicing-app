@@ -3,8 +3,8 @@ import { AdminSubject, AdminUnit } from '../../../shared/models/cms.model';
 /** `[unit title, sub-unit titles]` */
 type UnitSeed = [string, string[]];
 
-/** `[id, name, description, units]` */
-type SubjectSeed = [string, string, string, UnitSeed[]];
+/** `[id, name, description, units, level tags, chip colour]` */
+type SubjectSeed = [string, string, string, UnitSeed[], string[], string];
 
 const SEEDED_AT = '2026-09-12T00:00:00.000Z';
 
@@ -14,13 +14,17 @@ const SEEDED_AT = '2026-09-12T00:00:00.000Z';
  * reference units without a lookup.
  */
 export function seedSubjects(): AdminSubject[] {
-    return SUBJECT_SEEDS.map(([id, name, description, unitSeeds]) => ({
-        id,
-        name,
-        description,
-        updatedAt: SEEDED_AT,
-        units: unitSeeds.map((seed, index) => seedUnit(id, seed, index)),
-    }));
+    return SUBJECT_SEEDS.map(
+        ([id, name, description, unitSeeds, levels, color]) => ({
+            id,
+            name,
+            description,
+            updatedAt: SEEDED_AT,
+            levels: [...levels],
+            color,
+            units: unitSeeds.map((seed, index) => seedUnit(id, seed, index)),
+        })
+    );
 }
 
 function seedUnit(
@@ -82,7 +86,16 @@ const SUBJECT_SEEDS: SubjectSeed[] = [
             ['Lượng giác', ['Công thức biến đổi', 'Phương trình lượng giác']],
             ['Tổ hợp & Xác suất', ['Hoán vị, chỉnh hợp', 'Xác suất cơ bản']],
         ],
-    ],
+            [
+            'Theoretical',
+            'Basic application',
+            'Interpretation',
+            'Analysis',
+            'Synthesis',
+            'Practical application',
+        ],
+        '#1f6e52',
+],
     [
         'van',
         'Ngữ văn',
@@ -99,7 +112,14 @@ const SUBJECT_SEEDS: SubjectSeed[] = [
             ['Nghị luận xã hội', ['Hiện tượng đời sống', 'Tư tưởng đạo lý']],
             ['Tiếng Việt & Làm văn', ['Phong cách ngôn ngữ', 'Biện pháp tu từ']],
         ],
-    ],
+            [
+            'Nhận biết',
+            'Thông hiểu',
+            'Vận dụng',
+            'Vận dụng cao',
+        ],
+        '#6b3fa0',
+],
     [
         'ly',
         'Vật lý',
@@ -118,7 +138,14 @@ const SUBJECT_SEEDS: SubjectSeed[] = [
             ['Sóng điện từ & Quang học', ['Sóng điện từ', 'Giao thoa và tán sắc']],
             ['Vật lý hạt nhân', ['Phóng xạ', 'Phản ứng hạt nhân']],
         ],
-    ],
+            [
+            'Theoretical',
+            'Basic application',
+            'Experimental reasoning',
+            'Analysis',
+        ],
+        '#2c5aa8',
+],
     [
         'hoa',
         'Hoá học',
@@ -137,7 +164,14 @@ const SUBJECT_SEEDS: SubjectSeed[] = [
                 ['Este và lipit', 'Amin, amino axit', 'Polime'],
             ],
         ],
-    ],
+            [
+            'Theoretical',
+            'Basic application',
+            'Analysis',
+            'Synthesis',
+        ],
+        '#a3352b',
+],
     [
         'anh',
         'Tiếng Anh',
@@ -150,7 +184,14 @@ const SUBJECT_SEEDS: SubjectSeed[] = [
             ['Reading comprehension', ['Skimming & scanning', 'Inference']],
             ['Writing', ['Sentence transformation', 'Essay writing']],
         ],
-    ],
+            [
+            'Recognition',
+            'Usage',
+            'Inference',
+            'Production',
+        ],
+        '#8a5a00',
+],
     [
         'sinh',
         'Sinh học',
@@ -165,7 +206,15 @@ const SUBJECT_SEEDS: SubjectSeed[] = [
             ['Tiến hoá', ['Học thuyết tiến hoá', 'Nguồn gốc loài']],
             ['Sinh thái học', ['Quần thể và quần xã', 'Hệ sinh thái']],
         ],
-    ],
+            [
+            'Theoretical',
+            'Basic application',
+            'Interpretation',
+            'Analysis',
+            'Synthesis',
+        ],
+        '#2f7d6b',
+],
     [
         'khoahoc',
         'Khoa học',
@@ -189,5 +238,11 @@ const SUBJECT_SEEDS: SubjectSeed[] = [
                 ['Đọc biểu đồ', 'Thiết kế thí nghiệm'],
             ],
         ],
-    ],
+            [
+            'Data reading',
+            'Reasoning',
+            'Experimental design',
+        ],
+        '#5b625b',
+],
 ];

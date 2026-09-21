@@ -19,6 +19,9 @@
     </div>
 
     <footer class="sm-modal-foot">
+      @if (dangerLabel) {
+        <button type="button" class="sm-modal-danger" (click)="danger.emit()">{{ dangerLabel }}</button>
+      }
       @if (note) {
         <p class="sm-modal-note">{{ note }}</p>
       }

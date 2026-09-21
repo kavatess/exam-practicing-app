@@ -1,0 +1,79 @@
+<div class="qb-row">
+  <span class="qb-cell qb-id">{{ question.id }}</span>
+
+  <div class="qb-cell qb-content">
+    <p class="qb-content-text">{{ question.content }}</p>
+    <p class="qb-content-tag">{{ tagPath }}</p>
+  </div>
+
+  <span class="qb-cell">
+    <span class="qb-type">{{ typeLabel }}</span>
+  </span>
+
+  <span class="qb-cell">
+    <span class="qb-diff" [class]="difficultyClass">{{ difficultyLabel }}</span>
+  </span>
+
+  <span class="qb-cell qb-level">
+    @if (showSubjectDot) {
+      <span class="qb-dot" [style.background]="dotColor" [title]="subject?.name"></span>
+    }
+    <span class="qb-level-text">{{ question.level }}</span>
+  </span>
+
+  <span class="qb-cell qb-matches">
+    <button
+      type="button"
+      class="qb-match-pill"
+      [class.none]="!matchCount"
+      [disabled]="!matchCount"
+      [attr.aria-expanded]="popoverOpen"
+      (click)="toggleMatches.emit()"
+    >
+      {{ matchLabel }}
+      @if (matchCount) {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+          <path d="M6 9l6 6 6-6"></path>
+        </svg>
+      }
+    </button>
+
+    @if (popoverOpen) {
+      <div class="qb-pop">
+        <div class="qb-pop-head">
+          <span class="qb-pop-eyebrow">Eligible for</span>
+          <button type="button" class="qb-pop-close" title="Close" (click)="toggleMatches.emit()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+              <path d="M6 6l12 12M18 6L6 18"></path>
+            </svg>
+          </button>
+        </div>
+        <p class="qb-pop-note">
+          This question is eligible for these blocks based on its tags — it isn't assigned to
+          them. Each test generation randomly draws from all eligible questions.
+        </p>
+        @for (match of matches; track match.examId + match.blockLabel) {
+          <div class="qb-pop-row">
+            <p class="qb-pop-exam">{{ match.examName }}</p>
+            <p class="qb-pop-mold">{{ match.moldName }}</p>
+            <p class="qb-pop-block">{{ match.blockLabel }}</p>
+          </div>
+        }
+        <p class="qb-pop-foot">Blocks pull questions by criteria — a retag can change these matches.</p>
+      </div>
+    }
+  </span>
+
+  <span class="qb-cell qb-actions">
+    <button type="button" class="qb-action" title="Edit question" (click)="edit.emit()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 20h4L19 9l-4-4L4 16v4ZM14 6l4 4"></path>
+      </svg>
+    </button>
+    <button type="button" class="qb-action danger" title="Delete question" (click)="remove.emit()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"></path>
+      </svg>
+    </button>
+  </span>
+</div>

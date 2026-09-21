@@ -33,6 +33,7 @@ export enum QuestionTypes {
     Matching = 'Matching',
     TrueFalse = 'TrueFalse',
     EssayAnswer = 'EssayAnswer',
+    ShortAnswer = 'ShortAnswer',
 }
 
 export enum QuestionLevels {
