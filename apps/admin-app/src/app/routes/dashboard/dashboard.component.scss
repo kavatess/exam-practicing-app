@@ -1,0 +1,86 @@
+@use '../../shared/styles/tokens' as *;
+
+:host {
+  display: block;
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.dp-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dp-breadcrumb {
+  @include sm-mono-label(9.5px, 0.1em);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.dp-title {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 3px 0 0;
+}
+
+.dp-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dp-charts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dp-exams {
+  display: flex;
+  flex-direction: column;
+  background: $sm-surface;
+  border: 1px solid $sm-border-card;
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(22, 33, 28, 0.04);
+  overflow: hidden;
+
+  adm-exam-chart {
+    // The card chrome lives here so the footer link sits inside the same box.
+    ::ng-deep .dz-card {
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+  }
+}
+
+.dp-view-all {
+  align-self: flex-start;
+  padding: 14px 20px 16px;
+  border: none;
+  border-top: 1px solid $sm-border-soft;
+  background: none;
+  width: 100%;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: $sm-green;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background: $sm-surface-sunken;
+  }
+}
+
+@media (max-width: 1180px) {
+  .dp-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dp-charts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

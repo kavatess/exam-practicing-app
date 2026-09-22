@@ -1,0 +1,110 @@
+<div class="dz-card">
+  <header class="dz-head">
+    <div class="dz-head-left">
+      <h2 class="dz-title">Most attempted exams</h2>
+      <div class="dz-ranges" role="group" aria-label="Exam attempts range">
+        @for (option of ranges; track option) {
+          <button
+            type="button"
+            class="dz-range"
+            [class.on]="option === range"
+            [attr.aria-pressed]="option === range"
+            (click)="rangeChange.emit(option)"
+          >
+            {{ option }}
+          </button>
+        }
+      </div>
+    </div>
+    <span class="dz-total-meta">{{ total }} attempts</span>
+  </header>
+
+  <adm-exam-legend
+    [series]="series"
+    (toggleExam)="toggleExam.emit($event)"
+    (showAll)="showAll.emit()"
+    (resetToTop)="resetToTop.emit()"
+  ></adm-exam-legend>
+
+  <div class="dz-plot-row">
+    <div class="dz-y-axis">
+      <span>{{ yTop }}</span>
+      <span>{{ yMid }}</span>
+      <span>0</span>
+    </div>
+
+    <div class="dz-plot-col">
+      <div class="dz-plot" (mouseleave)="hovered.set(null)">
+        <div class="dz-grid-line top"></div>
+        <div class="dz-grid-line third"></div>
+        <div class="dz-grid-line two-thirds"></div>
+
+        @if (empty) {
+          <p class="dz-empty">Pick at least one exam to plot.</p>
+        } @else {
+          <svg class="dz-svg" viewBox="0 0 640 200" preserveAspectRatio="none" aria-hidden="true">
+            @for (line of plotted; track line.id) {
+              <path
+                [attr.d]="line.line"
+                fill="none"
+                [attr.stroke]="line.color"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+                vector-effect="non-scaling-stroke"
+              ></path>
+            }
+          </svg>
+
+          @if (hovered() !== null) {
+            <div class="dz-crosshair" [style.left]="hoveredLeft"></div>
+          }
+
+          @for (line of plotted; track line.id) {
+            @for (marker of line.markers; track $index) {
+              <span
+                class="dz-marker static"
+                [style.left]="marker.left"
+                [style.top]="marker.top"
+                [style.width.px]="markerSize($index)"
+                [style.height.px]="markerSize($index)"
+                [style.background]="line.color"
+              ></span>
+            }
+          }
+
+          @for (column of columns; track column.index) {
+            <button
+              type="button"
+              class="dz-hit"
+              [style.left]="column.left"
+              [style.width]="hitWidth"
+              [attr.aria-label]="column.label"
+              (mouseenter)="hovered.set(column.index)"
+              (focus)="hovered.set(column.index)"
+              (blur)="hovered.set(null)"
+            ></button>
+          }
+
+          @if (hovered() !== null) {
+            <div class="dz-tooltip" [style.left]="hoveredLeft" [style.transform]="tooltipShift">
+              <p class="dz-tooltip-label">{{ hoveredLabel }}</p>
+              @for (row of hoverRows; track row.name) {
+                <p class="dz-tooltip-row">
+                  <span class="dz-tooltip-dot" [style.background]="row.color"></span>
+                  <span class="dz-tooltip-name">{{ row.name }}</span>
+                  <span class="dz-tooltip-value">{{ row.value }}</span>
+                </p>
+              }
+            </div>
+          }
+        }
+      </div>
+
+      <div class="dz-x-axis">
+        @for (tick of axisLabels; track tick.axis) {
+          <span>{{ tick.axis }}</span>
+        }
+      </div>
+    </div>
+  </div>
+</div>

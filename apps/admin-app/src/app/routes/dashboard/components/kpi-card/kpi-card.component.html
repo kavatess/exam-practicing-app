@@ -1,0 +1,24 @@
+<div class="dk-card">
+  <div class="dk-top">
+    <span class="dk-label">
+      {{ kpi.label }}
+      @if (kpi.live) {
+        <span class="dk-live" aria-label="live"></span>
+      }
+    </span>
+    <span class="dk-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path [attr.d]="kpi.icon"></path>
+      </svg>
+    </span>
+  </div>
+
+  <p class="dk-value">{{ kpi.value }}</p>
+
+  <p class="dk-foot">
+    @if (!kpi.live) {
+      <span class="dk-trend" [class]="trend.tier">{{ trend.label }}</span>
+    }
+    <span class="dk-caption">{{ kpi.caption }}</span>
+  </p>
+</div>

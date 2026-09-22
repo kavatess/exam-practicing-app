@@ -1,0 +1,162 @@
+@use '../../../../shared/styles/tokens' as *;
+@use '../../../../shared/styles/chart' as *;
+
+:host {
+  display: block;
+  min-width: 0;
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.dz-card {
+  @include dz-card;
+}
+
+.dz-head {
+  @include dz-card-head;
+}
+
+.dz-head-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.dz-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.dz-ranges {
+  @include dz-range-group;
+}
+
+.dz-range {
+  @include dz-range-button;
+}
+
+.dz-total-meta {
+  flex: 0 0 auto;
+  font-family: $sm-font-mono;
+  font-size: 10.5px;
+  color: $sm-muted;
+  text-transform: uppercase;
+}
+
+.dz-plot-row {
+  display: flex;
+  gap: 10px;
+  padding: 18px 22px 12px;
+}
+
+.dz-y-axis {
+  @include dz-y-axis(320px);
+}
+
+.dz-plot-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.dz-plot {
+  @include dz-plot(296px);
+}
+
+.dz-grid-line {
+  @include dz-grid-line;
+
+  &.top {
+    top: 0;
+  }
+
+  &.third {
+    top: 33.3%;
+  }
+
+  &.two-thirds {
+    top: 66.6%;
+  }
+}
+
+.dz-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12.5px;
+  color: $sm-muted-light;
+  margin: 0;
+}
+
+.dz-svg {
+  @include dz-svg;
+}
+
+.dz-crosshair {
+  @include dz-crosshair;
+}
+
+.dz-hit {
+  @include dz-hit;
+}
+
+.dz-marker {
+  @include dz-marker;
+
+  &.static {
+    pointer-events: none;
+  }
+}
+
+.dz-tooltip {
+  @include dz-tooltip;
+}
+
+.dz-tooltip-label {
+  @include sm-mono-label(9.5px, 0.08em);
+  text-transform: uppercase;
+  margin: 0 0 6px;
+}
+
+.dz-tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+
+  & + & {
+    margin-top: 4px;
+  }
+}
+
+.dz-tooltip-dot {
+  flex: 0 0 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.dz-tooltip-name {
+  flex: 1;
+  min-width: 0;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  color: $sm-text-body;
+}
+
+.dz-tooltip-value {
+  flex: 0 0 auto;
+  font-family: $sm-font-mono;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.dz-x-axis {
+  @include dz-x-axis;
+}

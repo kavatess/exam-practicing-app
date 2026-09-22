@@ -3,6 +3,9 @@ import { provideRouter } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideState, provideStore } from '@ngrx/store';
 import { appRoutes } from './app.routes';
+import { DashboardEffects } from './routes/dashboard/store/dashboard.effects';
+import { dashboardReducer } from './routes/dashboard/store/dashboard.reducer';
+import { dashboardStoreKey } from './routes/dashboard/store/dashboard.selectors';
 import { ExamsEffects } from './routes/exams/store/exams.effects';
 import { examsReducer } from './routes/exams/store/exams.reducer';
 import { examsStoreKey } from './routes/exams/store/exams.selectors';
@@ -25,10 +28,12 @@ export const appConfig: ApplicationConfig = {
     provideState(subjectManagementStoreKey, subjectManagementReducer),
     provideState(examsStoreKey, examsReducer),
     provideState(questionBankStoreKey, questionBankReducer),
+    provideState(dashboardStoreKey, dashboardReducer),
     provideEffects(
       SubjectManagementEffects,
       ExamsEffects,
-      QuestionBankEffects
+      QuestionBankEffects,
+      DashboardEffects
     ),
   ],
 };

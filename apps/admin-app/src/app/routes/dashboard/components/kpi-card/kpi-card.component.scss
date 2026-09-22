@@ -1,0 +1,106 @@
+@use '../../../../shared/styles/tokens' as *;
+@use '../../../../shared/styles/chart' as *;
+
+:host {
+  display: block;
+  min-width: 0;
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.dk-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  padding: 18px;
+  background: $sm-surface;
+  border: 1px solid $sm-border-card;
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(22, 33, 28, 0.04);
+}
+
+.dk-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.dk-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: $sm-text-muted;
+}
+
+.dk-live {
+  flex: 0 0 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: $sm-green;
+  animation: dk-pulse 1.8s ease-out infinite;
+}
+
+@keyframes dk-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(31, 110, 82, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(31, 110, 82, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(31, 110, 82, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dk-live {
+    animation: none;
+  }
+}
+
+.dk-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: $sm-green-chip;
+  color: $sm-green;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.dk-value {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: 0;
+}
+
+.dk-foot {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+}
+
+.dk-trend {
+  @include dz-trend-pill;
+}
+
+.dk-caption {
+  font-size: 12px;
+  color: $sm-muted;
+}

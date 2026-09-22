@@ -290,3 +290,79 @@ export const EMPTY_QUESTION_FILTER: QuestionFilter = {
     level: null,
     search: '',
 };
+
+/** How far back a dashboard chart looks. */
+export type MetricRange = '1M' | '3M' | '6M' | '1Y';
+
+export const METRIC_RANGES: MetricRange[] = ['1M', '3M', '6M', '1Y'];
+
+export interface MetricPoint {
+    /** Full label for the tooltip, e.g. `23 Aug 2026` or `Week of 23/08`. */
+    label: string;
+    /** Short label for the x-axis. */
+    axis: string;
+    value: number;
+}
+
+export interface MetricSeries {
+    points: MetricPoint[];
+    total: number;
+    /** Change against the preceding window of the same length; null when flat. */
+    changePct: number | null;
+}
+
+export interface ExamMetricSeries {
+    id: string;
+    name: string;
+    total: number;
+    points: MetricPoint[];
+}
+
+export interface DashboardKpi {
+    id: string;
+    label: string;
+    value: string;
+    /** What the comparison is against, e.g. `vs last week`. */
+    caption: string;
+    changePct: number | null;
+    /** A live reading rather than a historical comparison. */
+    live: boolean;
+    icon: string;
+}
+
+export interface TrendTone {
+    label: string;
+    tier: 'up' | 'down' | 'flat';
+}
+
+/** Below this the change is noise, and the pill says so rather than showing 0.0%. */
+const FLAT_THRESHOLD = 0.6;
+
+export function describeTrend(changePct: number | null): TrendTone {
+    if (changePct === null || Math.abs(changePct) < FLAT_THRESHOLD) {
+        return { label: 'Flat', tier: 'flat' };
+    }
+    const sign = changePct >= 0 ? '+' : '−';
+    return {
+        label: `${sign}${Math.abs(changePct).toFixed(1)}%`,
+        tier: changePct >= 0 ? 'up' : 'down',
+    };
+}
+
+/**
+ * Series colours for the exam chart, assigned in this fixed order and never
+ * cycled — an eighth exam folds into the rest rather than reusing a hue.
+ *
+ * Ordered so neighbouring entries stay apart for red-green colour blindness:
+ * the blue and purple that sat side by side in the wireframe are separated,
+ * since those two are near-identical under protanopia.
+ */
+export const EXAM_SERIES_COLORS = [
+    '#0e7c57',
+    '#a06800',
+    '#2563c9',
+    '#c4342a',
+    '#009c90',
+    '#8b3fd6',
+    '#b02e7a',
+];

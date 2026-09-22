@@ -1,0 +1,25 @@
+<div class="dl-legend">
+  @for (exam of series; track exam.id) {
+    <button
+      type="button"
+      class="dl-chip"
+      [class.off]="!exam.visible"
+      [title]="exam.name"
+      [attr.aria-pressed]="exam.visible"
+      (click)="toggleExam.emit(exam.id)"
+    >
+      <span
+        class="dl-swatch"
+        [style.background]="exam.visible ? exam.color : 'transparent'"
+        [style.border-color]="exam.visible ? exam.color : '#c2c7c0'"
+      ></span>
+      <span class="dl-name">{{ exam.name }}</span>
+      <span class="dl-count">{{ countLabel(exam) }}</span>
+    </button>
+  }
+
+  <span class="dl-actions">
+    <button type="button" class="dl-link" (click)="showAll.emit()">Show all</button>
+    <button type="button" class="dl-link muted" (click)="resetToTop.emit()">Reset to top 5</button>
+  </span>
+</div>

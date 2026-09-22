@@ -1,0 +1,93 @@
+<div class="dz-card">
+  <header class="dz-head">
+    <h2 class="dz-title">{{ title }}</h2>
+    <div class="dz-ranges" role="group" [attr.aria-label]="title + ' range'">
+      @for (option of ranges; track option) {
+        <button
+          type="button"
+          class="dz-range"
+          [class.on]="option === range"
+          [attr.aria-pressed]="option === range"
+          (click)="rangeChange.emit(option)"
+        >
+          {{ option }}
+        </button>
+      }
+    </div>
+  </header>
+
+  <div class="dz-plot-row">
+    <div class="dz-y-axis">
+      <span>{{ yTop }}</span>
+      <span>{{ yMid }}</span>
+      <span>{{ yZero }}</span>
+    </div>
+
+    <div class="dz-plot-col">
+      <div class="dz-plot" (mouseleave)="hovered.set(null)">
+        <div class="dz-grid-line top"></div>
+        <div class="dz-grid-line mid"></div>
+
+        <svg class="dz-svg" viewBox="0 0 640 200" preserveAspectRatio="none" aria-hidden="true">
+          <path [attr.d]="areaPath" [attr.fill]="fill"></path>
+          <path
+            [attr.d]="linePath"
+            fill="none"
+            [attr.stroke]="color"
+            stroke-width="1.8"
+            stroke-linejoin="round"
+            vector-effect="non-scaling-stroke"
+          ></path>
+        </svg>
+
+        @if (hoveredPoint; as point) {
+          <div class="dz-crosshair" [style.left]="point.left"></div>
+        }
+
+        @for (point of plotted; track point.index) {
+          <button
+            type="button"
+            class="dz-hit"
+            [style.left]="point.left"
+            [style.width]="hitWidth"
+            [attr.aria-label]="point.label + ': ' + point.value"
+            (mouseenter)="hovered.set(point.index)"
+            (focus)="hovered.set(point.index)"
+            (blur)="hovered.set(null)"
+          >
+            <span
+              class="dz-marker"
+              [style.top]="point.top"
+              [style.width.px]="markerSize(point.index)"
+              [style.height.px]="markerSize(point.index)"
+              [style.background]="color"
+            ></span>
+          </button>
+        }
+
+        @if (hoveredPoint; as point) {
+          <div
+            class="dz-tooltip"
+            [style.left]="point.left"
+            [style.transform]="tooltipShift"
+          >
+            <p class="dz-tooltip-label">{{ point.label }}</p>
+            <p class="dz-tooltip-value">{{ point.value }}</p>
+          </div>
+        }
+      </div>
+
+      <div class="dz-x-axis">
+        @for (tick of axisLabels; track tick.axis) {
+          <span>{{ tick.axis }}</span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <footer class="dz-foot">
+    <span class="dz-total">{{ total }}</span>
+    <span class="dz-trend" [class]="trend.tier">{{ trend.label }}</span>
+    <span class="dz-caption">{{ captionLine }}</span>
+  </footer>
+</div>
