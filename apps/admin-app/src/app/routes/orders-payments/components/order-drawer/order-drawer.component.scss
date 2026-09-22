@@ -1,0 +1,135 @@
+@use '../../../../shared/styles/tokens' as *;
+@use '../../../../shared/styles/commerce' as *;
+
+:host {
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.od-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.od-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.od-status {
+  @include cm-status-pill;
+}
+
+.od-placed {
+  font-family: $sm-font-mono;
+  font-size: 10.5px;
+  color: $sm-muted-light;
+}
+
+.od-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 9px;
+}
+
+.od-customer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid $sm-border-card;
+  border-radius: 11px;
+  background: $sm-surface;
+}
+
+.od-avatar {
+  @include cm-avatar;
+  flex-basis: 40px;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  font-size: 12px;
+}
+
+.od-customer-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.od-customer-name {
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.od-customer-email {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12.5px;
+  color: $sm-text-muted;
+}
+
+.od-customer-id {
+  @include sm-mono-label(9.5px, 0.08em);
+}
+
+.od-lines {
+  border: 1px solid $sm-border-card;
+  border-radius: 11px;
+  background: $sm-surface;
+  overflow: hidden;
+}
+
+.od-line {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 11px 13px;
+
+  & + & {
+    border-top: 1px solid $sm-border-hair;
+  }
+
+  &.total {
+    background: $sm-surface-input;
+    font-weight: 600;
+  }
+}
+
+.od-line-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.od-line-qty {
+  font-family: $sm-font-mono;
+  font-size: 10.5px;
+  color: $sm-muted-light;
+}
+
+.od-line-sub {
+  font-family: $sm-font-mono;
+  font-size: 12px;
+  text-align: right;
+}
+
+.od-btn-ghost {
+  @include sm-button-ghost(38px);
+  margin-left: auto;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.od-btn-primary {
+  @include sm-button-primary(38px);
+  padding: 0 14px;
+  font-size: 13px;
+}

@@ -1,0 +1,206 @@
+@use '../../shared/styles/tokens' as *;
+
+:host {
+  display: block;
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.cu-page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cu-page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cu-breadcrumb {
+  @include sm-mono-label(9.5px, 0.1em);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.cu-title {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 3px 0 0;
+}
+
+.cu-primary {
+  @include sm-button-primary(40px);
+  flex: 0 0 auto;
+  padding: 0 16px;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.cu-card {
+  background: $sm-surface;
+  border: 1px solid $sm-border-card;
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(22, 33, 28, 0.04);
+  overflow: hidden;
+}
+
+.cu-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+}
+
+.cu-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.cu-card-sub {
+  font-size: 12.5px;
+  color: $sm-text-muted;
+  margin: 3px 0 0;
+}
+
+.cu-card-primary {
+  @include sm-button-primary(36px);
+  flex: 0 0 auto;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.cu-head,
+.cu-row {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.3fr) minmax(0, 2.4fr) minmax(0, 0.6fr)
+    minmax(0, 1fr) minmax(0, 0.7fr);
+  gap: 12px;
+  align-items: center;
+}
+
+.cu-head {
+  padding: 11px 20px;
+  background: $sm-surface-input;
+  border-top: 1px solid $sm-border-faint;
+  border-bottom: 1px solid $sm-border-faint;
+
+  span {
+    @include sm-mono-label(9px, 0.1em);
+    text-transform: uppercase;
+  }
+}
+
+.cu-right {
+  justify-self: end;
+  text-align: right;
+}
+
+.cu-row {
+  padding: 13px 20px;
+  border-bottom: 1px solid $sm-border-row;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: $sm-surface-sunken;
+  }
+}
+
+.cu-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.cu-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  font-family: $sm-font-mono;
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.cu-name-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.cu-desc {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  color: $sm-text-muted;
+}
+
+.cu-value {
+  font-family: $sm-font-mono;
+  font-size: 12px;
+}
+
+.cu-used {
+  font-size: 12.5px;
+  color: $sm-text-body;
+}
+
+.cu-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.cu-action {
+  @include sm-icon-button(28px, 8px);
+  border: 1px solid $sm-border-control;
+  background: $sm-surface;
+  color: $sm-text-body;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover {
+    background: $sm-surface-hover;
+  }
+
+  &.danger {
+    color: $sm-red;
+
+    &:hover {
+      background: $sm-red-soft;
+    }
+  }
+}
+
+.cu-empty {
+  padding: 40px 20px;
+  font-size: 13px;
+  color: $sm-muted;
+  text-align: center;
+  margin: 0;
+}

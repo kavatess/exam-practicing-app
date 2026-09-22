@@ -1,0 +1,122 @@
+@use '../../../../shared/styles/tokens' as *;
+@use '../../../../shared/styles/commerce' as *;
+
+:host {
+  display: block;
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.tt-table {
+  @include cm-table;
+}
+
+.tt-head,
+.tt-row {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 0.9fr) minmax(0, 1.3fr) minmax(0, 2.2fr) minmax(0, 0.6fr)
+    minmax(0, 0.7fr) minmax(0, 0.9fr) minmax(0, 0.5fr);
+  gap: 12px;
+  align-items: center;
+}
+
+.tt-head {
+  @include cm-table-head;
+}
+
+.tt-row {
+  padding: 13px 20px;
+  border-top: 1px solid $sm-border-row;
+
+  &:hover {
+    background: $sm-surface-sunken;
+  }
+}
+
+.tt-id {
+  font-family: $sm-font-mono;
+  font-size: 10.5px;
+  color: $sm-text-muted;
+}
+
+.tt-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.tt-avatar {
+  @include cm-avatar;
+}
+
+.tt-user-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.tt-desc {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.tt-desc-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.tt-currency {
+  @include sm-mono-label(9px, 0.08em);
+  text-transform: uppercase;
+}
+
+.tt-type {
+  @include sm-pill;
+  background: $sm-neutral-soft;
+  color: $sm-neutral;
+  font-size: 11px;
+  font-weight: 500;
+
+  &.credit {
+    background: $sm-green-soft;
+    color: $sm-green;
+  }
+}
+
+.tt-amount {
+  font-family: $sm-font-mono;
+  font-size: 12px;
+  font-weight: 600;
+
+  &.credit {
+    color: $sm-green;
+  }
+}
+
+.tt-order {
+  font-family: $sm-font-mono;
+  font-size: 10.5px;
+  color: $sm-green;
+
+  &.none {
+    color: $sm-chevron;
+  }
+}
+
+.tt-date {
+  font-family: $sm-font-mono;
+  font-size: 10.5px;
+  color: $sm-muted-light;
+}
+
+.tt-empty {
+  @include cm-table-empty;
+}

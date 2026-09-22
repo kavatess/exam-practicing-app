@@ -1,0 +1,144 @@
+@use '../../../../shared/styles/tokens' as *;
+
+@include sm-form-field;
+
+:host {
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.em-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.em-top {
+  display: flex;
+  gap: 16px;
+}
+
+.em-upload {
+  display: flex;
+  flex: 0 0 132px;
+  flex-direction: column;
+  gap: 7px;
+  width: 132px;
+}
+
+.em-upload-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: $sm-text-body;
+}
+
+.em-art {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  border-radius: 11px;
+}
+
+.em-abbr {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.em-slot {
+  position: absolute;
+  right: 8px;
+  bottom: 7px;
+  font-family: $sm-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+}
+
+.em-replace {
+  border: 1px solid $sm-border-control;
+  border-radius: 8px;
+  background: $sm-surface;
+  padding: 7px 0;
+  font: inherit;
+  font-size: 12px;
+  color: $sm-text-body;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $sm-border-strong;
+  }
+}
+
+.em-top-fields {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.em-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.em-control {
+  position: relative;
+  display: block;
+}
+
+.em-hint {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  font-family: $sm-font-mono;
+  font-size: 10px;
+  color: $sm-muted-light;
+  pointer-events: none;
+}
+
+.em-toggle-card {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 14px 15px;
+  border: 1px solid $sm-border-card;
+  border-radius: 11px;
+  background: $sm-surface;
+}
+
+.em-toggle {
+  display: flex;
+  align-items: center;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 22px;
+  padding: 2px;
+  border: none;
+  border-radius: 999px;
+  background: $sm-border-dashed;
+  justify-content: flex-start;
+  cursor: pointer;
+
+  &.on {
+    background: $sm-green;
+    justify-content: flex-end;
+  }
+}
+
+.em-knob {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: $sm-surface;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.em-toggle-label {
+  font-size: 13.5px;
+  font-weight: 500;
+}

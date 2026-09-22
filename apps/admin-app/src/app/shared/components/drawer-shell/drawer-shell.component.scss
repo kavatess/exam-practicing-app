@@ -1,0 +1,96 @@
+@use '../../styles/tokens' as *;
+
+:host {
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.dr-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  justify-content: flex-end;
+  background: $sm-scrim;
+}
+
+.dr-scrim-hit {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: default;
+}
+
+.dr-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  height: 100%;
+  background: $sm-surface-modal;
+  box-shadow: -24px 0 60px -24px rgba(22, 33, 28, 0.4);
+}
+
+.dr-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 22px;
+  background: $sm-surface;
+  border-bottom: 1px solid $sm-border-soft;
+}
+
+.dr-head-text {
+  min-width: 0;
+}
+
+.dr-eyebrow {
+  @include sm-mono-label(10px, 0.1em);
+  margin: 0;
+}
+
+.dr-title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 4px 0 0;
+}
+
+.dr-close {
+  @include sm-icon-button(30px, 9px);
+  flex: 0 0 auto;
+  border: 1px solid $sm-border;
+  color: $sm-text-body;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover {
+    background: $sm-surface-hover;
+  }
+}
+
+.dr-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 18px 22px;
+}
+
+.dr-foot {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 22px;
+  background: $sm-surface;
+  border-top: 1px solid $sm-border-soft;
+
+  &:empty {
+    display: none;
+  }
+}

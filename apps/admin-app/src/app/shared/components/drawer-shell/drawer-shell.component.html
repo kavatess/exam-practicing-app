@@ -1,0 +1,25 @@
+<div class="dr-scrim">
+  <button type="button" class="dr-scrim-hit" aria-label="Close panel" (click)="dismiss.emit()"></button>
+
+  <aside class="dr-panel" role="dialog" aria-modal="true" [attr.aria-label]="title" [style.width.px]="width">
+    <header class="dr-head">
+      <div class="dr-head-text">
+        <p class="dr-eyebrow">{{ eyebrow }}</p>
+        <h2 class="dr-title">{{ title }}</h2>
+      </div>
+      <button type="button" class="dr-close" title="Close" (click)="dismiss.emit()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </header>
+
+    <div class="dr-body">
+      <ng-content></ng-content>
+    </div>
+
+    <footer class="dr-foot">
+      <ng-content select="[drawerFooter]"></ng-content>
+    </footer>
+  </aside>
+</div>

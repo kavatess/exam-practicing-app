@@ -1,0 +1,41 @@
+<div class="tt-table">
+  <div class="tt-head">
+    <span>Transaction</span>
+    <span>User</span>
+    <span>Description</span>
+    <span>Type</span>
+    <span>Amount</span>
+    <span>Order</span>
+    <span>Date</span>
+  </div>
+
+  @for (tx of transactions; track tx.id) {
+    <div class="tt-row">
+      <span class="tt-id">{{ tx.id }}</span>
+
+      <span class="tt-user">
+        <span class="tt-avatar" [style.background]="avatar(tx).bg" [style.color]="avatar(tx).fg">
+          {{ avatar(tx).abbr }}
+        </span>
+        <span class="tt-user-name">{{ tx.userName }}</span>
+      </span>
+
+      <span class="tt-desc">
+        <span class="tt-desc-text">{{ tx.description }}</span>
+        <span class="tt-currency">{{ tx.currency }}</span>
+      </span>
+
+      <span>
+        <span class="tt-type" [class.credit]="tx.type === 'Credit'">{{ tx.type }}</span>
+      </span>
+
+      <span class="tt-amount" [class.credit]="tx.type === 'Credit'">{{ tx.amount }}</span>
+
+      <span class="tt-order" [class.none]="!tx.orderId">{{ tx.orderId ?? '—' }}</span>
+
+      <span class="tt-date">{{ tx.date }}</span>
+    </div>
+  } @empty {
+    <p class="tt-empty">No transactions in this period.</p>
+  }
+</div>

@@ -1,0 +1,24 @@
+@use '../../../../shared/styles/tokens' as *;
+
+@include sm-form-field;
+
+:host {
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.cm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cm-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
+.cm-narrow {
+  max-width: 140px;
+}

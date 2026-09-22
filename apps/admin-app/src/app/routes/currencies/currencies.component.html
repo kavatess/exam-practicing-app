@@ -1,0 +1,70 @@
+<div class="cu-page">
+  <header class="cu-page-head">
+    <div>
+      <p class="cu-breadcrumb">Admin / Currencies</p>
+      <h1 class="cu-title">Currencies</h1>
+    </div>
+    <button type="button" class="cu-primary" (click)="openModal(null)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+        <path d="M12 5v14M5 12h14"></path>
+      </svg>
+      New currency
+    </button>
+  </header>
+
+  <div class="cu-card">
+    <header class="cu-card-head">
+      <div>
+        <h2 class="cu-card-title">In-app currencies</h2>
+        <p class="cu-card-sub">Used by shop items, quests and achievement rewards</p>
+      </div>
+      <button type="button" class="cu-card-primary" (click)="openModal(null)">New currency</button>
+    </header>
+
+    <div class="cu-head">
+      <span>Currency</span>
+      <span>Description</span>
+      <span>Value</span>
+      <span>Used by</span>
+      <span class="cu-right">Actions</span>
+    </div>
+
+    @for (currency of currencies(); track currency.id) {
+      <div class="cu-row">
+        <span class="cu-name">
+          <span class="cu-chip" [style.background]="chip(currency).bg" [style.color]="chip(currency).fg">
+            {{ currency.abbr }}
+          </span>
+          <span class="cu-name-text">{{ currency.name }}</span>
+        </span>
+
+        <span class="cu-desc">{{ currency.description }}</span>
+        <span class="cu-value">{{ currency.value }}</span>
+        <span class="cu-used">{{ currency.usedBy }}</span>
+
+        <span class="cu-right cu-actions">
+          <button type="button" class="cu-action" title="Edit currency" (click)="openModal(currency)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 20h4L19 9l-4-4L4 16v4ZM14 6l4 4"></path>
+            </svg>
+          </button>
+          <button type="button" class="cu-action danger" title="Delete currency" (click)="removeCurrency(currency)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"></path>
+            </svg>
+          </button>
+        </span>
+      </div>
+    } @empty {
+      <p class="cu-empty">No currencies yet. Create one to price shop items and quest rewards.</p>
+    }
+  </div>
+</div>
+
+@if (modalOpen) {
+  <adm-currency-modal
+    [currency]="editingCurrency"
+    (dismiss)="closeModal()"
+    (save)="saveCurrency($event)"
+  ></adm-currency-modal>
+}

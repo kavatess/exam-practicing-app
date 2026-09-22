@@ -1,0 +1,35 @@
+<div class="cp-page">
+  <header class="cp-head">
+    <div>
+      <p class="cp-breadcrumb">{{ copy.breadcrumb }}</p>
+      <h1 class="cp-title">{{ copy.title }}</h1>
+    </div>
+    <button type="button" class="cp-primary" (click)="openModal(null)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+        <path d="M12 5v14M5 12h14"></path>
+      </svg>
+      New {{ copy.singular }}
+    </button>
+  </header>
+
+  <adm-entity-grid
+    [copy]="copy"
+    [entities]="entities()"
+    [search]="search()"
+    (searchChange)="onSearch($event)"
+    (create)="openModal(null)"
+    (edit)="openModal($event)"
+  ></adm-entity-grid>
+
+  <p class="cp-count">{{ countLabel }}</p>
+</div>
+
+@if (modalOpen) {
+  <adm-entity-modal
+    [copy]="copy"
+    [entity]="editingEntity"
+    (dismiss)="closeModal()"
+    (save)="saveEntity($event)"
+    (remove)="removeEntity()"
+  ></adm-entity-modal>
+}

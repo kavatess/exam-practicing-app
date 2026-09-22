@@ -3,6 +3,12 @@ import { provideRouter } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideState, provideStore } from '@ngrx/store';
 import { appRoutes } from './app.routes';
+import { CatalogEffects } from './routes/catalog/store/catalog.effects';
+import { catalogReducer } from './routes/catalog/store/catalog.reducer';
+import { catalogStoreKey } from './routes/catalog/store/catalog.selectors';
+import { CurrenciesEffects } from './routes/currencies/store/currencies.effects';
+import { currenciesReducer } from './routes/currencies/store/currencies.reducer';
+import { currenciesStoreKey } from './routes/currencies/store/currencies.selectors';
 import { DashboardEffects } from './routes/dashboard/store/dashboard.effects';
 import { dashboardReducer } from './routes/dashboard/store/dashboard.reducer';
 import { dashboardStoreKey } from './routes/dashboard/store/dashboard.selectors';
@@ -12,7 +18,13 @@ import { examsStoreKey } from './routes/exams/store/exams.selectors';
 import { QuestionBankEffects } from './routes/question-bank/store/question-bank.effects';
 import { questionBankReducer } from './routes/question-bank/store/question-bank.reducer';
 import { questionBankStoreKey } from './routes/question-bank/store/question-bank.selectors';
+import { OrdersPaymentsEffects } from './routes/orders-payments/store/orders-payments.effects';
+import { ordersPaymentsReducer } from './routes/orders-payments/store/orders-payments.reducer';
+import { ordersPaymentsStoreKey } from './routes/orders-payments/store/orders-payments.selectors';
 import { SubjectManagementEffects } from './routes/subject-management/store/subject-management.effects';
+import { UserManagementEffects } from './routes/user-management/store/user-management.effects';
+import { userManagementReducer } from './routes/user-management/store/user-management.reducer';
+import { userManagementStoreKey } from './routes/user-management/store/user-management.selectors';
 import { subjectManagementReducer } from './routes/subject-management/store/subject-management.reducer';
 import { subjectManagementStoreKey } from './routes/subject-management/store/subject-management.selectors';
 
@@ -29,11 +41,19 @@ export const appConfig: ApplicationConfig = {
     provideState(examsStoreKey, examsReducer),
     provideState(questionBankStoreKey, questionBankReducer),
     provideState(dashboardStoreKey, dashboardReducer),
+    provideState(catalogStoreKey, catalogReducer),
+    provideState(userManagementStoreKey, userManagementReducer),
+    provideState(ordersPaymentsStoreKey, ordersPaymentsReducer),
+    provideState(currenciesStoreKey, currenciesReducer),
     provideEffects(
       SubjectManagementEffects,
       ExamsEffects,
       QuestionBankEffects,
-      DashboardEffects
+      DashboardEffects,
+      CatalogEffects,
+      UserManagementEffects,
+      OrdersPaymentsEffects,
+      CurrenciesEffects
     ),
   ],
 };

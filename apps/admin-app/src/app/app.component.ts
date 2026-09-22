@@ -68,6 +68,11 @@ export class AppComponent {
       label: 'Orders & Payments',
       icon: 'M3 7h18v11H3V7Zm0 4.5h18M6 15h4',
     },
+    {
+      route: ADMIN_APP_ROUTES.CURRENCIES,
+      label: 'Currencies',
+      icon: 'M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm-2.2 5.6h4.4M9.8 14.4h4.4M12 7.4v9.2',
+    },
   ];
 
   constructor(public authService: AuthService) {}

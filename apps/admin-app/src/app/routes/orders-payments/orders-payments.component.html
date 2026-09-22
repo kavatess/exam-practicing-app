@@ -1,0 +1,51 @@
+<div class="op-page">
+  <header class="op-head">
+    <p class="op-breadcrumb">Admin / Orders &amp; Payments</p>
+    <h1 class="op-title">Orders &amp; Payments</h1>
+  </header>
+
+  <nav class="op-tabs" role="tablist">
+    @for (item of tabs; track item.id) {
+      <button
+        type="button"
+        class="op-tab"
+        role="tab"
+        [class.on]="tab() === item.id"
+        [attr.aria-selected]="tab() === item.id"
+        (click)="selectTab(item.id)"
+      >
+        {{ item.label }}
+      </button>
+    }
+  </nav>
+
+  @switch (tab()) {
+    @case ('orders') {
+      <adm-orders-tab
+        [stats]="stats()"
+        [orders]="orders()"
+        [total]="total()"
+        [status]="status()"
+        [currency]="currency()"
+        (statusChange)="selectStatus($event)"
+        (currencyChange)="selectCurrency($event)"
+        (openOrder)="open($event)"
+        (exportOrders)="exportOrders()"
+      ></adm-orders-tab>
+    }
+    @case ('transactions') {
+      <adm-transactions-tab [transactions]="transactions()"></adm-transactions-tab>
+    }
+    @case ('methods') {
+      <adm-methods-tab
+        [methods]="methods()"
+        (setLive)="setMethodLive($event)"
+        (addGateway)="addGateway()"
+      ></adm-methods-tab>
+    }
+  }
+</div>
+
+@if (openOrder(); as order) {
+  <adm-order-drawer [order]="order" (dismiss)="close()"></adm-order-drawer>
+}

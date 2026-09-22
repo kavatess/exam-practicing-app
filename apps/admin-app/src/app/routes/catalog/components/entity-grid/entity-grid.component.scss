@@ -1,0 +1,259 @@
+@use '../../../../shared/styles/tokens' as *;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.eg-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eg-search {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 40px;
+  padding: 0 13px;
+  border: 1px solid $sm-border-card;
+  border-radius: 10px;
+  background: $sm-surface;
+
+  &:focus-within {
+    border-color: $sm-green;
+  }
+
+  svg {
+    flex: 0 0 15px;
+    width: 15px;
+    height: 15px;
+    color: $sm-muted-light;
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    font-size: 13.5px;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $sm-muted-light;
+    }
+  }
+}
+
+.eg-sort {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 13px;
+  border: 1px solid $sm-border-control;
+  border-radius: 10px;
+  background: $sm-surface;
+  font-size: 13px;
+  color: $sm-text-body;
+}
+
+.eg-view {
+  display: flex;
+  gap: 3px;
+  flex: 0 0 auto;
+  padding: 3px;
+  border: 1px solid $sm-border-control;
+  border-radius: 10px;
+  background: $sm-surface;
+}
+
+.eg-view-btn {
+  height: 32px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 7px;
+  background: none;
+  font: inherit;
+  font-size: 12.5px;
+  color: $sm-text-body;
+  cursor: pointer;
+
+  &.on {
+    background: $sm-ink;
+    color: $sm-surface;
+    font-weight: 500;
+  }
+}
+
+.eg-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+
+  &.list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.eg-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid $sm-border-card;
+  border-radius: 14px;
+  background: $sm-surface;
+  box-shadow: 0 1px 2px rgba(22, 33, 28, 0.04);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $sm-border-strong;
+  }
+}
+
+.eg-grid.list .eg-card {
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.eg-art {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+}
+
+.eg-grid.list .eg-art {
+  flex: 0 0 96px;
+  width: 96px;
+  aspect-ratio: 1;
+}
+
+.eg-abbr {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.eg-slot {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  font-family: $sm-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+}
+
+.eg-grid.list .eg-slot {
+  display: none;
+}
+
+.eg-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.eg-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.eg-desc {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: $sm-text-muted;
+}
+
+.eg-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 11px;
+  border-top: 1px solid $sm-border-hair;
+}
+
+.eg-grid.list .eg-meta {
+  flex: 0 0 auto;
+  padding-top: 0;
+  border-top: none;
+}
+
+.eg-meta-primary {
+  @include sm-mono-label(9.5px, 0.08em);
+  text-transform: uppercase;
+}
+
+.eg-meta-secondary {
+  @include sm-pill;
+  font-size: 11px;
+  font-weight: 500;
+
+  &.tone-ok {
+    background: $sm-green-soft;
+    color: $sm-green;
+  }
+
+  &.tone-warn {
+    background: #fbf0dc;
+    color: $sm-amber;
+  }
+
+  &.tone-info {
+    background: $sm-blue-soft;
+    color: $sm-blue;
+  }
+}
+
+.eg-add {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 180px;
+  border: 1.5px dashed $sm-border-dashed;
+  border-radius: 14px;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: $sm-muted-dim;
+  cursor: pointer;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    border-color: $sm-green;
+    color: $sm-green;
+  }
+}
+
+@media (max-width: 1180px) {
+  .eg-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

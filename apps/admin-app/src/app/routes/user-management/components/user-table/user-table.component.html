@@ -1,0 +1,83 @@
+<div class="ut-filters">
+  <label class="ut-select">
+    <span class="ut-select-label">Role:</span>
+    <select [ngModel]="role" (ngModelChange)="roleChange.emit($event)">
+      @for (option of roles; track $index) {
+        <option [ngValue]="option">{{ roleLabel(option) }}</option>
+      }
+    </select>
+  </label>
+
+  <label class="ut-select">
+    <span class="ut-select-label">Status:</span>
+    <select [ngModel]="status" (ngModelChange)="statusChange.emit($event)">
+      @for (option of statuses; track $index) {
+        <option [ngValue]="option">{{ statusLabel(option) }}</option>
+      }
+    </select>
+  </label>
+
+  <label class="ut-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14ZM20 20l-4.2-4.2"></path>
+    </svg>
+    <input
+      type="search"
+      placeholder="Search name or email"
+      [ngModel]="search"
+      (ngModelChange)="searchChange.emit($event)"
+    />
+  </label>
+
+  <button type="button" class="ut-export" (click)="exportCsv.emit()">Export CSV</button>
+</div>
+
+<div class="ut-table">
+  <div class="ut-head">
+    <span>Name</span>
+    <span>Email</span>
+    <span>Role</span>
+    <span>Status</span>
+    <span>Joined</span>
+    <span class="ut-right">Actions</span>
+  </div>
+
+  @for (user of users; track user.id) {
+    <button type="button" class="ut-row" (click)="openUser.emit(user)">
+      <span class="ut-name">
+        <span class="ut-avatar" [style.background]="avatar(user).bg" [style.color]="avatar(user).fg">
+          {{ avatar(user).abbr }}
+        </span>
+        <span class="ut-name-text">{{ user.name }}</span>
+      </span>
+
+      <span class="ut-email">{{ user.email }}</span>
+
+      <span>
+        <span class="ut-role" [class.admin]="user.role === 'Admin'">{{ user.role }}</span>
+      </span>
+
+      <span class="ut-status">
+        <span class="ut-dot" [class.on]="user.status === 'Active'"></span>
+        {{ user.status }}
+      </span>
+
+      <span class="ut-joined">{{ user.joined }}</span>
+
+      <span class="ut-right">
+        <span class="ut-more" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+            <path d="M12 6h.01M12 12h.01M12 18h.01"></path>
+          </svg>
+        </span>
+      </span>
+    </button>
+  } @empty {
+    <p class="ut-empty">No learner matches these filters.</p>
+  }
+
+  <div class="ut-foot">
+    <span class="ut-count">{{ countLabel }}</span>
+    <button type="button" class="ut-load">Load more</button>
+  </div>
+</div>

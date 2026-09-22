@@ -1,0 +1,70 @@
+<div class="eg-toolbar">
+  <label class="eg-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14ZM20 20l-4.2-4.2"></path>
+    </svg>
+    <input
+      type="search"
+      [placeholder]="searchPlaceholder"
+      [ngModel]="search"
+      (ngModelChange)="searchChange.emit($event)"
+    />
+  </label>
+
+  <span class="eg-sort">Sort: Recent</span>
+
+  <div class="eg-view" role="group" aria-label="Layout">
+    <button
+      type="button"
+      class="eg-view-btn"
+      [class.on]="!listView()"
+      [attr.aria-pressed]="!listView()"
+      (click)="listView.set(false)"
+    >
+      Grid
+    </button>
+    <button
+      type="button"
+      class="eg-view-btn"
+      [class.on]="listView()"
+      [attr.aria-pressed]="listView()"
+      (click)="listView.set(true)"
+    >
+      List
+    </button>
+  </div>
+</div>
+
+<div class="eg-grid" [class.list]="listView()">
+  @for (entity of entities; track entity.id) {
+    <button type="button" class="eg-card" (click)="edit.emit(entity)">
+      <span
+        class="eg-art"
+        [style.background]="art(entity).bg"
+        [style.color]="art(entity).fg"
+      >
+        <span class="eg-abbr">{{ art(entity).abbr }}</span>
+        <span class="eg-slot">{{ copy.artSlot }}</span>
+      </span>
+
+      <span class="eg-body">
+        <span class="eg-name">{{ entity.name }}</span>
+        <span class="eg-desc">{{ entity.description }}</span>
+      </span>
+
+      <span class="eg-meta">
+        <span class="eg-meta-primary">{{ entity.metaPrimary }}</span>
+        <span class="eg-meta-secondary" [class]="toneClass(entity)">
+          {{ entity.metaSecondary }}
+        </span>
+      </span>
+    </button>
+  }
+
+  <button type="button" class="eg-add" (click)="create.emit()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <path d="M12 5v14M5 12h14"></path>
+    </svg>
+    {{ addLabel }}
+  </button>
+</div>

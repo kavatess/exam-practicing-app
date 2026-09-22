@@ -1,0 +1,182 @@
+@use '../../../../shared/styles/tokens' as *;
+
+:host {
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.ud-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ud-identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ud-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  font-family: $sm-font-mono;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ud-identity-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.ud-email {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  color: $sm-text-muted;
+}
+
+.ud-chips {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ud-role {
+  @include sm-pill;
+  background: $sm-neutral-soft;
+  color: $sm-neutral;
+  font-size: 11px;
+  font-weight: 500;
+
+  &.admin {
+    background: $sm-blue-soft;
+    color: $sm-blue;
+  }
+}
+
+.ud-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: $sm-text-body;
+}
+
+.ud-dot {
+  flex: 0 0 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: $sm-chevron;
+
+  &.on {
+    background: $sm-green;
+  }
+}
+
+.ud-joined {
+  @include sm-mono-label(9.5px, 0.08em);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.ud-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ud-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 12px 13px;
+  border: 1px solid $sm-border-card;
+  border-radius: 11px;
+  background: $sm-surface;
+}
+
+.ud-stat-label {
+  @include sm-mono-label(9px, 0.1em);
+}
+
+.ud-stat-value {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.ud-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 9px;
+}
+
+.ud-activity {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid $sm-border-card;
+  border-radius: 11px;
+  background: $sm-surface;
+  overflow: hidden;
+}
+
+.ud-activity-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 11px 13px;
+
+  & + & {
+    border-top: 1px solid $sm-border-hair;
+  }
+}
+
+.ud-activity-text {
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.ud-activity-when {
+  font-size: 11px;
+  color: $sm-muted-light;
+}
+
+.ud-loading {
+  font-size: 12.5px;
+  color: $sm-muted-light;
+  margin: 0;
+}
+
+.ud-btn-ghost {
+  @include sm-button-ghost(38px);
+  margin-left: auto;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.ud-btn-danger {
+  @include sm-button-base;
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid $sm-red-border;
+  background: $sm-surface;
+  font-size: 13px;
+  font-weight: 500;
+  color: $sm-red;
+
+  &:hover {
+    background: $sm-red-soft;
+  }
+}

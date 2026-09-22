@@ -1,0 +1,72 @@
+<adm-modal-shell
+  [eyebrow]="copy.label"
+  [title]="title"
+  [width]="560"
+  [confirmLabel]="'Save ' + copy.singular"
+  [dangerLabel]="entity ? 'Delete ' + copy.singular : ''"
+  (dismiss)="dismiss.emit()"
+  (danger)="remove.emit()"
+  (confirm)="confirm()"
+>
+  <div class="em-form">
+    <div class="em-top">
+      <div class="em-upload">
+        <span class="em-upload-label">{{ copy.uploadLabel }}</span>
+        <span class="em-art" [style.background]="art.bg" [style.color]="art.fg">
+          <span class="em-abbr">{{ art.abbr }}</span>
+          <span class="em-slot">{{ copy.artSlot }}</span>
+        </span>
+        <button type="button" class="em-replace">Replace</button>
+      </div>
+
+      <div class="em-top-fields">
+        <label class="sm-field">
+          <span class="sm-field-label">{{ copy.nameLabel }}</span>
+          <input class="sm-field-control" type="text" [(ngModel)]="draft.name" />
+        </label>
+
+        <label class="sm-field">
+          <span class="sm-field-label">Description</span>
+          <textarea
+            class="sm-field-control"
+            rows="2"
+            placeholder="What the learner sees…"
+            [(ngModel)]="draft.description"
+          ></textarea>
+        </label>
+      </div>
+    </div>
+
+    <div class="em-grid">
+      @for (field of draft.fields; track field.label) {
+        <label class="sm-field">
+          <span class="sm-field-label">{{ field.label }}</span>
+          <span class="em-control">
+            <input
+              class="sm-field-control"
+              type="text"
+              [ngModel]="field.value"
+              (ngModelChange)="updateField($index, $event)"
+            />
+            @if (field.hint) {
+              <span class="em-hint">{{ field.hint }}</span>
+            }
+          </span>
+        </label>
+      }
+    </div>
+
+    <div class="em-toggle-card">
+      <button
+        type="button"
+        class="em-toggle"
+        [class.on]="enabled()"
+        [attr.aria-pressed]="enabled()"
+        (click)="enabled.set(!enabled())"
+      >
+        <span class="em-knob"></span>
+      </button>
+      <span class="em-toggle-label">{{ copy.toggleLabel }}</span>
+    </div>
+  </div>
+</adm-modal-shell>

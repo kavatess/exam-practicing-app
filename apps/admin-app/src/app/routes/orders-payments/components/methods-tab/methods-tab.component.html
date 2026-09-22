@@ -1,0 +1,48 @@
+<div class="mt-table">
+  <header class="mt-card-head">
+    <div>
+      <h2 class="mt-card-title">Payment methods</h2>
+      <p class="mt-card-sub">Gateways money and gem top-ups arrive through</p>
+    </div>
+    <button type="button" class="mt-primary" (click)="addGateway.emit()">Add gateway</button>
+  </header>
+
+  <div class="mt-head">
+    <span>Method</span>
+    <span>Provider</span>
+    <span>Fee</span>
+    <span>Volume · 30d</span>
+    <span class="mt-right">State</span>
+  </div>
+
+  @for (method of methods; track method.id) {
+    <div class="mt-row">
+      <span class="mt-name">
+        <span class="mt-logo" [style.background]="logo(method).bg" [style.color]="logo(method).fg">
+          {{ logo(method).abbr }}
+        </span>
+        <span class="mt-name-text">{{ method.name }}</span>
+      </span>
+
+      <span class="mt-provider">{{ method.provider }}</span>
+      <span class="mt-fee">{{ method.fee }}</span>
+      <span class="mt-volume">{{ method.volume }}</span>
+
+      <span class="mt-right mt-state">
+        <span class="mt-state-label" [class.live]="method.live">{{ stateLabel(method) }}</span>
+        <button
+          type="button"
+          class="mt-toggle"
+          [class.on]="method.live"
+          [attr.aria-pressed]="method.live"
+          [attr.aria-label]="method.name + ' live'"
+          (click)="toggle(method)"
+        >
+          <span class="mt-knob"></span>
+        </button>
+      </span>
+    </div>
+  } @empty {
+    <p class="mt-empty">No gateways configured yet.</p>
+  }
+</div>

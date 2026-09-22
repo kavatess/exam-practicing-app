@@ -366,3 +366,220 @@ export const EXAM_SERIES_COLORS = [
     '#8b3fd6',
     '#b02e7a',
 ];
+
+/* ---------- People ---------- */
+
+export type UserRole = 'User' | 'Admin';
+export type UserStatus = 'Active' | 'Inactive';
+
+export interface AdminUser {
+    id: string;
+    name: string;
+    email: string;
+    role: UserRole;
+    status: UserStatus;
+    joined: string;
+}
+
+/** Numbers shown on a learner's drawer. */
+export interface UserStat {
+    label: string;
+    value: string;
+}
+
+export interface UserActivity {
+    text: string;
+    when: string;
+}
+
+/* ---------- Catalogue: achievements, quests and shop items ---------- */
+
+/**
+ * Achievements, quests and shop items are one shape behind three pages: an
+ * icon, a name, a condition and a reward. They share a card grid and an editor.
+ */
+export type EntityKind = 'achievement' | 'quest' | 'shop-item';
+
+export type EntityTone = 'ok' | 'warn' | 'info';
+
+export interface AdminEntity {
+    id: string;
+    kind: EntityKind;
+    name: string;
+    description: string;
+    /** Condition or price, e.g. `STREAK · 7` or `200 GEMS`. */
+    metaPrimary: string;
+    /** State or depth, e.g. `3 levels`, `Active`, `Draft`. */
+    metaSecondary: string;
+    tone: EntityTone;
+    fields: EntityField[];
+}
+
+export interface EntityField {
+    label: string;
+    value: string;
+    /** Trailing unit or a caret for a picker. */
+    hint: string;
+}
+
+/** Per-kind wording, so one grid and one editor serve all three pages. */
+export interface EntityCopy {
+    title: string;
+    breadcrumb: string;
+    /** Plural, lower case — `achievements`. */
+    noun: string;
+    /** Singular, lower case — `achievement`. */
+    singular: string;
+    /** Mono eyebrow in the editor — `ACHIEVEMENT`. */
+    label: string;
+    uploadLabel: string;
+    nameLabel: string;
+    toggleLabel: string;
+    /** The artwork slot's caption — `ICON 96` or `IMAGE 4:3`. */
+    artSlot: string;
+}
+
+export const ENTITY_COPY: Record<EntityKind, EntityCopy> = {
+    achievement: {
+        title: 'Achievements',
+        breadcrumb: 'Admin / Achievements',
+        noun: 'achievements',
+        singular: 'achievement',
+        label: 'Achievement',
+        uploadLabel: 'Icon',
+        nameLabel: 'Name',
+        toggleLabel: 'Visible to learners',
+        artSlot: 'ICON 96',
+    },
+    quest: {
+        title: 'Quests',
+        breadcrumb: 'Admin / Quests',
+        noun: 'quests',
+        singular: 'quest',
+        label: 'Quest',
+        uploadLabel: 'Icon',
+        nameLabel: 'Title',
+        toggleLabel: 'Active',
+        artSlot: 'ICON 96',
+    },
+    'shop-item': {
+        title: 'Shop',
+        breadcrumb: 'Admin / Shop',
+        noun: 'shop items',
+        singular: 'item',
+        label: 'Shop item',
+        uploadLabel: 'Image',
+        nameLabel: 'Name',
+        toggleLabel: 'Available in shop',
+        artSlot: 'IMAGE 4:3',
+    },
+};
+
+/* ---------- Commerce ---------- */
+
+export type OrderStatus = 'PAID' | 'PENDING' | 'CANCELLED';
+/** Real money or in-app gems — the two things an order can be paid in. */
+export type OrderCurrency = 'money' | 'gems';
+
+export interface AdminOrder {
+    id: string;
+    userName: string;
+    items: number;
+    total: string;
+    currency: OrderCurrency;
+    status: OrderStatus;
+    date: string;
+}
+
+export interface OrderLine {
+    name: string;
+    price: string;
+    quantity: number;
+    subtotal: string;
+}
+
+export interface AdminOrderDetail extends AdminOrder {
+    email: string;
+    userId: string;
+    placedAt: string;
+    lines: OrderLine[];
+}
+
+export type TransactionType = 'Credit' | 'Debit';
+
+export interface AdminTransaction {
+    id: string;
+    userName: string;
+    description: string;
+    type: TransactionType;
+    amount: string;
+    currency: string;
+    /** The order it settled, or null for a reward or top-up. */
+    orderId: string | null;
+    date: string;
+}
+
+export interface AdminPaymentMethod {
+    id: string;
+    name: string;
+    provider: string;
+    fee: string;
+    volume: string;
+    live: boolean;
+}
+
+export interface AdminCurrency {
+    id: string;
+    name: string;
+    abbr: string;
+    description: string;
+    value: string;
+    /** Where it is spent or earned, e.g. `Shop · Quests`. */
+    usedBy: string;
+}
+
+export interface OrderStat {
+    label: string;
+    value: string;
+    meta: string;
+}
+
+/* ---------- Avatars and chips ---------- */
+
+/** `[background, foreground]` pairs for initials chips. */
+const AVATAR_TONES: [string, string][] = [
+    ['#e6f2ec', '#1f6e52'],
+    ['#eaf0fb', '#2c5aa8'],
+    ['#fbf0dc', '#8a5a00'],
+    ['#f3ebf9', '#6b3fa0'],
+    ['#fbe9e7', '#a3352b'],
+    ['#e8f1f1', '#2b6a66'],
+];
+
+/**
+ * A stable colour per name, so the same person keeps the same chip everywhere
+ * without storing one.
+ */
+export function avatarTone(name: string): [string, string] {
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+        hash = (hash * 31 + name.charCodeAt(i)) % 997;
+    }
+    return AVATAR_TONES[hash % AVATAR_TONES.length];
+}
+
+export function initials(name: string): string {
+    return name
+        .split(' ')
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((word) => word[0])
+        .join('')
+        .toUpperCase();
+}
+
+export const ENTITY_TONE_CLASS: Record<EntityTone, string> = {
+    ok: 'tone-ok',
+    warn: 'tone-warn',
+    info: 'tone-info',
+};

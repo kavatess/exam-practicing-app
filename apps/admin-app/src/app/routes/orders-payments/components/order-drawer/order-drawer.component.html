@@ -1,0 +1,50 @@
+<adm-drawer-shell
+  [eyebrow]="'Order · ' + order.id"
+  [title]="order.total"
+  [width]="440"
+  (dismiss)="dismiss.emit()"
+>
+  <div class="od-body">
+    <div class="od-summary">
+      <span class="od-status" [class]="statusClass">{{ order.status }}</span>
+      <span class="od-placed">{{ order.placedAt }}</span>
+    </div>
+
+    <section class="od-section">
+      <h3 class="od-section-title">Customer</h3>
+      <div class="od-customer">
+        <span class="od-avatar" [style.background]="avatar.bg" [style.color]="avatar.fg">
+          {{ avatar.abbr }}
+        </span>
+        <span class="od-customer-text">
+          <span class="od-customer-name">{{ order.userName }}</span>
+          <span class="od-customer-email">{{ order.email }}</span>
+          <span class="od-customer-id">{{ order.userId }}</span>
+        </span>
+      </div>
+    </section>
+
+    <section class="od-section">
+      <h3 class="od-section-title">Items</h3>
+      <div class="od-lines">
+        @for (line of order.lines; track line.name) {
+          <div class="od-line">
+            <span class="od-line-name">{{ line.name }}</span>
+            <span class="od-line-qty">{{ line.price }} × {{ line.quantity }}</span>
+            <span class="od-line-sub">{{ line.subtotal }}</span>
+          </div>
+        }
+        <div class="od-line total">
+          <span class="od-line-name">Total</span>
+          <span class="od-line-qty">{{ currencyLabel }}</span>
+          <span class="od-line-sub">{{ order.total }}</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <ng-container drawerFooter>
+    <button type="button" class="od-btn-ghost">Refund</button>
+    <button type="button" class="od-btn-primary">Open receipt</button>
+  </ng-container>
+</adm-drawer-shell>

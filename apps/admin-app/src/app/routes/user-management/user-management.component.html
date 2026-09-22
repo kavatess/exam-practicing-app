@@ -1,1 +1,37 @@
-<p>user-management works!</p>
+<div class="um-page">
+  <header class="um-head">
+    <div>
+      <p class="um-breadcrumb">Admin / User Management</p>
+      <h1 class="um-title">User Management</h1>
+    </div>
+    <button type="button" class="um-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+        <path d="M12 5v14M5 12h14"></path>
+      </svg>
+      Invite user
+    </button>
+  </header>
+
+  <adm-user-table
+    [users]="users()"
+    [total]="total()"
+    [role]="role()"
+    [status]="status()"
+    [search]="search()"
+    (roleChange)="selectRole($event)"
+    (statusChange)="selectStatus($event)"
+    (searchChange)="onSearch($event)"
+    (openUser)="open($event)"
+    (exportCsv)="exportCsv()"
+  ></adm-user-table>
+</div>
+
+@if (openUser(); as user) {
+  <adm-user-drawer
+    [user]="user"
+    [profile]="profile()"
+    (dismiss)="close()"
+    (setStatus)="setStatus(user.id, $event)"
+    (setRole)="setRole(user.id, $event)"
+  ></adm-user-drawer>
+}

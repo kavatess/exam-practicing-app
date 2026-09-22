@@ -1,0 +1,56 @@
+<adm-drawer-shell
+  [eyebrow]="'Learner · ' + user.id"
+  [title]="user.name"
+  [width]="440"
+  (dismiss)="dismiss.emit()"
+>
+  <div class="ud-body">
+    <div class="ud-identity">
+      <span class="ud-avatar" [style.background]="avatar.bg" [style.color]="avatar.fg">
+        {{ avatar.abbr }}
+      </span>
+      <span class="ud-identity-text">
+        <span class="ud-email">{{ user.email }}</span>
+        <span class="ud-chips">
+          <span class="ud-role" [class.admin]="isAdmin">{{ user.role }}</span>
+          <span class="ud-status">
+            <span class="ud-dot" [class.on]="active"></span>
+            {{ user.status }}
+          </span>
+        </span>
+      </span>
+    </div>
+
+    <p class="ud-joined">Joined {{ user.joined }}</p>
+
+    @if (profile; as loaded) {
+      <div class="ud-stats">
+        @for (stat of loaded.stats; track stat.label) {
+          <div class="ud-stat">
+            <span class="ud-stat-label">{{ stat.label }}</span>
+            <span class="ud-stat-value">{{ stat.value }}</span>
+          </div>
+        }
+      </div>
+
+      <section class="ud-section">
+        <h3 class="ud-section-title">Recent activity</h3>
+        <ul class="ud-activity">
+          @for (entry of loaded.activity; track entry.text) {
+            <li class="ud-activity-row">
+              <span class="ud-activity-text">{{ entry.text }}</span>
+              <span class="ud-activity-when">{{ entry.when }}</span>
+            </li>
+          }
+        </ul>
+      </section>
+    } @else {
+      <p class="ud-loading">Loading profile…</p>
+    }
+  </div>
+
+  <ng-container drawerFooter>
+    <button type="button" class="ud-btn-ghost" (click)="toggleRole()">{{ roleLabel }}</button>
+    <button type="button" class="ud-btn-danger" (click)="toggleStatus()">{{ suspendLabel }}</button>
+  </ng-container>
+</adm-drawer-shell>

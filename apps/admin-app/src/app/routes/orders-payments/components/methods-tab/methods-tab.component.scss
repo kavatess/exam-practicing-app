@@ -1,0 +1,150 @@
+@use '../../../../shared/styles/tokens' as *;
+@use '../../../../shared/styles/commerce' as *;
+
+:host {
+  display: block;
+  font-family: $sm-font-sans;
+  color: $sm-text;
+}
+
+.mt-table {
+  @include cm-table;
+}
+
+.mt-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+}
+
+.mt-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.mt-card-sub {
+  font-size: 12.5px;
+  color: $sm-text-muted;
+  margin: 3px 0 0;
+}
+
+.mt-primary {
+  @include sm-button-primary(36px);
+  flex: 0 0 auto;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.mt-head,
+.mt-row {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr)
+    minmax(0, 0.8fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+}
+
+.mt-head {
+  @include cm-table-head;
+  border-top: 1px solid $sm-border-faint;
+}
+
+.mt-right {
+  justify-self: end;
+}
+
+.mt-row {
+  padding: 13px 20px;
+  border-top: 1px solid $sm-border-row;
+
+  &:hover {
+    background: $sm-surface-sunken;
+  }
+}
+
+.mt-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.mt-logo {
+  @include cm-avatar;
+  flex-basis: 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+}
+
+.mt-name-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.mt-provider {
+  font-size: 13px;
+  color: $sm-text-body;
+}
+
+.mt-fee,
+.mt-volume {
+  font-family: $sm-font-mono;
+  font-size: 11.5px;
+  color: $sm-text-body;
+}
+
+.mt-state {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mt-state-label {
+  font-size: 12px;
+  color: $sm-muted;
+
+  &.live {
+    color: $sm-green;
+    font-weight: 500;
+  }
+}
+
+.mt-toggle {
+  display: flex;
+  align-items: center;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 22px;
+  padding: 2px;
+  border: none;
+  border-radius: 999px;
+  background: $sm-border-dashed;
+  justify-content: flex-start;
+  cursor: pointer;
+
+  &.on {
+    background: $sm-green;
+    justify-content: flex-end;
+  }
+}
+
+.mt-knob {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: $sm-surface;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.mt-empty {
+  @include cm-table-empty;
+}

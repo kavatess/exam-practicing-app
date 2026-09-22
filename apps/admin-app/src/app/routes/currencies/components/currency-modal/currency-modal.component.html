@@ -1,0 +1,47 @@
+<adm-modal-shell
+  eyebrow="Currency"
+  [title]="title"
+  [width]="480"
+  confirmLabel="Save currency"
+  (dismiss)="dismiss.emit()"
+  (confirm)="save.emit(draft)"
+>
+  <div class="cm-form">
+    <div class="cm-grid">
+      <label class="sm-field">
+        <span class="sm-field-label">Name</span>
+        <input class="sm-field-control" type="text" placeholder="Gems" [(ngModel)]="draft.name" />
+      </label>
+      <label class="sm-field cm-narrow">
+        <span class="sm-field-label">Short code</span>
+        <input class="sm-field-control" type="text" maxlength="3" placeholder="G" [(ngModel)]="draft.abbr" />
+      </label>
+    </div>
+
+    <label class="sm-field">
+      <span class="sm-field-label">Description</span>
+      <textarea
+        class="sm-field-control"
+        rows="2"
+        placeholder="What the learner spends or earns it on…"
+        [(ngModel)]="draft.description"
+      ></textarea>
+    </label>
+
+    <div class="cm-grid">
+      <label class="sm-field">
+        <span class="sm-field-label">Value</span>
+        <input class="sm-field-control" type="text" [(ngModel)]="draft.value" />
+      </label>
+      <label class="sm-field">
+        <span class="sm-field-label">Used by</span>
+        <input class="sm-field-control" type="text" placeholder="Shop · Quests" [(ngModel)]="draft.usedBy" />
+      </label>
+    </div>
+
+    <p class="sm-field-hint">
+      Currencies are referenced by shop items, quests and achievement rewards — renaming one
+      updates every reference.
+    </p>
+  </div>
+</adm-modal-shell>

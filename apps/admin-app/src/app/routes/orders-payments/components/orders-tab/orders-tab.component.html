@@ -1,0 +1,90 @@
+<div class="ot-stats">
+  @for (stat of stats; track stat.label) {
+    <div class="ot-stat">
+      <span class="ot-stat-label">{{ stat.label }}</span>
+      <span class="ot-stat-value">{{ stat.value }}</span>
+      <span class="ot-stat-meta">{{ stat.meta }}</span>
+    </div>
+  }
+</div>
+
+<div class="ot-filters">
+  <span class="ot-range">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M4 6h16v14H4V6Zm0 5h16M8 3v4m8-4v4"></path>
+    </svg>
+    01 Mar 2026 → 17 Mar 2026
+  </span>
+
+  <label class="ot-select">
+    <span class="ot-select-label">Status:</span>
+    <select [ngModel]="status" (ngModelChange)="statusChange.emit($event)">
+      @for (option of statuses; track $index) {
+        <option [ngValue]="option">{{ statusLabel(option) }}</option>
+      }
+    </select>
+  </label>
+
+  <label class="ot-select">
+    <span class="ot-select-label">Currency:</span>
+    <select [ngModel]="currency" (ngModelChange)="currencyChange.emit($event)">
+      @for (option of currencies; track $index) {
+        <option [ngValue]="option">{{ currencyLabel(option) }}</option>
+      }
+    </select>
+  </label>
+
+  <button type="button" class="ot-export" (click)="exportOrders.emit()">Export</button>
+</div>
+
+<div class="ot-table">
+  <div class="ot-head">
+    <span>Order</span>
+    <span>User</span>
+    <span>Items</span>
+    <span>Total</span>
+    <span>Currency</span>
+    <span>Status</span>
+    <span>Date</span>
+    <span></span>
+  </div>
+
+  @for (order of orders; track order.id) {
+    <button type="button" class="ot-row" (click)="openOrder.emit(order)">
+      <span class="ot-id">{{ order.id }}</span>
+
+      <span class="ot-user">
+        <span class="ot-avatar" [style.background]="avatar(order).bg" [style.color]="avatar(order).fg">
+          {{ avatar(order).abbr }}
+        </span>
+        <span class="ot-user-name">{{ order.userName }}</span>
+      </span>
+
+      <span class="ot-items">{{ order.items }}</span>
+      <span class="ot-total">{{ order.total }}</span>
+
+      <span class="ot-currency">
+        <span class="ot-dot" [class.gems]="order.currency === 'gems'"></span>
+        {{ currencyLabel(order.currency) }}
+      </span>
+
+      <span>
+        <span class="ot-status" [class]="statusClass(order.status)">{{ order.status }}</span>
+      </span>
+
+      <span class="ot-date">{{ order.date }}</span>
+
+      <span class="ot-chevron" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M9 6l6 6-6 6"></path>
+        </svg>
+      </span>
+    </button>
+  } @empty {
+    <p class="ot-empty">No order matches these filters.</p>
+  }
+
+  <div class="ot-foot">
+    <span class="ot-count">{{ countLabel }}</span>
+  </div>
+</div>
